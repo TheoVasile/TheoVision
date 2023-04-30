@@ -12,6 +12,11 @@ Viewport::Viewport(vector<Mesh *> meshes)
         this->meshes.push_back(meshes[i]);
     }
 
+    SetBackgroundColour(wxColour(* wxWHITE));
+
+    this->normal = (array<float, 3>){0.0, 0.0, 1.0};
+    this->vertical = (array<float, 3>){0.0, 1.0, 0.0};
+
     // Define graphics behavior
     this->Connect(wxEVT_PAINT, wxPaintEventHandler(Viewport::OnPaint));
     this->Centre();
@@ -51,7 +56,14 @@ void Viewport::OnExit(wxCommandEvent& event)
 
 void Viewport::OnPaint(wxPaintEvent& event){
     wxPaintDC dc(this);
-  
+
+    for (int i = 0; i < this->meshes.size(); i++){
+        vector<array<float, 3> > curr_verts = this->meshes[i]->get_verts();
+        for (int j = 0; j < this->meshes[i]->get_verts().size(); j++){
+            array<float, 2> screen_coords = this->projectPoint(curr_verts[j]);
+            dc.DrawCircle((int)screen_coords[0], (int)screen_coords[1], 1);
+        }
+    }
     wxCoord x1 = 50, y1 = 60;
     wxCoord x2 = 190, y2 = 60;
 
@@ -67,4 +79,12 @@ void Viewport::OnAbout(wxCommandEvent& event)
 void Viewport::OnHello(wxCommandEvent& event)
 {
     wxLogMessage("3D interactive display using wxWidgets");
+}
+
+array<float, 2> Viewport::projectPoint(float x, float y, float z){
+    return {x / z, y / z};
+}
+
+array<float, 2> Viewport::projectPoint(array<float, 3> pos){
+    return {pos[0]/pos[2], pos[1]/pos[2]};
 }

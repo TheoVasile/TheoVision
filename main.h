@@ -1,6 +1,5 @@
 #include <wx/wxprec.h>
 #include <iostream>
-#include <list>
 #include <vector>
 #include "display.h"
  
