@@ -8,6 +8,7 @@ class Mesh{
 
 public:
     Mesh(float pos[3]);
+    void add_vert(array<float, 3> pos);
 
 private:
     float pos[3];

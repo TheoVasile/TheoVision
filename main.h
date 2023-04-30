@@ -1,11 +1,18 @@
 #include <wx/wxprec.h>
+#include <iostream>
+#include <list>
+#include <vector>
+#include "display.h"
  
 #ifndef WX_PRECOMP
     #include <wx/wx.h>
 #endif
 
+using namespace std;
+
 class MyApp : public wxApp
 {
 public:
+    vector<Mesh *> meshes;
     virtual bool OnInit();
 };
