@@ -65,17 +65,20 @@ void Viewport::OnPaint(wxPaintEvent& event){
 
     // Mesh loop
     for (int i = 0; i < this->meshes.size(); i++){
-        // Vert loop
+        // Draw vertices
         vector<array<float, 3> > curr_verts = this->meshes[i]->get_verts();
-        for (int j = 0; j < this->meshes[i]->get_verts().size(); j++){
+        for (int j = 0; j < curr_verts.size(); j++){
             array<float, 2> screen_coords = this->projectPoint(curr_verts[j]);
             dc.DrawCircle((int)screen_coords[0], (int)screen_coords[1], 1);
         }
+        // Draw edges
+        vector<array<int, 2> > curr_edges = this->meshes[i]->get_edges();
+        for (int j=0; j < curr_edges.size(); j++){
+            array<float, 2> v1_coords = this->projectPoint(curr_verts[curr_edges[j][0]]);
+            array<float, 2> v2_coords = this->projectPoint(curr_verts[curr_edges[j][1]]);
+            dc.DrawLine((int)v1_coords[0], (int)v1_coords[1],(int)v2_coords[0], (int)v2_coords[1]);
+        }
     }
-    wxCoord x1 = 50, y1 = 60;
-    wxCoord x2 = 190, y2 = 60;
-
-    dc.DrawLine(x1, y1, x2, y2);
 }
 
 void Viewport::OnAbout(wxCommandEvent& event)
@@ -107,7 +110,8 @@ array<float, 2> Viewport::projectPoint(float x, float y, float z){
     float y_angle = acos(dot(x_component, this->normal)) * 180 / PI;
     y_angle = y_angle * (float) sign(dot(y_component, this->vertical));
 
-    return {x_angle / this->fov * 2, y_angle / this->fov * 2};
+    wxSize screen_dim = this->GetSize();
+    return {x_angle / this->fov * 2 + screen_dim.GetWidth() / 2, y_angle / this->fov * 2 + screen_dim.GetHeight() / 2};
     //return {x / z * this->fov, y / z * this->fov};
 }
 
