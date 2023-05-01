@@ -1,7 +1,7 @@
 #include "controller.h"
 
 Controller::Controller(){
-    
+
 }
 
 vector<Mesh *> Controller::getSelected(){
@@ -30,6 +30,18 @@ void Controller::addCube(float x, float y, float z){
     cube->add_vert(1.0, -1.0, -1.0);
     cube->add_vert(-1.0, 1.0, -1.0);
     cube->add_vert(-1.0, -1.0, -1.0);
+    cube->add_edge(0, 1);
+    cube->add_edge(0, 2);
+    cube->add_edge(0, 4);
+    cube->add_edge(1, 3);
+    cube->add_edge(1, 5);
+    cube->add_edge(2, 3);
+    cube->add_edge(2, 6);
+    cube->add_edge(4, 5);
+    cube->add_edge(4, 6);
+    cube->add_edge(7, 3);
+    cube->add_edge(7, 5);
+    cube->add_edge(7, 6);
 
     this->objects.push_back(cube);
     this->meshes.push_back(this->objects.size()-1);
