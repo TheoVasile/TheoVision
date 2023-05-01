@@ -1,4 +1,5 @@
 #include "display.h"
+#include "operations.h"
 
 enum
 {
@@ -89,7 +90,25 @@ void Viewport::OnHello(wxCommandEvent& event)
 }
 
 array<float, 2> Viewport::projectPoint(float x, float y, float z){
-    return {x / z * this->fov, y / z * this->fov};
+    array<float, 3> dir;
+    dir[0] = x - this->pos[0];
+    dir[1] = y - this->pos[1];
+    dir[2] = z - this->pos[2];
+
+    array<float, 3> x_component = project_onto_plane(dir, this->vertical);
+    x_component = normalize(x_component);
+
+    array<float, 3> y_component = project_onto_plane(dir, this->normal);
+    y_component = normalize(y_component);
+
+    float x_angle = acos(dot(x_component, this->normal)) * 180 / PI;
+    x_angle = x_angle * (float) sign(dot(x_component, cross(this->vertical, this->normal)));
+
+    float y_angle = acos(dot(x_component, this->normal)) * 180 / PI;
+    y_angle = y_angle * (float) sign(dot(y_component, this->vertical));
+
+    return {x_angle / this->fov * 2, y_angle / this->fov * 2};
+    //return {x / z * this->fov, y / z * this->fov};
 }
 
 array<float, 2> Viewport::projectPoint(array<float, 3> pos){

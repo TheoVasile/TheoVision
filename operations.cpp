@@ -1,5 +1,14 @@
 #include "operations.h"
 
+int sign(float val){
+    if (val > 0){
+        return 1;
+    } else if (val < 0){
+        return -1;
+    }
+    return 0;
+}
+
 float magnitude(array<float, 3> vector){
     return pow(pow(vector[0], 2) + pow(vector[1], 2) + pow(vector[2], 2), 0.5);
 }
