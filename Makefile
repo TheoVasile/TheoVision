@@ -2,7 +2,7 @@ CC = g++
 CFLAGS = `wx-config --cxxflags`
 LDFLAGS = `wx-config --libs`
 
-SOURCES = main.cpp display.cpp object.cpp
+SOURCES = main.cpp display.cpp object.cpp operations.cpp
 EXECUTABLE = Theovision
 
 all: $(EXECUTABLE)

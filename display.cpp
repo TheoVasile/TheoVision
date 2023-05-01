@@ -14,9 +14,13 @@ Viewport::Viewport(vector<Mesh *> meshes)
 
     SetBackgroundColour(wxColour(* wxWHITE));
 
+    // Initialize default attributes
     this->normal = (array<float, 3>){0.0, 0.0, 1.0};
     this->vertical = (array<float, 3>){0.0, 1.0, 0.0};
     this->fov = 30.6;
+    this->pos[0] = 0;
+    this->pos[1] = 0;
+    this->pos[2] = 0;
 
     // Define graphics behavior
     this->Connect(wxEVT_PAINT, wxPaintEventHandler(Viewport::OnPaint));
@@ -58,7 +62,9 @@ void Viewport::OnExit(wxCommandEvent& event)
 void Viewport::OnPaint(wxPaintEvent& event){
     wxPaintDC dc(this);
 
+    // Mesh loop
     for (int i = 0; i < this->meshes.size(); i++){
+        // Vert loop
         vector<array<float, 3> > curr_verts = this->meshes[i]->get_verts();
         for (int j = 0; j < this->meshes[i]->get_verts().size(); j++){
             array<float, 2> screen_coords = this->projectPoint(curr_verts[j]);
