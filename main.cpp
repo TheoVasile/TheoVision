@@ -11,6 +11,7 @@ bool MyApp::OnInit()
     cube->add_vert(1.0, -1.0, 1.0);
     cube->add_vert(-1.0, 1.0, 1.0);
     cube->add_vert(-1.0, -1.0, 1.0);
+    cube->scale(10.0);
     meshes.push_back(cube);
     Viewport *frame = new Viewport(meshes);
     frame->Show(true);

@@ -16,6 +16,7 @@ Viewport::Viewport(vector<Mesh *> meshes)
 
     this->normal = (array<float, 3>){0.0, 0.0, 1.0};
     this->vertical = (array<float, 3>){0.0, 1.0, 0.0};
+    this->fov = 30.6;
 
     // Define graphics behavior
     this->Connect(wxEVT_PAINT, wxPaintEventHandler(Viewport::OnPaint));
@@ -82,9 +83,9 @@ void Viewport::OnHello(wxCommandEvent& event)
 }
 
 array<float, 2> Viewport::projectPoint(float x, float y, float z){
-    return {x / z, y / z};
+    return {x / z * this->fov, y / z * this->fov};
 }
 
 array<float, 2> Viewport::projectPoint(array<float, 3> pos){
-    return {pos[0]/pos[2], pos[1]/pos[2]};
+    return this->projectPoint(pos[0], pos[1], pos[2]);
 }

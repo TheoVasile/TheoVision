@@ -8,6 +8,14 @@ Mesh::Mesh(float pos[3])
     this->pos[2] = pos[2];
 }
 
+void Mesh::scale(float size){
+    for (int i=0; i < this->vertices.size(); i++){
+        this->vertices[i][0] = this->vertices[i][0] * size;
+        this->vertices[i][1] = this->vertices[i][1] * size;
+        this->vertices[i][2] = this->vertices[i][2] * size;
+    }
+}
+
 void Mesh::add_vert(array<float, 3> pos){
     this->vertices.push_back(pos);
 }

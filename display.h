@@ -15,6 +15,7 @@ private:
     vector<Mesh *> meshes;
     array<float, 3> normal;
     array<float, 3> vertical;
+    float fov;
     void OnHello(wxCommandEvent& event);
     void OnPaint(wxPaintEvent& event);
     void OnExit(wxCommandEvent& event);

@@ -8,7 +8,7 @@ EXECUTABLE = Theovision
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(SOURCES)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) && ./$(EXECUTABLE)
 
 .PHONY: clean
 

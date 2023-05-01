@@ -11,6 +11,7 @@ public:
     void add_vert(array<float, 3> pos);
     void add_vert(float x, float y, float z);
     vector<array<float, 3> > get_verts();
+    void scale(float size);
 
 private:
     float pos[3];
