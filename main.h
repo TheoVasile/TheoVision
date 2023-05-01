@@ -1,6 +1,7 @@
 #include <wx/wxprec.h>
 #include <iostream>
 #include <vector>
+#include <array>
 #include "display.h"
  
 #ifndef WX_PRECOMP

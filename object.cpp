@@ -16,6 +16,14 @@ void Mesh::scale(float size){
     }
 }
 
+void Mesh::move(float x, float y, float z){
+    for (int i=0; i < this->vertices.size(); i++){
+        this->vertices[i][0] += x;
+        this->vertices[i][1] += y;
+        this->vertices[i][2] += z;
+    }
+}
+
 void Mesh::add_vert(array<float, 3> pos){
     this->vertices.push_back(pos);
 }

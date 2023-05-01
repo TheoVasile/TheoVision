@@ -12,6 +12,7 @@ public:
     void add_vert(float x, float y, float z);
     vector<array<float, 3> > get_verts();
     void scale(float size);
+    void move(float x, float y, float z);
 
 private:
     float pos[3];
