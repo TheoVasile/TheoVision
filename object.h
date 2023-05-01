@@ -7,9 +7,10 @@ using namespace std;
 class Mesh{
 
 public:
-    Mesh(float pos[3]);
+    Mesh(float x, float y, float z);
     void add_vert(array<float, 3> pos);
     void add_vert(float x, float y, float z);
+    void add_edge(int vert1, int vert2);
     vector<array<float, 3> > get_verts();
     vector<array<int, 2> > get_edges();
     void scale(float size);

@@ -6,12 +6,10 @@ enum
     ID_Hello = 1
 };
 
-Viewport::Viewport(vector<Mesh *> meshes)
+Viewport::Viewport(Controller * controller)
     : wxFrame(NULL, wxID_ANY, "TheoVision 3D")
 {
-    for (int i=0; i < meshes.size(); i++){
-        this->meshes.push_back(meshes[i]);
-    }
+    this->controller = controller;
 
     SetBackgroundColour(wxColour(* wxWHITE));
 
@@ -64,15 +62,15 @@ void Viewport::OnPaint(wxPaintEvent& event){
     wxPaintDC dc(this);
 
     // Mesh loop
-    for (int i = 0; i < this->meshes.size(); i++){
+    for (int i = 0; i < this->controller->getMeshes().size(); i++){
         // Draw vertices
-        vector<array<float, 3> > curr_verts = this->meshes[i]->get_verts();
+        vector<array<float, 3> > curr_verts = this->controller->getMeshes()[i]->get_verts();
         for (int j = 0; j < curr_verts.size(); j++){
             array<float, 2> screen_coords = this->projectPoint(curr_verts[j]);
             dc.DrawCircle((int)screen_coords[0], (int)screen_coords[1], 1);
         }
         // Draw edges
-        vector<array<int, 2> > curr_edges = this->meshes[i]->get_edges();
+        vector<array<int, 2> > curr_edges = this->controller->getMeshes()[i]->get_edges();
         for (int j=0; j < curr_edges.size(); j++){
             array<float, 2> v1_coords = this->projectPoint(curr_verts[curr_edges[j][0]]);
             array<float, 2> v2_coords = this->projectPoint(curr_verts[curr_edges[j][1]]);

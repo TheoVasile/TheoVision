@@ -1,5 +1,5 @@
 #include <wx/wx.h>
-#include "object.h"
+#include "controller.h"
 #include <iostream>
 #include <list>
 
@@ -8,10 +8,10 @@ using namespace std;
 class Viewport : public wxFrame
 {
 public:
-    Viewport(vector<Mesh *> meshes);
+    Viewport(Controller *controller);
  
 private:
-    vector<Mesh *> meshes;
+    Controller *controller;
     array<float, 3> normal;
     array<float, 3> vertical;
     float fov;

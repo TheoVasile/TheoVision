@@ -6,17 +6,9 @@ wxIMPLEMENT_APP(MyApp);
 bool MyApp::OnInit()
 {
     float pos[3] = {0.0, 0.0, 0.0};
-    Mesh *cube = new Mesh(pos);
-    cube->add_vert(1.0, 1.0, 1.0);
-    cube->add_vert(1.0, -1.0, 1.0);
-    cube->add_vert(-1.0, 1.0, 1.0);
-    cube->add_vert(-1.0, -1.0, 1.0);
-    cube->add_vert(1.0, 1.0, -1.0);
-    cube->add_vert(1.0, -1.0, -1.0);
-    cube->add_vert(-1.0, 1.0, -1.0);
-    cube->add_vert(-1.0, -1.0, -1.0);
-    meshes.push_back(cube);
-    Viewport *frame = new Viewport(meshes);
+    Controller *controller = new Controller();
+    controller->addCube(0, 0, 0);
+    Viewport *frame = new Viewport(controller);
     frame->Show(true);
     return true;
 }

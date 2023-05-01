@@ -1,11 +1,11 @@
 #include "object.h"
 
 
-Mesh::Mesh(float pos[3])
+Mesh::Mesh(float x, float y, float z)
 {
-    this->origin[0] = pos[0];
-    this->origin[1] = pos[1];
-    this->origin[2] = pos[2];
+    this->origin[0] = x;
+    this->origin[1] = y;
+    this->origin[2] = z;
 }
 
 void Mesh::scale(float size){
@@ -36,6 +36,11 @@ void Mesh::add_vert(array<float, 3> pos){
 void Mesh::add_vert(float x, float y, float z){
     array<float, 3> pos = {x, y, z};
     this->add_vert(pos);
+}
+
+void Mesh::add_edge(int vert1, int vert2){
+    array<int, 2> edge = {vert1, vert2};
+    this->edges.push_back(edge);
 }
 
 vector<array<float, 3> > Mesh::get_verts(){
