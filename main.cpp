@@ -7,7 +7,7 @@ bool MyApp::OnInit()
 {
     float pos[3] = {0.0, 0.0, 0.0};
     Controller *controller = new Controller();
-    controller->addCube(0, 0, 0);
+    controller->addUVSphere(0, 0, 10, 8, 16);
     Viewport *frame = new Viewport(controller);
     frame->Show(true);
     return true;

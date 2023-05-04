@@ -3,7 +3,9 @@
 
 enum
 {
-    ID_Hello = 1
+    ID_Hello = 1,
+    ID_GRAB = 2,
+    ID_GRABBY = 3
 };
 
 Viewport::Viewport(Controller * controller)
@@ -41,12 +43,17 @@ Viewport::Viewport(Controller * controller)
     wxMenuBar *menuBar = new wxMenuBar;
     menuBar->Append(menuFile, "&File");
     menuBar->Append(menuHelp, "&Help");
+
+    // Define grab behavior
+    menuFile ->AppendSeparator();
+    menuFile->Append(ID_GRAB, "&Grab...\tG");
  
     SetMenuBar( menuBar );
  
     CreateStatusBar();
     SetStatusText("Welcome to wxWidgets!");
  
+    Bind(wxEVT_KEY_DOWN, &Viewport::OnGrab, this, ID_GRAB);
     Bind(wxEVT_MENU, &Viewport::OnHello, this, ID_Hello);
     Bind(wxEVT_MENU, &Viewport::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &Viewport::OnExit, this, wxID_EXIT);
@@ -90,6 +97,43 @@ void Viewport::OnHello(wxCommandEvent& event)
     wxLogMessage("3D interactive display using wxWidgets");
 }
 
+void Viewport::OnChar(wxKeyEvent& event)
+{
+    wxPrintf("CHAR");
+    wxChar uc = event.GetUnicodeKey();
+    if ( uc != WXK_NONE )
+    {
+        wxPrintf("DONE DID");
+    }
+    else // No Unicode equivalent.
+    {
+        // It's a special key, deal with all the known ones:
+        switch ( event.GetKeyCode() )
+        {
+            case WXK_LEFT:
+            case WXK_RIGHT:
+                break;
+            case WXK_F1:
+                break;
+        }
+    }
+}
+
+void Viewport::OnGrab(wxKeyEvent& event)
+{
+    wxPrintf("GRAB");
+    wxLogStatus("Key Event");
+    cout << "GRAB";
+    if (event.GetKeyCode() == 'g')
+    {
+        this->controller->move(10, 1, 1);
+    }
+    else
+    {
+        event.Skip();
+    }
+}
+
 array<float, 2> Viewport::projectPoint(float x, float y, float z){
     array<float, 3> dir;
     dir[0] = x - this->pos[0];
@@ -109,7 +153,9 @@ array<float, 2> Viewport::projectPoint(float x, float y, float z){
     y_angle = y_angle * (float) sign(dot(y_component, this->vertical));
 
     wxSize screen_dim = this->GetSize();
-    return {x_angle / this->fov * 2 + screen_dim.GetWidth() / 2, y_angle / this->fov * 2 + screen_dim.GetHeight() / 2};
+    int scale_factor = min(screen_dim.GetHeight(), screen_dim.GetWidth());
+    //wxPrintf("%d\n", scale_factor);
+    return {x_angle / this->fov * 2 * scale_factor + screen_dim.GetWidth() / 2, y_angle / this->fov * 2 * scale_factor + screen_dim.GetHeight() / 2};
     //return {x / z * this->fov, y / z * this->fov};
 }
 
