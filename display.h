@@ -16,8 +16,12 @@ private:
     array<float, 3> normal;
     array<float, 3> vertical;
     float fov;
+    float prev_cursor_pos[2];
+    float mouse_motion[2];
+    char operation;
     array<float, 3> pos;
     void OnGrab(wxKeyEvent& event);
+    void OnMouseMotion(wxMouseEvent& event);
     void OnShow(wxShowEvent& event);
     void OnHello(wxCommandEvent& event);
     void OnPaint(wxPaintEvent& event);

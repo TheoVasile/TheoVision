@@ -48,6 +48,7 @@ Viewport::Viewport(Controller * controller)
     menuFile->Append(wxID_EXIT);
  
     panel->Bind(wxEVT_KEY_UP, &Viewport::OnGrab, this);
+    panel->Bind(wxEVT_MOTION, &Viewport::OnMouseMotion, this);
     Bind(wxEVT_MENU, &Viewport::OnHello, this, ID_Hello);
     Bind(wxEVT_MENU, &Viewport::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &Viewport::OnExit, this, wxID_EXIT);
@@ -91,11 +92,26 @@ void Viewport::OnHello(wxCommandEvent& event)
     wxLogMessage("3D interactive display using wxWidgets");
 }
 
+void Viewport::OnMouseMotion(wxMouseEvent& event)
+{
+    wxPrintf("MOUSE MOTION");
+    this->mouse_motion[0] = event.GetX() - this->prev_cursor_pos[0];
+    this->prev_cursor_pos[0] = event.GetX();
+    this->mouse_motion[1] = event.GetY() - this->prev_cursor_pos[1];
+    this->prev_cursor_pos[1] = event.GetY();
+
+    if (operation == 'g'){
+        this->controller->move(mouse_motion[0]/10, mouse_motion[1]/10, 0);
+        Refresh();
+    }
+}
+
 void Viewport::OnGrab(wxKeyEvent& event)
 {
     if (event.GetUnicodeKey() == 'G')
     {
-        this->controller->move(0, 0, 1);
+        //this->controller->move(0, 0, 1);
+        this->operation = 'g';
         Refresh();
     }
     else
