@@ -49,6 +49,7 @@ Viewport::Viewport(Controller * controller)
  
     panel->Bind(wxEVT_KEY_UP, &Viewport::OnGrab, this);
     panel->Bind(wxEVT_MOTION, &Viewport::OnMouseMotion, this);
+    panel->Bind(wxEVT_LEFT_DOWN, &Viewport::OnClick, this);
     Bind(wxEVT_MENU, &Viewport::OnHello, this, ID_Hello);
     Bind(wxEVT_MENU, &Viewport::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &Viewport::OnExit, this, wxID_EXIT);
@@ -104,6 +105,11 @@ void Viewport::OnMouseMotion(wxMouseEvent& event)
         this->controller->move(mouse_motion[0]/10, mouse_motion[1]/10, 0);
         Refresh();
     }
+}
+
+void Viewport::OnClick(wxMouseEvent& event)
+{
+    this->operation = '\0';
 }
 
 void Viewport::OnGrab(wxKeyEvent& event)

@@ -22,6 +22,7 @@ private:
     array<float, 3> pos;
     void OnGrab(wxKeyEvent& event);
     void OnMouseMotion(wxMouseEvent& event);
+    void OnClick(wxMouseEvent& event);
     void OnShow(wxShowEvent& event);
     void OnHello(wxCommandEvent& event);
     void OnPaint(wxPaintEvent& event);
