@@ -1,4 +1,5 @@
 #include "object.h"
+#include <wx/wx.h>
 
 
 Mesh::Mesh(float x, float y, float z)
@@ -24,10 +25,13 @@ void Mesh::move(float x, float y, float z){
     this->origin[1] += y;
     this->origin[2] += z;
     for (int i=0; i < this->vertices.size(); i++){
+        wxPrintf("%f\n", this->vertices[i][2]);
         this->vertices[i][0] += x;
         this->vertices[i][1] += y;
         this->vertices[i][2] += z;
+        wxPrintf("%f\n--\n", this->vertices[i][2]);
     }
+    wxPrintf("Loop ended\n");
 }
 
 void Mesh::add_vert(array<float, 3> pos){

@@ -93,12 +93,10 @@ void Viewport::OnHello(wxCommandEvent& event)
 
 void Viewport::OnGrab(wxKeyEvent& event)
 {
-    //event.Skip();
-    wxPrintf("GRAB");
-    wxLogDebug("Key Event");
-    if (event.GetKeyCode() == 'g')
+    if (event.GetUnicodeKey() == 'G')
     {
-        this->controller->move(10, 1, 1);
+        this->controller->move(0, 0, 1);
+        Refresh();
     }
     else
     {

@@ -7,7 +7,9 @@ Controller::Controller(){
 
 void Controller::move(float x, float y, float z){
     for (int i=0; i < this->getSelected().size(); i++){
+        wxPrintf("Moving %d", i);
         this->getSelected()[i]->move(x, y, z);
+        wxPrintf("Moved\n");
     }
 }
 
@@ -52,6 +54,7 @@ void Controller::addCube(float x, float y, float z){
     cube->move(x, y, z);
 
     this->objects.push_back(cube);
+    this->selected.push_back(this->objects.size()-1);
     this->meshes.push_back(this->objects.size()-1);
 }
 
