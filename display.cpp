@@ -3,17 +3,17 @@
 
 enum
 {
-    ID_Hello = 1,
-    ID_GRAB = 2,
-    ID_GRABBY = 3
+    ID_Hello = 1
 };
 
 Viewport::Viewport(Controller * controller)
-    : wxFrame(NULL, wxID_ANY, "TheoVision 3D")
+    : wxFrame(NULL, wxID_ANY, "TheoVision 3D", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE | wxWS_EX_PROCESS_UI_UPDATES)
 {
+    wxPanel * panel = new wxPanel(this);
     this->controller = controller;
 
     SetBackgroundColour(wxColour(* wxWHITE));
+    
 
     // Initialize default attributes
     this->normal = (array<float, 3>){0.0, 0.0, 1.0};
@@ -23,10 +23,21 @@ Viewport::Viewport(Controller * controller)
     this->pos[1] = 0;
     this->pos[2] = 0;
 
+    // Make sure the frame has focus and keyboard input is enabled
+    SetFocus();
+    Bind(wxEVT_SHOW, &Viewport::OnShow, this);
+    if (!HasFocus())
+    {
+        wxLogError("Failed to set focus on frame");
+    }
+    if ((GetWindowStyleFlag() & wxWS_EX_PROCESS_UI_UPDATES) != wxWS_EX_PROCESS_UI_UPDATES)
+    {
+        wxLogError("Keyboard input not enabled on frame");
+    }
+
     // Define graphics behavior
     this->Connect(wxEVT_PAINT, wxPaintEventHandler(Viewport::OnPaint));
     this->Centre();
-    
     // Define menu
     wxMenu *menuFile = new wxMenu;
     menuFile->Append(ID_Hello, "&Hello...\tCtrl-H",
@@ -36,24 +47,7 @@ Viewport::Viewport(Controller * controller)
     menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT);
  
-    // Define help menu
-    wxMenu *menuHelp = new wxMenu;
-    menuHelp->Append(wxID_ABOUT);
- 
-    wxMenuBar *menuBar = new wxMenuBar;
-    menuBar->Append(menuFile, "&File");
-    menuBar->Append(menuHelp, "&Help");
-
-    // Define grab behavior
-    menuFile ->AppendSeparator();
-    menuFile->Append(ID_GRAB, "&Grab...\tG");
- 
-    SetMenuBar( menuBar );
- 
-    CreateStatusBar();
-    SetStatusText("Welcome to wxWidgets!");
- 
-    Bind(wxEVT_KEY_DOWN, &Viewport::OnGrab, this, ID_GRAB);
+    panel->Bind(wxEVT_KEY_UP, &Viewport::OnGrab, this);
     Bind(wxEVT_MENU, &Viewport::OnHello, this, ID_Hello);
     Bind(wxEVT_MENU, &Viewport::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &Viewport::OnExit, this, wxID_EXIT);
@@ -97,33 +91,11 @@ void Viewport::OnHello(wxCommandEvent& event)
     wxLogMessage("3D interactive display using wxWidgets");
 }
 
-void Viewport::OnChar(wxKeyEvent& event)
-{
-    wxPrintf("CHAR");
-    wxChar uc = event.GetUnicodeKey();
-    if ( uc != WXK_NONE )
-    {
-        wxPrintf("DONE DID");
-    }
-    else // No Unicode equivalent.
-    {
-        // It's a special key, deal with all the known ones:
-        switch ( event.GetKeyCode() )
-        {
-            case WXK_LEFT:
-            case WXK_RIGHT:
-                break;
-            case WXK_F1:
-                break;
-        }
-    }
-}
-
 void Viewport::OnGrab(wxKeyEvent& event)
 {
+    //event.Skip();
     wxPrintf("GRAB");
-    wxLogStatus("Key Event");
-    cout << "GRAB";
+    wxLogDebug("Key Event");
     if (event.GetKeyCode() == 'g')
     {
         this->controller->move(10, 1, 1);
@@ -132,6 +104,15 @@ void Viewport::OnGrab(wxKeyEvent& event)
     {
         event.Skip();
     }
+}
+
+void Viewport::OnShow(wxShowEvent& event)
+{
+    // Call SetFocus to ensure the window has keyboard focus
+    SetFocus();
+
+    // Unbind the OnShow handler since we only need to call SetFocus once
+    Unbind(wxEVT_SHOW, &Viewport::OnShow, this);
 }
 
 array<float, 2> Viewport::projectPoint(float x, float y, float z){

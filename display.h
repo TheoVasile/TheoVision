@@ -11,13 +11,14 @@ public:
     Viewport(Controller *controller);
  
 private:
+    wxPanel * panel;
     Controller *controller;
     array<float, 3> normal;
     array<float, 3> vertical;
     float fov;
     array<float, 3> pos;
     void OnGrab(wxKeyEvent& event);
-    void OnChar(wxKeyEvent& event);
+    void OnShow(wxShowEvent& event);
     void OnHello(wxCommandEvent& event);
     void OnPaint(wxPaintEvent& event);
     void OnExit(wxCommandEvent& event);

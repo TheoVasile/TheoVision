@@ -1,7 +1,7 @@
 #include "object.h"
 #include <math.h>
 
-#define PI 3.1415
+#define PI 3.141592653589793
 
 class Controller{
     public:

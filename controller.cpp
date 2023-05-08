@@ -57,13 +57,12 @@ void Controller::addCube(float x, float y, float z){
 
 void Controller::addUVSphere(float x, float y, float z, float rings, float segments){
     Mesh *uvsphere = new Mesh(0, 0, 0);
-    for (int i=0; i < segments; i++){
-        float curr_height = 2 / rings * i - 1;
-        curr_height = sin((i/rings - 0.5) * PI);
-        for (int j=0; j < rings; j++){
-            float curr_y = pow(1 - pow(curr_height, 2), 0.5) * sin(j / segments * 2 * PI);
-            float curr_x = pow(1 - pow(curr_height, 2), 0.5) * cos(j / segments * 2 * PI);
-            wxPrintf("%f, %f, %f\n", curr_x, curr_y, curr_height);
+    for (int i=0; i < rings+1; i++){
+        float curr_height = sinf((((float)i)/rings - 0.5) * PI);
+        for (int j=0; j < segments; j++){
+            float curr_y = pow(1 - pow(curr_height, 2), 0.5) * sinf(((float)j) / segments * 2.0 * PI);
+            float curr_x = pow(1 - pow(curr_height, 2), 0.5) * cosf(((float)j) / segments * 2.0 * PI);
+            //wxPrintf("%f, %f, %f\n", curr_x, curr_y, curr_height);
             uvsphere->add_vert(curr_x, curr_y, curr_height);
         }
     }
