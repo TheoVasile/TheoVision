@@ -144,13 +144,13 @@ array<float, 2> Viewport::projectPoint(float x, float y, float z){
     array<float, 3> x_component = project_onto_plane(dir, this->vertical);
     x_component = normalize(x_component);
 
-    array<float, 3> y_component = project_onto_plane(dir, this->normal);
+    array<float, 3> y_component = project_onto_plane(dir, cross(this->vertical, this->normal));
     y_component = normalize(y_component);
 
-    float x_angle = acos(dot(x_component, this->normal)) * 180 / PI;
+    float x_angle = acos(dot(x_component, this->normal)) * 180.0 / PI;
     x_angle = x_angle * (float) sign(dot(x_component, cross(this->vertical, this->normal)));
 
-    float y_angle = acos(dot(x_component, this->normal)) * 180 / PI;
+    float y_angle = acos(dot(y_component, this->normal)) * 180.0 / PI;
     y_angle = y_angle * (float) sign(dot(y_component, this->vertical));
 
     wxSize screen_dim = this->GetSize();
