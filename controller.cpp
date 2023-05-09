@@ -2,7 +2,7 @@
 #include <wx/wx.h>
 
 Controller::Controller(){
-
+    this->operation=0;
 }
 
 void Controller::move(float x, float y, float z){
@@ -11,6 +11,18 @@ void Controller::move(float x, float y, float z){
         this->getSelected()[i]->move(x, y, z);
         wxPrintf("Moved\n");
     }
+}
+
+void Controller::operate(){
+    switch(this->operation){
+        case ID_GRAB:
+            this->move(this->cursor_movement[0]/10, this->cursor_movement[1]/10, 0);
+            break;
+    }
+}
+
+void Controller::setOperation(int operation){
+    this->operation=operation;
 }
 
 vector<Mesh *> Controller::getSelected(){
@@ -73,5 +85,6 @@ void Controller::addUVSphere(float x, float y, float z, float rings, float segme
     //uvsphere->scale(1);
     uvsphere->move(x, y, z);
     this->objects.push_back(uvsphere);
+    this->selected.push_back(this->objects.size()-1);
     this->meshes.push_back(this->objects.size()-1);
 }

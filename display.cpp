@@ -95,21 +95,17 @@ void Viewport::OnHello(wxCommandEvent& event)
 
 void Viewport::OnMouseMotion(wxMouseEvent& event)
 {
-    wxPrintf("MOUSE MOTION");
-    this->mouse_motion[0] = event.GetX() - this->prev_cursor_pos[0];
+    this->controller->cursor_movement[0] = event.GetX() - this->prev_cursor_pos[0];
     this->prev_cursor_pos[0] = event.GetX();
-    this->mouse_motion[1] = event.GetY() - this->prev_cursor_pos[1];
+    this->controller->cursor_movement[1] = event.GetY() - this->prev_cursor_pos[1];
     this->prev_cursor_pos[1] = event.GetY();
-
-    if (operation == 'g'){
-        this->controller->move(mouse_motion[0]/10, mouse_motion[1]/10, 0);
-        Refresh();
-    }
+    this->controller->operate();
+    Refresh();
 }
 
 void Viewport::OnClick(wxMouseEvent& event)
 {
-    this->operation = '\0';
+    this->controller->setOperation(0);
 }
 
 void Viewport::OnGrab(wxKeyEvent& event)
@@ -117,7 +113,7 @@ void Viewport::OnGrab(wxKeyEvent& event)
     if (event.GetUnicodeKey() == 'G')
     {
         //this->controller->move(0, 0, 1);
-        this->operation = 'g';
+        this->controller->setOperation(ID_GRAB);
         Refresh();
     }
     else
