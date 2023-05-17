@@ -1,4 +1,5 @@
 #include "object.h"
+#include "camera.h"
 #include <math.h>
 
 #define PI 3.141592653589793
@@ -11,6 +12,7 @@ class Controller{
         float cursor_movement[2];
         void move(float x, float y, float z);
         void rotate(float xrot, float yrot, float zrot);
+        Camera *getActiveCamera();
         vector<Mesh *> getSelected();
         vector<Mesh *> getMeshes();
         void operate();
@@ -19,6 +21,7 @@ class Controller{
         void addUVSphere(float x, float y, float z, float rings, float segments);
     private:
         int operation;
+        Camera *activeCamera;
         vector<int> selected;
         vector<Mesh *> objects;
         vector<int> meshes;

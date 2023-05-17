@@ -3,6 +3,11 @@
 
 Controller::Controller(){
     this->operation=0;
+    this->activeCamera = new Camera(0, 0, 0);
+}
+
+Camera *Controller::getActiveCamera(){
+    return this->activeCamera;
 }
 
 void Controller::move(float x, float y, float z){

@@ -21,10 +21,6 @@ Viewport::Viewport(Controller * controller)
     // Make sure the frame has focus and keyboard input is enabled
     SetFocus();
     Bind(wxEVT_SHOW, &Viewport::OnShow, this);
-    if (!HasFocus())
-    {
-        wxLogError("Failed to set focus on frame");
-    }
     if ((GetWindowStyleFlag() & wxWS_EX_PROCESS_UI_UPDATES) != wxWS_EX_PROCESS_UI_UPDATES)
     {
         wxLogError("Keyboard input not enabled on frame");
@@ -58,25 +54,27 @@ void Viewport::OnPaint(wxPaintEvent& event){
 
     // Mesh loop
     for (int i = 0; i < this->controller->getMeshes().size(); i++){
+        Camera *cam = this->controller->getActiveCamera();
         // Draw vertices
         vector<array<float, 3> > curr_verts = this->controller->getMeshes()[i]->get_verts();
         for (int j = 0; j < curr_verts.size(); j++){
-            array<float, 2> screen_coords = this->projectPoint(curr_verts[j]);
+            array<float, 2> screen_coords = cam->projectPoint(curr_verts[j], this->GetSize());
+            wxPrintf("SCR-> %f %f\n", screen_coords[0], screen_coords[1]);
             dc.DrawCircle((int)screen_coords[0], (int)screen_coords[1], 1);
         }
 
         // Draw edges
         vector<array<int, 2> > curr_edges = this->controller->getMeshes()[i]->get_edges();
         for (int j=0; j < curr_edges.size(); j++){
-            array<float, 2> v1_coords = this->projectPoint(curr_verts[curr_edges[j][0]]);
-            array<float, 2> v2_coords = this->projectPoint(curr_verts[curr_edges[j][1]]);
+            array<float, 2> v1_coords = cam->projectPoint(curr_verts[curr_edges[j][0]], this->GetSize());
+            array<float, 2> v2_coords = cam->projectPoint(curr_verts[curr_edges[j][1]], this->GetSize());
             dc.DrawLine((int)v1_coords[0], (int)v1_coords[1],(int)v2_coords[0], (int)v2_coords[1]);
         }
 
         wxColor col(255, 0, 0);
         dc.SetPen( wxPen(col) );
         dc.SetBrush( wxBrush(col) );
-        array<float, 2> originPos = this->projectPoint(this->controller->getMeshes()[i]->get_origin());
+        array<float, 2> originPos = cam->projectPoint(this->controller->getMeshes()[i]->get_origin(), this->GetSize());
         dc.DrawCircle((int)originPos[0], (int)originPos[1], 1);
     }
 }
@@ -129,6 +127,7 @@ void Viewport::OnShow(wxShowEvent& event)
     // Unbind the OnShow handler since we only need to call SetFocus once
     Unbind(wxEVT_SHOW, &Viewport::OnShow, this);
 }
+
 
 array<float, 2> Viewport::projectPoint(float x, float y, float z){
     array<float, 3> dir;
