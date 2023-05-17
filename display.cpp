@@ -72,6 +72,12 @@ void Viewport::OnPaint(wxPaintEvent& event){
             array<float, 2> screen_coords = this->projectPoint(curr_verts[j]);
             dc.DrawCircle((int)screen_coords[0], (int)screen_coords[1], 1);
         }
+        wxColor col(255, 0, 0);
+        dc.SetPen( wxPen(col) );
+        dc.SetBrush( wxBrush(col) );
+        array<float, 2> originPos = this->projectPoint(this->controller->getMeshes()[i]->get_origin());
+        dc.DrawCircle((int)originPos[0], (int)originPos[1], 1);
+
         // Draw edges
         vector<array<int, 2> > curr_edges = this->controller->getMeshes()[i]->get_edges();
         for (int j=0; j < curr_edges.size(); j++){
