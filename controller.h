@@ -6,6 +6,8 @@
 #define ID_GRAB 1
 #define ID_ROTATE 2
 #define ID_SCALE 3
+#define ID_ZOOM_IN 4
+#define ID_ZOOM_OUT 5
 
 class Controller{
     public:

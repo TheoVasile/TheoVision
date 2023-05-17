@@ -36,7 +36,8 @@ Viewport::Viewport(Controller * controller)
     menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT);
  
-    panel->Bind(wxEVT_KEY_UP, &Viewport::OnKeyPress, this);
+    panel->Bind(wxEVT_KEY_DOWN, &Viewport::OnKeyPress, this);
+    panel->Bind(wxEVT_KEY_UP, &Viewport::OnKeyUp, this);
     panel->Bind(wxEVT_MOTION, &Viewport::OnMouseMotion, this);
     panel->Bind(wxEVT_LEFT_DOWN, &Viewport::OnClick, this);
     Bind(wxEVT_MENU, &Viewport::OnAbout, this, wxID_ABOUT);
@@ -115,6 +116,19 @@ void Viewport::OnKeyPress(wxKeyEvent& event)
             break;
         case 'S':
             this->controller->setOperation(ID_SCALE);
+            break;
+        case 'W':
+            this->controller->setOperation(ID_ZOOM_IN);
+            break;
+    }
+    Refresh();
+    event.Skip();
+}
+
+void Viewport::OnKeyUp(wxKeyEvent& event){
+    switch(event.GetUnicodeKey()){
+        case 'W':
+            this->controller->setOperation(0);
             break;
     }
     Refresh();

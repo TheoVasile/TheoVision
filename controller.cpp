@@ -43,6 +43,9 @@ void Controller::operate(){
         case ID_SCALE:
             this->scale(this->cursor_movement[0]/10+1);
             break;
+        case ID_ZOOM_IN:
+            this->activeCamera->zoom();
+            break;
     }
 }
 
@@ -102,12 +105,22 @@ void Controller::addUVSphere(float x, float y, float z, float rings, float segme
         for (int j=0; j < segments; j++){
             float curr_y = pow(1 - pow(curr_height, 2), 0.5) * sinf(((float)j) / segments * 2.0 * PI);
             float curr_x = pow(1 - pow(curr_height, 2), 0.5) * cosf(((float)j) / segments * 2.0 * PI);
-            //wxPrintf("%f, %f, %f\n", curr_x, curr_y, curr_height);
             uvsphere->add_vert(curr_x, curr_y, curr_height);
+
+            // connect vertices on the same ring
+            if (uvsphere->get_verts().size() > 1){
+                if (j == 0){
+                    uvsphere->add_edge((i-1) * segments, i * segments - 1);
+                } else{
+                    uvsphere->add_edge(i * segments + j - 1, i * segments + j);
+                }
+            }
+            if (i > 0){
+                uvsphere->add_edge(i * segments + j, (i-1) * segments + j);
+            }
         }
     }
 
-    //uvsphere->scale(1);
     uvsphere->move(x, y, z);
     this->objects.push_back(uvsphere);
     this->selected.push_back(this->objects.size()-1);

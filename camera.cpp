@@ -7,6 +7,16 @@ Camera::Camera(float x, float y, float z){
     this->fov = 30.6;
 }
 
+void Camera::move(array<float, 3> translation){
+    this->pos[0] += translation[0];
+    this->pos[1] += translation[1];
+    this->pos[2] += translation[2];
+}
+
+void Camera::zoom(){
+    this->move(this->normal);
+}
+
 array<float, 2> Camera::projectPoint(array<float, 3> pos, wxSize screenDim){
     return this->projectPoint(pos[0], pos[1], pos[2], screenDim);
 }
@@ -34,6 +44,10 @@ array<float, 2> Camera::projectPoint(float x, float y, float z, wxSize screenDim
     screenCoord[0] = x_angle / this->fov * 2 * scale_factor + screenDim.GetWidth() / 2;
     screenCoord[1] = y_angle / this->fov * 2 * scale_factor + screenDim.GetHeight() / 2;
     return screenCoord;
+}
+
+array<float, 3> Camera::getNormal(){
+    return this->normal;
 }
 
 void Camera::setFov(float fov){

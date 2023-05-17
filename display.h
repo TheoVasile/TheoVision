@@ -20,6 +20,7 @@ private:
     float mouse_motion[2];
     char operation;
     array<float, 3> pos;
+    void OnKeyUp(wxKeyEvent& event);
     void OnKeyPress(wxKeyEvent& event);
     void OnMouseMotion(wxMouseEvent& event);
     void OnClick(wxMouseEvent& event);
