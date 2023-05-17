@@ -1,10 +1,6 @@
 #include "display.h"
 #include "operations.h"
 
-enum
-{
-    ID_Hello = 1
-};
 
 Viewport::Viewport(Controller * controller)
     : wxFrame(NULL, wxID_ANY, "TheoVision 3D", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE | wxWS_EX_PROCESS_UI_UPDATES)
@@ -13,7 +9,6 @@ Viewport::Viewport(Controller * controller)
     this->controller = controller;
 
     SetBackgroundColour(wxColour(* wxWHITE));
-    
 
     // Initialize default attributes
     this->normal = (array<float, 3>){0.0, 0.0, 1.0};
@@ -38,11 +33,9 @@ Viewport::Viewport(Controller * controller)
     // Define graphics behavior
     this->Connect(wxEVT_PAINT, wxPaintEventHandler(Viewport::OnPaint));
     this->Centre();
+
     // Define menu
     wxMenu *menuFile = new wxMenu;
-    menuFile->Append(ID_Hello, "&Hello...\tCtrl-H",
-                     "Help string shown in status bar for this menu item");
-    
     // Define exit
     menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT);
@@ -50,7 +43,6 @@ Viewport::Viewport(Controller * controller)
     panel->Bind(wxEVT_KEY_UP, &Viewport::OnKeyPress, this);
     panel->Bind(wxEVT_MOTION, &Viewport::OnMouseMotion, this);
     panel->Bind(wxEVT_LEFT_DOWN, &Viewport::OnClick, this);
-    Bind(wxEVT_MENU, &Viewport::OnHello, this, ID_Hello);
     Bind(wxEVT_MENU, &Viewport::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &Viewport::OnExit, this, wxID_EXIT);
 }
@@ -158,9 +150,7 @@ array<float, 2> Viewport::projectPoint(float x, float y, float z){
 
     wxSize screen_dim = this->GetSize();
     int scale_factor = min(screen_dim.GetHeight(), screen_dim.GetWidth());
-    //wxPrintf("%d\n", scale_factor);
     return {x_angle / this->fov * 2 * scale_factor + screen_dim.GetWidth() / 2, y_angle / this->fov * 2 * scale_factor + screen_dim.GetHeight() / 2};
-    //return {x / z * this->fov, y / z * this->fov};
 }
 
 array<float, 2> Viewport::projectPoint(array<float, 3> pos){

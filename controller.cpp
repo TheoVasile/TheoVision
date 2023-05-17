@@ -50,7 +50,7 @@ vector<Mesh *> Controller::getMeshes(){
 }
 
 void Controller::addCube(float x, float y, float z){
-    Mesh *cube = new Mesh(x, y, z);
+    Mesh *cube = new Mesh(0, 0, 0);
     cube->add_vert(1.0, 1.0, 1.0);
     cube->add_vert(1.0, -1.0, 1.0);
     cube->add_vert(-1.0, 1.0, 1.0);
