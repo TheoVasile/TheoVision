@@ -7,9 +7,15 @@ Controller::Controller(){
 
 void Controller::move(float x, float y, float z){
     for (int i=0; i < this->getSelected().size(); i++){
-        wxPrintf("Moving %d", i);
+        //wxPrintf("Moving %d", i);
         this->getSelected()[i]->move(x, y, z);
-        wxPrintf("Moved\n");
+        //wxPrintf("Moved\n");
+    }
+}
+
+void Controller::rotate(float xrot, float yrot, float zrot){
+    for (int i=0; i < this->getSelected().size(); i++){
+        this->getSelected()[i]->rotate(xrot, yrot, zrot);
     }
 }
 
@@ -18,6 +24,8 @@ void Controller::operate(){
         case ID_GRAB:
             this->move(this->cursor_movement[0]/10, this->cursor_movement[1]/10, 0);
             break;
+        case ID_ROTATE:
+            this->rotate(this->cursor_movement[0]/10 * PI / 180, this->cursor_movement[1]/10 * PI / 180, 0);
     }
 }
 

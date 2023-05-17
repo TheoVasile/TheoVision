@@ -1,5 +1,6 @@
 #include "object.h"
 #include <wx/wx.h>
+//#include <blaze/Math.h>
 
 
 Mesh::Mesh(float x, float y, float z)
@@ -25,13 +26,27 @@ void Mesh::move(float x, float y, float z){
     this->origin[1] += y;
     this->origin[2] += z;
     for (int i=0; i < this->vertices.size(); i++){
-        wxPrintf("%f\n", this->vertices[i][2]);
+        //wxPrintf("%f\n", this->vertices[i][2]);
         this->vertices[i][0] += x;
         this->vertices[i][1] += y;
         this->vertices[i][2] += z;
-        wxPrintf("%f\n--\n", this->vertices[i][2]);
+        //wxPrintf("%f\n--\n", this->vertices[i][2]);
     }
-    wxPrintf("Loop ended\n");
+    //wxPrintf("Loop ended\n");
+}
+
+void Mesh::rotate(array<float, 3> rot){
+    array<float, 3> currOrigin = this->origin;
+    this->move(-this->origin[0], -this->origin[1], -this->origin[2]);
+    for (int i=0; i < this->vertices.size(); i++){
+        this->vertices[i] = Rotate(this->vertices[i], rot);
+    }
+    this->move(currOrigin[0], currOrigin[1], currOrigin[2]);
+}
+
+void Mesh::rotate(float xrot, float yrot, float zrot){
+    array<float, 3> rot = {xrot, yrot, zrot};
+    this->rotate(rot);
 }
 
 void Mesh::add_vert(array<float, 3> pos){

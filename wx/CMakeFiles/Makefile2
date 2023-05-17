@@ -589,10 +589,10 @@ libs/net/CMakeFiles/wxnet.dir/clean:
 # Target rules for target libs/core/CMakeFiles/wxcore.dir
 
 # All Build rule for target.
-libs/core/CMakeFiles/wxcore.dir/all: libs/base/CMakeFiles/wxbase.dir/all
 libs/core/CMakeFiles/wxcore.dir/all: libs/CMakeFiles/wxjpeg.dir/all
 libs/core/CMakeFiles/wxcore.dir/all: libs/CMakeFiles/wxpng.dir/all
 libs/core/CMakeFiles/wxcore.dir/all: libs/CMakeFiles/wxtiff.dir/all
+libs/core/CMakeFiles/wxcore.dir/all: libs/base/CMakeFiles/wxbase.dir/all
 	$(MAKE) $(MAKESILENT) -f libs/core/CMakeFiles/wxcore.dir/build.make libs/core/CMakeFiles/wxcore.dir/depend
 	$(MAKE) $(MAKESILENT) -f libs/core/CMakeFiles/wxcore.dir/build.make libs/core/CMakeFiles/wxcore.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/Users/theovasile/Desktop/wx 3d/wx/CMakeFiles" --progress-num=15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51 "Built target wxcore"

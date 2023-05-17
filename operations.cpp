@@ -50,3 +50,17 @@ array<float, 3> project_onto_plane(array<float, 3> dir, array<float, 3> normal){
 
     return new_dir;
 }
+
+array<float, 3> Rotate(array<float, 3> pos, array<float, 3> rot){
+    /*
+    Return the new 3D coordinate of the provided point around the origin
+
+    precondition: given angles of rotation must be in radians
+    */
+    array<float, 3> newPos;
+    newPos[0] = pos[0] * cosf(rot[1]) * cosf(rot[0]) + pos[1] * cosf(rot[1]) * sinf(rot[0]) - pos[2] * sinf(rot[1]);
+    newPos[1] = pos[0] * (sinf(rot[2]) * sinf(rot[1]) * cosf(rot[0]) - cosf(rot[2]) * sinf(rot[0])) + pos[1] * (sinf(rot[2]) * sinf(rot[1]) * sinf(rot[0]) + cosf(rot[2]) * cosf(rot[0])) + pos[2] * sinf(rot[2]) * cosf(rot[1]);
+    newPos[2] = pos[0] * (cosf(rot[2]) * sinf(rot[1]) * cosf(rot[0]) + sinf(rot[2]) * sinf(rot[0])) + pos[1] * (cosf(rot[2]) * sinf(rot[1]) * sinf(rot[0]) - sinf(rot[2]) * cosf(rot[0])) + pos[2] * cos(rot[2]) * cos(rot[1]);
+
+    return newPos;
+}

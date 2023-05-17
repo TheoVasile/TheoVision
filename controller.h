@@ -3,12 +3,14 @@
 
 #define PI 3.141592653589793
 #define ID_GRAB 1
+#define ID_ROTATE 2
 
 class Controller{
     public:
         Controller();
         float cursor_movement[2];
         void move(float x, float y, float z);
+        void rotate(float xrot, float yrot, float zrot);
         vector<Mesh *> getSelected();
         vector<Mesh *> getMeshes();
         void operate();

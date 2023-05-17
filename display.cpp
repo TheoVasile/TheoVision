@@ -47,7 +47,7 @@ Viewport::Viewport(Controller * controller)
     menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT);
  
-    panel->Bind(wxEVT_KEY_UP, &Viewport::OnGrab, this);
+    panel->Bind(wxEVT_KEY_UP, &Viewport::OnKeyPress, this);
     panel->Bind(wxEVT_MOTION, &Viewport::OnMouseMotion, this);
     panel->Bind(wxEVT_LEFT_DOWN, &Viewport::OnClick, this);
     Bind(wxEVT_MENU, &Viewport::OnHello, this, ID_Hello);
@@ -108,18 +108,18 @@ void Viewport::OnClick(wxMouseEvent& event)
     this->controller->setOperation(0);
 }
 
-void Viewport::OnGrab(wxKeyEvent& event)
+void Viewport::OnKeyPress(wxKeyEvent& event)
 {
-    if (event.GetUnicodeKey() == 'G')
-    {
-        //this->controller->move(0, 0, 1);
-        this->controller->setOperation(ID_GRAB);
-        Refresh();
+    switch(event.GetUnicodeKey()){
+        case 'G':
+            this->controller->setOperation(ID_GRAB);
+            break;
+        case 'R':
+            this->controller->setOperation(ID_ROTATE);
+            break;
     }
-    else
-    {
-        event.Skip();
-    }
+    Refresh();
+    event.Skip();
 }
 
 void Viewport::OnShow(wxShowEvent& event)

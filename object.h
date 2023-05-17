@@ -1,3 +1,4 @@
+#include "operations.h"
 #include <iostream>
 #include <vector>
 #include <array>
@@ -15,9 +16,11 @@ public:
     vector<array<int, 2> > get_edges();
     void scale(float size);
     void move(float x, float y, float z);
+    void rotate(array<float, 3> rot);
+    void rotate(float xrot, float yrot, float zrot);
 
 private:
-    float origin[3];
+    array<float, 3> origin;
     vector<array<float, 3> > vertices;
     vector<array<int, 2> > edges;
     vector<vector<int> > faces;
