@@ -5,6 +5,7 @@
 #define PI 3.141592653589793
 #define ID_GRAB 1
 #define ID_ROTATE 2
+#define ID_SCALE 3
 
 class Controller{
     public:
@@ -12,6 +13,8 @@ class Controller{
         float cursor_movement[2];
         void move(float x, float y, float z);
         void rotate(float xrot, float yrot, float zrot);
+        void scale(float size);
+        void scale(float x, float y, float z);
         Camera *getActiveCamera();
         vector<Mesh *> getSelected();
         vector<Mesh *> getMeshes();

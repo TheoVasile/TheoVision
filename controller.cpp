@@ -12,9 +12,7 @@ Camera *Controller::getActiveCamera(){
 
 void Controller::move(float x, float y, float z){
     for (int i=0; i < this->getSelected().size(); i++){
-        //wxPrintf("Moving %d", i);
         this->getSelected()[i]->move(x, y, z);
-        //wxPrintf("Moved\n");
     }
 }
 
@@ -24,6 +22,16 @@ void Controller::rotate(float xrot, float yrot, float zrot){
     }
 }
 
+void Controller::scale(float x, float y, float z){
+    for (int i=0; i<this->getSelected().size(); i++){
+        this->getSelected()[i]->scale(x, y, z);
+    }
+}
+
+void Controller::scale(float size){
+    this->scale(size, size, size);
+}
+
 void Controller::operate(){
     switch(this->operation){
         case ID_GRAB:
@@ -31,6 +39,10 @@ void Controller::operate(){
             break;
         case ID_ROTATE:
             this->rotate(this->cursor_movement[0]/10 * PI / 180, this->cursor_movement[1]/10 * PI / 180, 0);
+            break;
+        case ID_SCALE:
+            this->scale(this->cursor_movement[0]/10+1);
+            break;
     }
 }
 

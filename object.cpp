@@ -10,13 +10,17 @@ Mesh::Mesh(float x, float y, float z)
     this->origin[2] = z;
 }
 
-void Mesh::scale(float size){
+void Mesh::scale(float x, float y, float z){
     // Scale the vertices around the origin of the mesh
     for (int i=0; i < this->vertices.size(); i++){
-        this->vertices[i][0] = (this->vertices[i][0] - this->origin[0]) * size + this->origin[0];
-        this->vertices[i][1] = (this->vertices[i][1] - this->origin[1]) * size + this->origin[1];
-        this->vertices[i][2] = (this->vertices[i][2] - this->origin[2]) * size + this->origin[2];
+        this->vertices[i][0] = (this->vertices[i][0] - this->origin[0]) * x + this->origin[0];
+        this->vertices[i][1] = (this->vertices[i][1] - this->origin[1]) * y + this->origin[1];
+        this->vertices[i][2] = (this->vertices[i][2] - this->origin[2]) * z + this->origin[2];
     }
+}
+
+void Mesh::scale(float size){
+    this->scale(size, size, size);
 }
 
 void Mesh::move(float x, float y, float z){

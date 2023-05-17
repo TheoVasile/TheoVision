@@ -15,6 +15,7 @@ public:
     array<float, 3> get_origin();
     vector<array<float, 3> > get_verts();
     vector<array<int, 2> > get_edges();
+    void scale(float x, float y, float z);
     void scale(float size);
     void move(float x, float y, float z);
     void rotate(array<float, 3> rot);

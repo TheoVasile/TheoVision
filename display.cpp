@@ -59,7 +59,6 @@ void Viewport::OnPaint(wxPaintEvent& event){
         vector<array<float, 3> > curr_verts = this->controller->getMeshes()[i]->get_verts();
         for (int j = 0; j < curr_verts.size(); j++){
             array<float, 2> screen_coords = cam->projectPoint(curr_verts[j], this->GetSize());
-            wxPrintf("SCR-> %f %f\n", screen_coords[0], screen_coords[1]);
             dc.DrawCircle((int)screen_coords[0], (int)screen_coords[1], 1);
         }
 
@@ -113,6 +112,9 @@ void Viewport::OnKeyPress(wxKeyEvent& event)
             break;
         case 'R':
             this->controller->setOperation(ID_ROTATE);
+            break;
+        case 'S':
+            this->controller->setOperation(ID_SCALE);
             break;
     }
     Refresh();
