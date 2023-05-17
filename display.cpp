@@ -72,11 +72,6 @@ void Viewport::OnPaint(wxPaintEvent& event){
             array<float, 2> screen_coords = this->projectPoint(curr_verts[j]);
             dc.DrawCircle((int)screen_coords[0], (int)screen_coords[1], 1);
         }
-        wxColor col(255, 0, 0);
-        dc.SetPen( wxPen(col) );
-        dc.SetBrush( wxBrush(col) );
-        array<float, 2> originPos = this->projectPoint(this->controller->getMeshes()[i]->get_origin());
-        dc.DrawCircle((int)originPos[0], (int)originPos[1], 1);
 
         // Draw edges
         vector<array<int, 2> > curr_edges = this->controller->getMeshes()[i]->get_edges();
@@ -85,6 +80,12 @@ void Viewport::OnPaint(wxPaintEvent& event){
             array<float, 2> v2_coords = this->projectPoint(curr_verts[curr_edges[j][1]]);
             dc.DrawLine((int)v1_coords[0], (int)v1_coords[1],(int)v2_coords[0], (int)v2_coords[1]);
         }
+
+        wxColor col(255, 0, 0);
+        dc.SetPen( wxPen(col) );
+        dc.SetBrush( wxBrush(col) );
+        array<float, 2> originPos = this->projectPoint(this->controller->getMeshes()[i]->get_origin());
+        dc.DrawCircle((int)originPos[0], (int)originPos[1], 1);
     }
 }
 
