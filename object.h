@@ -9,12 +9,13 @@ class Mesh{
 
 public:
     Mesh(float x, float y, float z);
-    void add_vert(array<float, 3> pos);
-    void add_vert(float x, float y, float z);
-    void add_edge(int vert1, int vert2);
-    array<float, 3> get_origin();
-    vector<array<float, 3> > get_verts();
-    vector<array<int, 2> > get_edges();
+    void addVert(array<float, 3> pos);
+    void addVert(float x, float y, float z);
+    void addEdge(int vert1, int vert2);
+    void addFace(vector<int> verts);
+    array<float, 3> getOrigin();
+    vector<array<float, 3> > getVerts();
+    vector<array<int, 2> > getEdges();
     void scale(float x, float y, float z);
     void scale(float size);
     void move(float x, float y, float z);

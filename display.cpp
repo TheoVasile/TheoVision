@@ -57,14 +57,14 @@ void Viewport::OnPaint(wxPaintEvent& event){
     for (int i = 0; i < this->controller->getMeshes().size(); i++){
         Camera *cam = this->controller->getActiveCamera();
         // Draw vertices
-        vector<array<float, 3> > curr_verts = this->controller->getMeshes()[i]->get_verts();
+        vector<array<float, 3> > curr_verts = this->controller->getMeshes()[i]->getVerts();
         for (int j = 0; j < curr_verts.size(); j++){
             array<float, 2> screen_coords = cam->projectPoint(curr_verts[j], this->GetSize());
             dc.DrawCircle((int)screen_coords[0], (int)screen_coords[1], 1);
         }
 
         // Draw edges
-        vector<array<int, 2> > curr_edges = this->controller->getMeshes()[i]->get_edges();
+        vector<array<int, 2> > curr_edges = this->controller->getMeshes()[i]->getEdges();
         for (int j=0; j < curr_edges.size(); j++){
             array<float, 2> v1_coords = cam->projectPoint(curr_verts[curr_edges[j][0]], this->GetSize());
             array<float, 2> v2_coords = cam->projectPoint(curr_verts[curr_edges[j][1]], this->GetSize());
@@ -74,7 +74,7 @@ void Viewport::OnPaint(wxPaintEvent& event){
         wxColor col(255, 0, 0);
         dc.SetPen( wxPen(col) );
         dc.SetBrush( wxBrush(col) );
-        array<float, 2> originPos = cam->projectPoint(this->controller->getMeshes()[i]->get_origin(), this->GetSize());
+        array<float, 2> originPos = cam->projectPoint(this->controller->getMeshes()[i]->getOrigin(), this->GetSize());
         dc.DrawCircle((int)originPos[0], (int)originPos[1], 1);
     }
 }

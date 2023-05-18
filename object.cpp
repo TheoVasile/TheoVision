@@ -50,27 +50,31 @@ void Mesh::rotate(float xrot, float yrot, float zrot){
     this->rotate(rot);
 }
 
-array<float, 3> Mesh::get_origin(){
+array<float, 3> Mesh::getOrigin(){
     return this->origin;
 }
 
-void Mesh::add_vert(array<float, 3> pos){
+void Mesh::addVert(array<float, 3> pos){
     this->vertices.push_back(pos);
 }
-void Mesh::add_vert(float x, float y, float z){
+void Mesh::addVert(float x, float y, float z){
     array<float, 3> pos = {x, y, z};
-    this->add_vert(pos);
+    this->addVert(pos);
 }
 
-void Mesh::add_edge(int vert1, int vert2){
+void Mesh::addEdge(int vert1, int vert2){
     array<int, 2> edge = {vert1, vert2};
     this->edges.push_back(edge);
 }
 
-vector<array<float, 3> > Mesh::get_verts(){
+void Mesh::addFace(vector<int> face){
+    this->faces.push_back(face);
+}
+
+vector<array<float, 3> > Mesh::getVerts(){
     return this->vertices;
 }
 
-vector<array<int, 2> > Mesh::get_edges(){
+vector<array<int, 2> > Mesh::getEdges(){
     return this->edges;
 }

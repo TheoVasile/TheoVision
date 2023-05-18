@@ -71,26 +71,26 @@ vector<Mesh *> Controller::getMeshes(){
 
 void Controller::addCube(float x, float y, float z){
     Mesh *cube = new Mesh(0, 0, 0);
-    cube->add_vert(1.0, 1.0, 1.0);
-    cube->add_vert(1.0, -1.0, 1.0);
-    cube->add_vert(-1.0, 1.0, 1.0);
-    cube->add_vert(-1.0, -1.0, 1.0);
-    cube->add_vert(1.0, 1.0, -1.0);
-    cube->add_vert(1.0, -1.0, -1.0);
-    cube->add_vert(-1.0, 1.0, -1.0);
-    cube->add_vert(-1.0, -1.0, -1.0);
-    cube->add_edge(0, 1);
-    cube->add_edge(0, 2);
-    cube->add_edge(0, 4);
-    cube->add_edge(1, 3);
-    cube->add_edge(1, 5);
-    cube->add_edge(2, 3);
-    cube->add_edge(2, 6);
-    cube->add_edge(4, 5);
-    cube->add_edge(4, 6);
-    cube->add_edge(7, 3);
-    cube->add_edge(7, 5);
-    cube->add_edge(7, 6);
+    cube->addVert(1.0, 1.0, 1.0);
+    cube->addVert(1.0, -1.0, 1.0);
+    cube->addVert(-1.0, 1.0, 1.0);
+    cube->addVert(-1.0, -1.0, 1.0);
+    cube->addVert(1.0, 1.0, -1.0);
+    cube->addVert(1.0, -1.0, -1.0);
+    cube->addVert(-1.0, 1.0, -1.0);
+    cube->addVert(-1.0, -1.0, -1.0);
+    cube->addEdge(0, 1);
+    cube->addEdge(0, 2);
+    cube->addEdge(0, 4);
+    cube->addEdge(1, 3);
+    cube->addEdge(1, 5);
+    cube->addEdge(2, 3);
+    cube->addEdge(2, 6);
+    cube->addEdge(4, 5);
+    cube->addEdge(4, 6);
+    cube->addEdge(7, 3);
+    cube->addEdge(7, 5);
+    cube->addEdge(7, 6);
     cube->move(x, y, z);
 
     this->objects.push_back(cube);
@@ -103,20 +103,34 @@ void Controller::addUVSphere(float x, float y, float z, float rings, float segme
     for (int i=0; i < rings+1; i++){
         float curr_height = sinf((((float)i)/rings - 0.5) * PI);
         for (int j=0; j < segments; j++){
+            // create vertices
             float curr_y = pow(1 - pow(curr_height, 2), 0.5) * sinf(((float)j) / segments * 2.0 * PI);
             float curr_x = pow(1 - pow(curr_height, 2), 0.5) * cosf(((float)j) / segments * 2.0 * PI);
-            uvsphere->add_vert(curr_x, curr_y, curr_height);
+            uvsphere->addVert(curr_x, curr_y, curr_height);
 
-            // connect vertices on the same ring
-            if (uvsphere->get_verts().size() > 1){
+            // create edges
+            if (uvsphere->getVerts().size() > 1){
                 if (j == 0){
-                    uvsphere->add_edge((i-1) * segments, i * segments - 1);
+                    uvsphere->addEdge((i-1) * segments, i * segments - 1);
                 } else{
-                    uvsphere->add_edge(i * segments + j - 1, i * segments + j);
+                    uvsphere->addEdge(i * segments + j - 1, i * segments + j);
                 }
             }
             if (i > 0){
-                uvsphere->add_edge(i * segments + j, (i-1) * segments + j);
+                uvsphere->addEdge(i * segments + j, (i-1) * segments + j);
+            }
+
+            // create faces
+            if (i != 0 && i != 1 && i != rings){
+                if (j != 0) {
+                    vector<int> face;
+                    face.push_back(i * segments + j - 1);
+                    face.push_back(i * segments + j);
+                    face.push_back((i-1) * segments + j);
+                    face.push_back((i-1) * segments + j - 1);
+                    uvsphere->addFace(face);
+                    //faces.append([i * segments + j - 1, i * segments + j, (i-1) * segments + j, (i-1) * segments + j - 1])
+                }
             }
         }
     }
