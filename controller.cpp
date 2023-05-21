@@ -119,41 +119,39 @@ void Controller::addCube(float x, float y, float z){
     this->meshes.push_back(this->objects.size()-1);
 }
 
-void Controller::addUVSphere(float x, float y, float z, float rings, float segments){
+void Controller::addUVSphere(float x, float y, float z, int rings, int segments){
     Mesh *uvsphere = new Mesh(0, 0, 0);
-    for (int i=0; i < rings+1; i++){
+   // Create vertices
+    for (int i = 0; i <= rings; i++) {
         float curr_height = sinf((((float)i)/rings - 0.5) * PI);
-        for (int j=0; j < segments; j++){
-            // create vertices
-            float curr_y = pow(1 - pow(curr_height, 2), 0.5) * sinf(((float)j) / segments * 2.0 * PI);
-            float curr_x = pow(1 - pow(curr_height, 2), 0.5) * cosf(((float)j) / segments * 2.0 * PI);
+        for (int j = 0; j < segments; j++) {
+            float curr_y = sqrt(1 - curr_height * curr_height) * sin(static_cast<float>(j) / segments * 2.0f * M_PI);
+            float curr_x = sqrt(1 - curr_height * curr_height) * cos(static_cast<float>(j) / segments * 2.0f * M_PI);
             uvsphere->addVert(curr_x, curr_y, curr_height);
+        }
+    }
 
-            // create edges
-            if (uvsphere->getVerts().size() > 1){
-                if (j == 0){
-                    uvsphere->addEdge(uvsphere->getVerts()[(i-1) * segments], uvsphere->getVerts()[i * segments - 1]);
-                } else{
-                    uvsphere->addEdge(uvsphere->getVerts()[i * segments + j - 1], uvsphere->getVerts()[i * segments + j]);
-                }
-            }
-            if (i > 0){
-                uvsphere->addEdge(uvsphere->getVerts()[i * segments + j], uvsphere->getVerts()[(i-1) * segments + j]);
-            }
+    // Create edges
+    for (int i = 0; i < rings; i++) {
+        int next_i = (i + 1) % (rings + 1);
+        for (int j = 0; j < segments; j++) {
+            int next_j = (j + 1) % segments;
+            uvsphere->addEdge(uvsphere->getVertex(i * segments + j), uvsphere->getVertex(i * segments + next_j));
+            uvsphere->addEdge(uvsphere->getVertex(i * segments + j), uvsphere->getVertex(next_i * segments + j));
+        }
+    }
 
-            /*
-            // create faces
-            if (i != 0 && i != 1 && i != rings){
-                if (j != 0) {
-                    vector<int> face;
-                    face.push_back(i * segments + j - 1);
-                    face.push_back(i * segments + j);
-                    face.push_back((i-1) * segments + j);
-                    face.push_back((i-1) * segments + j - 1);
-                    uvsphere->addFace(face);
-                }
-            }
-            */
+    // Create faces
+    for (int i = 0; i < rings; i++) {
+        for (int j = 0; j < segments; j++) {
+            int next_i = (i + 1) % rings;
+            int next_j = (j + 1) % segments;
+            uvsphere->addFace(uvsphere->getEdge(i * segments + j));
+            uvsphere->addFace(uvsphere->getEdge(i * segments + j));
+            uvsphere->addFace(uvsphere->getEdge(next_i * segments + next_j));
+            uvsphere->addFace(uvsphere->getEdge(i * segments + j));
+            uvsphere->addFace(uvsphere->getEdge(next_i * segments + j));
+            uvsphere->addFace(uvsphere->getEdge(next_i * segments + next_j));
         }
     }
 

@@ -29,7 +29,7 @@ class Controller{
         void operate();
         void setOperation(int operation);
         void addCube(float x, float y, float z);
-        void addUVSphere(float x, float y, float z, float rings, float segments);
+        void addUVSphere(float x, float y, float z, int rings, int segments);
     private:
         int operation;
         Camera *activeCamera;

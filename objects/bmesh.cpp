@@ -56,14 +56,32 @@ vector<Vertex *> Mesh::getVerts()
 {
     return this->vertices;
 }
+
+Vertex *Mesh::getVertex(int index)
+{
+    return this->vertices[index];
+}
+
 vector<Edge *> Mesh::getEdges()
 {
     return this->edges;
 }
+
+Edge *Mesh::getEdge(int index)
+{
+    return this->edges[index];
+}
+
 vector<Face *> Mesh::getFaces()
 {
     return this->faces;
 }
+
+Face *Mesh::getFace(int index)
+{
+    return this->faces[index];
+}
+
 void Mesh::scale(float x, float y, float z)
 {
     array<float, 3> _origin = this->origin;

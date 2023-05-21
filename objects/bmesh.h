@@ -108,6 +108,15 @@ public:
     vector<Vertex *> getVerts();
 
     /**
+     * @brief Returns a vertex at the specified index
+     * 
+     * @param index the index to retrieve the vertex
+     * 
+     * @return A vertex
+     */
+    Vertex *getVertex(int index);
+
+    /**
      * @brief Retrieves a vector of all edges in the mesh.
      *
      * @return A vector of Edge pointers representing all edges in the mesh.
@@ -115,11 +124,29 @@ public:
     vector<Edge *> getEdges();
 
     /**
+     * @brief Returns the edge at the specified index
+     * 
+     * @param index the index to retrieve the edge
+     * 
+     * @return the edge
+     */
+    Edge *getEdge(int index);
+
+    /**
      * @brief Retrieves a vector of all faces in the mesh.
      *
      * @return A vector of Face pointers representing all faces in the mesh.
      */
     vector<Face *> getFaces();
+
+    /**
+     * @brief Returns a face at the specified index
+     * 
+     * @param index the index to retrieve the face
+     * 
+     * @return A face
+     */
+    Face *getFace(int index);
 
     /**
      * @brief Scales the mesh by the given scale factors for each axis.
