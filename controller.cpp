@@ -1,5 +1,4 @@
 #include "controller.h"
-#include <wx/wx.h>
 
 Controller::Controller(){
     this->operation=0;
@@ -11,18 +10,35 @@ Camera *Controller::getActiveCamera(){
 }
 
 void Controller::move(float x, float y, float z){
+    /*
+    Translate all the selected objects
+    */
     for (int i=0; i < this->getSelected().size(); i++){
         this->getSelected()[i]->move(x, y, z);
     }
 }
 
+void Controller::move(array<float, 3> translation){
+    this->move(translation[0], translation[1], translation[2]);
+}
+
 void Controller::rotate(float xrot, float yrot, float zrot){
+    /*
+    Rotate all the selected objects
+    */
     for (int i=0; i < this->getSelected().size(); i++){
         this->getSelected()[i]->rotate(xrot, yrot, zrot);
     }
 }
 
+void Controller::rotate(array<float, 3> rot){
+    this->rotate(rot[0], rot[1], rot[2]);
+}
+
 void Controller::scale(float x, float y, float z){
+    /*
+    Scale all selected objects
+    */
     for (int i=0; i<this->getSelected().size(); i++){
         this->getSelected()[i]->scale(x, y, z);
     }
@@ -33,6 +49,9 @@ void Controller::scale(float size){
 }
 
 void Controller::operate(){
+    /*
+    Perform the current operation on all selected objects
+    */
     switch(this->operation){
         case ID_GRAB:
             this->move(this->cursor_movement[0]/10, this->cursor_movement[1]/10, 0);
@@ -79,6 +98,7 @@ void Controller::addCube(float x, float y, float z){
     cube->addVert(1.0, -1.0, -1.0);
     cube->addVert(-1.0, 1.0, -1.0);
     cube->addVert(-1.0, -1.0, -1.0);
+    /*
     cube->addEdge(0, 1);
     cube->addEdge(0, 2);
     cube->addEdge(0, 4);
@@ -91,6 +111,7 @@ void Controller::addCube(float x, float y, float z){
     cube->addEdge(7, 3);
     cube->addEdge(7, 5);
     cube->addEdge(7, 6);
+    */
     cube->move(x, y, z);
 
     this->objects.push_back(cube);
@@ -108,6 +129,7 @@ void Controller::addUVSphere(float x, float y, float z, float rings, float segme
             float curr_x = pow(1 - pow(curr_height, 2), 0.5) * cosf(((float)j) / segments * 2.0 * PI);
             uvsphere->addVert(curr_x, curr_y, curr_height);
 
+            /*
             // create edges
             if (uvsphere->getVerts().size() > 1){
                 if (j == 0){
@@ -129,9 +151,9 @@ void Controller::addUVSphere(float x, float y, float z, float rings, float segme
                     face.push_back((i-1) * segments + j);
                     face.push_back((i-1) * segments + j - 1);
                     uvsphere->addFace(face);
-                    //faces.append([i * segments + j - 1, i * segments + j, (i-1) * segments + j, (i-1) * segments + j - 1])
                 }
             }
+            */
         }
     }
 

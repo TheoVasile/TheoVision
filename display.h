@@ -1,5 +1,6 @@
 #include <wx/wx.h>
 #include "controller.h"
+#include "operations.h"
 #include <iostream>
 #include <list>
 

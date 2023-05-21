@@ -1,4 +1,7 @@
-#include "object.h"
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
+#include <wx/wx.h>
+#include "./objects/bmesh.h"
 #include "camera.h"
 #include <math.h>
 
@@ -8,13 +11,16 @@
 #define ID_SCALE 3
 #define ID_ZOOM_IN 4
 #define ID_ZOOM_OUT 5
+#endif
 
 class Controller{
     public:
         Controller();
         float cursor_movement[2];
         void move(float x, float y, float z);
+        void move(array<float, 3> translation);
         void rotate(float xrot, float yrot, float zrot);
+        void rotate(array<float, 3> rot);
         void scale(float size);
         void scale(float x, float y, float z);
         Camera *getActiveCamera();
