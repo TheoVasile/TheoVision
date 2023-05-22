@@ -8,9 +8,38 @@ array<float, 3> multiply(array<float, 3> vector, float coefficient)
     return vector;
 }
 
+array<float, 3> subtract(array<float, 3> vector1, array<float, 3> vector2)
+{
+    vector1[0] -= vector2[0];
+    vector1[1] -= vector2[1];
+    vector1[2] -= vector2[2];
+    return vector1;
+}
+
+array<float, 3> add(array<float, 3> vector1, array<float, 3> vector2)
+{
+    vector1[0] += vector2[0];
+    vector1[1] += vector2[1];
+    vector1[2] += vector2[2];
+    return vector1;
+}
+
+array<float, 3> power(array<float, 3> vector, float exponent)
+{
+    vector[0] = pow(vector[0], exponent);
+    vector[1] = pow(vector[1], exponent);
+    vector[2] = pow(vector[2], exponent);
+    return vector;
+}
+
+float sum(array<float, 3> vector)
+{
+    return vector[0] + vector[1] + vector[2];
+}
+
 float dist(array<float, 3> startPos, array<float, 3> endPos)
 {
-    return sqrt(pow((startPos[0] - endPos[0]), 2) + pow((startPos[1] - endPos[1]), 2) + pow((startPos[2] - endPos[2]), 2));
+    return sqrt(sum(power(subtract(startPos, endPos), 2)));
 }
 
 int sign(float val){

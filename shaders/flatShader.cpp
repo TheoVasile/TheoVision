@@ -11,36 +11,39 @@ void FlatShader::ApplyShading(wxGraphicsContext *gc, wxSize screenDim, Camera *c
         Mesh *currMesh = this->meshes[i];
         // Loop through faces
         for (int j=0; j < currMesh->getFaces().size(); j++){
+            vector<array<float, 3> > vertPositions;
             Face *currFace = currMesh->getFace(j);
 
             // Trace the path of the edges until the face is completed.
-            gc->SetPen( *wxRED_PEN );
-            gc->SetBrush(*wxRED_BRUSH);
             wxGraphicsPath path = gc->CreatePath();
             Edge *startEdge = currFace->getEdge();
             Edge *currEdge = startEdge;
             if (currEdge == NULL){
-                wxPrintf("very very bad\n");
-                continue;
+                throw runtime_error("Face incorrectly defined.\n");
             }
 
             Vertex *currVert = currEdge->vertStart;
+            vertPositions.push_back(currVert->getPos());
             array<float, 2> screenCoord = camera->projectPoint(currVert->getPos(), screenDim);
             path.AddLineToPoint((int)screenCoord[0], (int)screenCoord[1]);
-            
             while (currEdge->nextEdge != startEdge){
                 currVert = currEdge->vertEnd;
+                vertPositions.push_back(currVert->getPos());
                 screenCoord = camera->projectPoint(currVert->getPos(), screenDim);
                 path.AddLineToPoint((int)screenCoord[0], (int)screenCoord[1]);
                 if (currEdge->nextEdge == NULL){
-                    wxPrintf("NO EDGE\n");
-                    break;
+                    throw runtime_error("Face is not complete.\n");
                 }
                 currEdge = currEdge->nextEdge;
-                wxPrintf("(%f, %f)\n", screenCoord[0], screenCoord[1]);
             }
             path.CloseSubpath();
 
+            array<float, 3> faceNormals = normalize(cross(subtract(vertPositions[1], vertPositions[0]), subtract(vertPositions[2], vertPositions[0])));
+            float fresnel = dot(faceNormals, camera->getNormal());
+
+            wxColour brushColour((int) (fresnel * 255), (int) (fresnel * 255), (int) (fresnel * 255));
+
+            gc->SetBrush(brushColour);
             gc->FillPath(path);
         }
     }
