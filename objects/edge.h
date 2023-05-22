@@ -8,6 +8,12 @@ class Vertex;
 
 class Face;
 
+/**
+ * @class Edge
+ * @brief Represents a connection between two vertices.
+ * 
+ * This is a winged edge representation of an edge, with adjascency information included.
+ */
 class Edge{
     public:
         Edge(Vertex *vertStart, Vertex *vertEnd);

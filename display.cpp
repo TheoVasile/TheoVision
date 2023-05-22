@@ -143,7 +143,7 @@ void Viewport::OnMouseWheel(wxMouseEvent& event)
     float rotation = event.GetWheelRotation();
     if (rotation != 0) {
         // Scroll up event detected
-        this->controller->getActiveCamera()->rotate(0, 0, rotation * PI/360);
+        this->controller->getActiveCamera()->rotate(0, 0, rotation * PI / 360);
     }
     Refresh();
     event.Skip();

@@ -62,6 +62,11 @@ array<float, 3> Camera::getNormal(){
     return this->normal;
 }
 
+array<float, 3> Camera::getVertical()
+{
+    return this->vertical;
+}
+
 array<float, 3> Camera::getPos()
 {
     return this->pos;

@@ -21,6 +21,7 @@ class Camera{
         void setFov(float fov);
         float getFov();
         array<float, 3> getNormal();
+        array<float, 3> getVertical();
     private:
         array<float, 3> pos;
         array<float, 3> normal;

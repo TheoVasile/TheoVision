@@ -1,5 +1,13 @@
 #include "operations.h"
 
+array<float, 3> multiply(array<float, 3> vector, float coefficient)
+{
+    vector[0] *= coefficient;
+    vector[1] *= coefficient;
+    vector[2] *= coefficient;
+    return vector;
+}
+
 float dist(array<float, 3> startPos, array<float, 3> endPos)
 {
     return sqrt(pow((startPos[0] - endPos[0]), 2) + pow((startPos[1] - endPos[1]), 2) + pow((startPos[2] - endPos[2]), 2));

@@ -10,6 +10,7 @@
 
 using namespace std;
 
+array<float, 3> multiply(array<float, 3> vector, float coefficient);
 float dist(array<float, 3> startPos, array<float, 3> endPos);
 int sign(float val);
 float magnitude(array<float, 3> vector);

@@ -55,7 +55,8 @@ void Controller::operate(){
     switch(this->operation){
         case ID_GRAB: {
             float movementFactor = dist(this->activeCamera->getPos(), this->getSelected()[0]->getOrigin()) / 1000;
-            this->move(this->cursor_movement[0] * movementFactor, this->cursor_movement[1] * movementFactor, 0);
+            this->move(multiply(cross(this->activeCamera->getNormal(), this->activeCamera->getVertical()), -this->cursor_movement[0] * movementFactor));
+            this->move(multiply(this->activeCamera->getVertical(), this->cursor_movement[1] * movementFactor));
             break;
         }
         case ID_ROTATE: {
