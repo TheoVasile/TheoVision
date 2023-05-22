@@ -83,14 +83,14 @@ public:
      *
      * @param edge The associated edge for the face.
      */
-    void addFace(Edge *edge);
+    void addFace(Edge *edge, bool pair=false);
 
     /**
      * @brief Adds a face to the mesh with the associated edge given by the provided index.
      * 
      * @param edgeIndex The index of the associated edge for the face.
      */
-    void addFace(int edgeIndex);
+    void addFace(int edgeIndex, bool pair=false);
 
     /**
      * @brief Retrieves the origin coordinates of the mesh.

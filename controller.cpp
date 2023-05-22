@@ -127,7 +127,7 @@ void Controller::addCube(float x, float y, float z){
     cube->getEdge(1)->pair->setNextEdge(cube->getEdge(4));
     
     cube->getEdge(2)->setNextEdge(cube->getEdge(0));
-    cube->getEdge(2)->pair->setNextEdge(cube->getEdge(8));
+    cube->getEdge(2)->pair->setNextEdge(cube->getEdge(10)->pair);
     
     cube->getEdge(3)->setNextEdge(cube->getEdge(7));
     cube->getEdge(3)->pair->setNextEdge(cube->getEdge(2)->pair);
@@ -138,14 +138,14 @@ void Controller::addCube(float x, float y, float z){
     cube->getEdge(5)->setNextEdge(cube->getEdge(2));
     cube->getEdge(5)->pair->setNextEdge(cube->getEdge(6));
     
-    cube->getEdge(6)->setNextEdge(cube->getEdge(10));
+    cube->getEdge(6)->setNextEdge(cube->getEdge(9));
     cube->getEdge(6)->pair->setNextEdge(cube->getEdge(1)->pair);
     
     cube->getEdge(7)->setNextEdge(cube->getEdge(4)->pair);
     cube->getEdge(7)->pair->setNextEdge(cube->getEdge(11));
 
     cube->getEdge(8)->setNextEdge(cube->getEdge(6)->pair);
-    cube->getEdge(8)->pair->setNextEdge(cube->getEdge(7));
+    cube->getEdge(8)->pair->setNextEdge(cube->getEdge(7)->pair);
     
     cube->getEdge(9)->setNextEdge(cube->getEdge(10));
     cube->getEdge(9)->pair->setNextEdge(cube->getEdge(8)->pair);
@@ -158,6 +158,11 @@ void Controller::addCube(float x, float y, float z){
 
     // Faces
     cube->addFace(2);
+    cube->addFace(11, true);
+    cube->addFace(3);
+    cube->addFace(1, true);
+    cube->addFace(10);
+    cube->addFace(11);
 
 
     cube->move(x, y, z);

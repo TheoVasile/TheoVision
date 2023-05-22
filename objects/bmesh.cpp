@@ -40,14 +40,17 @@ void Mesh::addEdge(int vertStartIndex, int vertEndIndex)
     this->addEdge(vertStart, vertEnd);
 }
 
-void Mesh::addFace(Edge *edge)
+void Mesh::addFace(Edge *edge, bool pair)
 {
+    if (pair) {
+        edge = edge->pair;
+    }
     this->faces.push_back(new Face(edge));
 }
 
-void Mesh::addFace(int edgeIndex)
+void Mesh::addFace(int edgeIndex, bool pair)
 {
-    this->faces.push_back(new Face(this->getEdge(edgeIndex)));
+    this->addFace(this->getEdge(edgeIndex), pair);
 }
 
 array<float, 3> Mesh::getOrigin()

@@ -40,11 +40,12 @@ void FlatShader::ApplyShading(wxGraphicsContext *gc, wxSize screenDim, Camera *c
 
             array<float, 3> faceNormals = normalize(cross(subtract(vertPositions[1], vertPositions[0]), subtract(vertPositions[2], vertPositions[0])));
             float fresnel = dot(faceNormals, camera->getNormal());
+            if (fresnel > 0) {
+                wxColour brushColour((int) (fresnel * 255), (int) (fresnel * 255), (int) (fresnel * 255));
 
-            wxColour brushColour((int) (fresnel * 255), (int) (fresnel * 255), (int) (fresnel * 255));
-
-            gc->SetBrush(brushColour);
-            gc->FillPath(path);
+                gc->SetBrush(brushColour);
+                gc->FillPath(path);
+            }
         }
     }
 }
