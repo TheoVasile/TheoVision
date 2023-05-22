@@ -94,6 +94,8 @@ vector<Mesh *> Controller::getMeshes(){
 
 void Controller::addCube(float x, float y, float z){
     Mesh *cube = new Mesh(0, 0, 0);
+
+    // Vertices
     cube->addVert(1.0, 1.0, 1.0);
     cube->addVert(1.0, -1.0, 1.0);
     cube->addVert(-1.0, 1.0, 1.0);
@@ -102,20 +104,62 @@ void Controller::addCube(float x, float y, float z){
     cube->addVert(1.0, -1.0, -1.0);
     cube->addVert(-1.0, 1.0, -1.0);
     cube->addVert(-1.0, -1.0, -1.0);
-    /*
-    cube->addEdge(0, 1);
+
+    // Edges
     cube->addEdge(0, 2);
-    cube->addEdge(0, 4);
-    cube->addEdge(1, 3);
-    cube->addEdge(1, 5);
-    cube->addEdge(2, 3);
     cube->addEdge(2, 6);
-    cube->addEdge(4, 5);
-    cube->addEdge(4, 6);
-    cube->addEdge(7, 3);
+    cube->addEdge(4, 0);
+    cube->addEdge(0, 1);
+    cube->addEdge(2, 3);
+    cube->addEdge(6, 4);
+    cube->addEdge(6, 7);
+    cube->addEdge(1, 3);
+    cube->addEdge(3, 7);
     cube->addEdge(7, 5);
-    cube->addEdge(7, 6);
-    */
+    cube->addEdge(5, 4);
+    cube->addEdge(1, 5);
+
+    // Adjascency information
+    cube->getEdge(0)->setNextEdge(cube->getEdge(1));
+    cube->getEdge(0)->pair->setNextEdge(cube->getEdge(3));
+
+    cube->getEdge(1)->setNextEdge(cube->getEdge(5));
+    cube->getEdge(1)->pair->setNextEdge(cube->getEdge(4));
+    
+    cube->getEdge(2)->setNextEdge(cube->getEdge(0));
+    cube->getEdge(2)->pair->setNextEdge(cube->getEdge(8));
+    
+    cube->getEdge(3)->setNextEdge(cube->getEdge(7));
+    cube->getEdge(3)->pair->setNextEdge(cube->getEdge(2)->pair);
+
+    cube->getEdge(4)->setNextEdge(cube->getEdge(8));
+    cube->getEdge(4)->pair->setNextEdge(cube->getEdge(0)->pair);
+
+    cube->getEdge(5)->setNextEdge(cube->getEdge(2));
+    cube->getEdge(5)->pair->setNextEdge(cube->getEdge(6));
+    
+    cube->getEdge(6)->setNextEdge(cube->getEdge(10));
+    cube->getEdge(6)->pair->setNextEdge(cube->getEdge(1)->pair);
+    
+    cube->getEdge(7)->setNextEdge(cube->getEdge(4)->pair);
+    cube->getEdge(7)->pair->setNextEdge(cube->getEdge(11));
+
+    cube->getEdge(8)->setNextEdge(cube->getEdge(6)->pair);
+    cube->getEdge(8)->pair->setNextEdge(cube->getEdge(7));
+    
+    cube->getEdge(9)->setNextEdge(cube->getEdge(10));
+    cube->getEdge(9)->pair->setNextEdge(cube->getEdge(8)->pair);
+
+    cube->getEdge(10)->setNextEdge(cube->getEdge(5)->pair);
+    cube->getEdge(10)->pair->setNextEdge(cube->getEdge(11)->pair);
+
+    cube->getEdge(11)->setNextEdge(cube->getEdge(9)->pair);
+    cube->getEdge(11)->pair->setNextEdge(cube->getEdge(3)->pair);
+
+    // Faces
+    cube->addFace(2);
+
+
     cube->move(x, y, z);
 
     this->objects.push_back(cube);
@@ -126,6 +170,7 @@ void Controller::addCube(float x, float y, float z){
 void Controller::addUVSphere(float x, float y, float z, int rings, int segments){
     Mesh *uvsphere = new Mesh(0, 0, 0);
    // Create vertices
+   /*
     for (int i = 0; i <= rings; i++) {
         float curr_height = sinf((((float)i)/rings - 0.5) * PI);
         for (int j = 0; j < segments; j++) {
@@ -187,6 +232,7 @@ void Controller::addUVSphere(float x, float y, float z, int rings, int segments)
             uvsphere->addFace(uvsphere->getEdge(next_i * segments + next_j));
         }
     }
+    */
 
     uvsphere->move(x, y, z);
     this->objects.push_back(uvsphere);

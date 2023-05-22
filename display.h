@@ -3,7 +3,7 @@
 
 #include <wx/wx.h>
 #include "controller.h"
-#include "operations.h"
+#include "utils.h"
 #include "./shaders/flatShader.h"
 #include <iostream>
 #include <list>

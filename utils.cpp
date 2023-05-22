@@ -1,4 +1,4 @@
-#include "operations.h"
+#include "utils.h"
 
 array<float, 3> multiply(array<float, 3> vector, float coefficient)
 {

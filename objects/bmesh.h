@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <wx/wx.h>
-#include "../operations.h"
+#include "../utils.h"
 #include "vertex.h"
 #include "edge.h"
 #include "face.h"
@@ -41,7 +41,7 @@ public:
      * @param pos  The position of the vertex as an array of floats [x, y, z].
      * @param edge The associated edge for the vertex.
      */
-    void addVert(array<float, 3> pos, Edge *edge);
+    void addVert(array<float, 3> pos, vector<Edge *> edges);
 
     /**
      * @brief Adds a vertex to the mesh with the given coordinates.
@@ -60,7 +60,7 @@ public:
      * @param z    The z-coordinate of the vertex.
      * @param edge The associated edge for the vertex.
      */
-    void addVert(float x, float y, float z, Edge *edge);
+    void addVert(float x, float y, float z, vector<Edge *> edges);
 
     /**
      * @brief Adds an edge to the mesh between the given start and end vertices.
@@ -71,11 +71,26 @@ public:
     void addEdge(Vertex *vertStart, Vertex *vertEnd);
 
     /**
+     * @brief Adds an edge to the mesh between the vertices corresponding to the start and end indices.
+     * 
+     * @param vertStartIndex The index corresponding to the starting vertex of the edge.
+     * @param vertEndIndex   The index corresponding to the ending vertex of the edge.
+     */
+    void addEdge(int vertStartIndex, int vertEndIndex);
+
+    /**
      * @brief Adds a face to the mesh with the given associated edge.
      *
      * @param edge The associated edge for the face.
      */
     void addFace(Edge *edge);
+
+    /**
+     * @brief Adds a face to the mesh with the associated edge given by the provided index.
+     * 
+     * @param edgeIndex The index of the associated edge for the face.
+     */
+    void addFace(int edgeIndex);
 
     /**
      * @brief Retrieves the origin coordinates of the mesh.

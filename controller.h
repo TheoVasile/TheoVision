@@ -3,6 +3,7 @@
 #include <wx/wx.h>
 #include "./objects/bmesh.h"
 #include "camera.h"
+#include "utils.h"
 #include <math.h>
 
 #define PI 3.141592653589793

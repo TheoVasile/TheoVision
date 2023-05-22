@@ -4,13 +4,12 @@
 Vertex::Vertex(float x, float y, float z)
 {
     this->setPos(x, y, z);
-    this->edge = NULL;
 }
 
-Vertex::Vertex(float x, float y, float z, Edge *edge)
+Vertex::Vertex(float x, float y, float z, vector<Edge *> edges)
 {
     this->setPos(x, y, z);
-    this->setEdge(edge);
+    this->setEdges(edges);
 }
 
 array<float, 3> Vertex::getPos()
@@ -58,14 +57,15 @@ void Vertex::setZ(float z)
     this->pos[2] = z;
 }
 
-Edge *Vertex::getEdge(){
-    return this->edge;
+vector<Edge *> Vertex::getEdges(){
+    return this->edges;
 }
 
-void Vertex::setEdge(Edge *edge){
-    this->edge = edge;
+void Vertex::setEdges(vector<Edge *> edges){
+    this->edges = edges;
 }
 
-bool Vertex::hasEdge(){
-    return (this->edge != NULL);
+void Vertex::addEdge(Edge *edge)
+{
+    this->edges.push_back(edge);
 }

@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "operations.h"
+#include "utils.h"
 #include <array>
 #include <iostream>
 #include <wx/wx.h>

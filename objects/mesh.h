@@ -1,6 +1,6 @@
 #include <vector>
 #include <wx/wx.h>
-#include "../operations.h"
+#include "../utils.h"
 #include "vertex.h"
 #include "edge.h"
 #include "face.h"

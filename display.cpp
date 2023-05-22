@@ -56,6 +56,11 @@ void Viewport::OnPaint(wxPaintEvent& event){
     // Mesh loop
     for (int i = 0; i < this->controller->getMeshes().size(); i++){
         Camera *cam = this->controller->getActiveCamera();
+
+        wxGraphicsContext* gc = wxGraphicsContext::Create(dc);
+        FlatShader *shader = new FlatShader(this->controller->getMeshes());
+        shader->ApplyShading(gc, this->GetSize(), cam);
+
         // Draw vertices
         vector<Vertex *> curr_verts = this->controller->getMeshes()[i]->getVerts();
         for (int j = 0; j < curr_verts.size(); j++){
@@ -70,44 +75,6 @@ void Viewport::OnPaint(wxPaintEvent& event){
             array<float, 2> v2_coords = cam->projectPoint(curr_edges[j]->vertEnd->getPos(), this->GetSize());
             dc.DrawLine((int)v1_coords[0], (int)v1_coords[1],(int)v2_coords[0], (int)v2_coords[1]);
         }
-
-        wxGraphicsContext* gc = wxGraphicsContext::Create(dc);
-        FlatShader *shader = new FlatShader(this->controller->getMeshes());
-        shader->ApplyShading(gc, this->GetSize(), cam);
-
-        /*
-        // Draw faces
-        vector<vector<int> > currFaces = this->controller->getMeshes()[i]->getFaces();
-        for (int j=0; j < curr_edges.size(); j++){
-            array<float, 3> edgeDirection1;
-            array<float, 3> edgeDirection2;
-            edgeDirection1[0] = curr_verts[currFaces[j][0]][0] - curr_verts[currFaces[j][1]][0];
-            edgeDirection1[0] = curr_verts[currFaces[j][0]][1] - curr_verts[currFaces[j][1]][1];
-            edgeDirection1[0] = curr_verts[currFaces[j][0]][2] - curr_verts[currFaces[j][1]][2];
-            
-            edgeDirection2[0] = curr_verts[currFaces[j][0]][0] - curr_verts[currFaces[j][2]][0];
-            edgeDirection2[0] = curr_verts[currFaces[j][0]][1] - curr_verts[currFaces[j][2]][1];
-            edgeDirection2[0] = curr_verts[currFaces[j][0]][2] - curr_verts[currFaces[j][2]][2];
-
-            array<float, 3> normal = cross(edgeDirection1, edgeDirection2);
-            normal = normalize(normal);
-
-            float facingRatio = dot(normal, this->controller->getActiveCamera()->getNormal());
-            wxColor col(facingRatio, facingRatio, facingRatio);
-            dc.SetPen( wxPen(col) );
-            dc.SetBrush( wxBrush(col) );
-
-            wxPrintf("HI!\n");
-            wxPoint points[3];
-            for (int i=0; i < 3; i++){
-                array<float, 2> screenCoord = cam->projectPoint(curr_verts[currFaces[j][i]], this->GetSize());
-                points[i] = wxPoint((int)screenCoord[0], (int)screenCoord[1]);
-                wxPrintf("POINTS\n");
-            }
-            dc.DrawPolygon(3, points, 0, 0);
-
-        }
-        */
 
         wxColor col(255, 0, 0);
         dc.SetPen( wxPen(col) );

@@ -17,13 +17,13 @@ class Face;
 class Edge{
     public:
         Edge(Vertex *vertStart, Vertex *vertEnd);
+        Edge(Edge *edge);
+        void setNextEdge(Edge *edge);
+        void setPreviousEdge(Edge *edge);
         Vertex *vertStart;
         Vertex *vertEnd;
-        Face *faceCW;
-        Face *faceCCW;
-        Edge *edgePreviousCW;
-        Edge *edgeNextCW;
-        Edge *edgePreviousCCW;
-        Edge *edgeNextCCW;
+        Edge *pair;
+        Edge *nextEdge;
+        Edge *previousEdge;
 };
 #endif

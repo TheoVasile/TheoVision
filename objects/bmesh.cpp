@@ -10,9 +10,9 @@ void Mesh::addVert(array<float, 3> pos)
     this->addVert(pos[0], pos[1], pos[2]);
 }
 
-void Mesh::addVert(array<float, 3> pos, Edge *edge)
+void Mesh::addVert(array<float, 3> pos, vector<Edge *> edges)
 {
-    this->addVert(pos[0], pos[1], pos[2], edge);
+    this->addVert(pos[0], pos[1], pos[2], edges);
 }
 
 void Mesh::addVert(float x, float y, float z)
@@ -20,19 +20,34 @@ void Mesh::addVert(float x, float y, float z)
     this->vertices.push_back(new Vertex(x, y, z));
 }
 
-void Mesh::addVert(float x, float y, float z, Edge *edge)
+void Mesh::addVert(float x, float y, float z, vector<Edge *> edges)
 {
-    this->vertices.push_back(new Vertex(x, y, z, edge));
+    this->vertices.push_back(new Vertex(x, y, z, edges));
 }
 
 void Mesh::addEdge(Vertex *vertStart, Vertex *vertEnd)
 {
-    this->edges.push_back(new Edge(vertStart, vertEnd));
+    Edge *newEdge = new Edge(vertStart, vertEnd);
+    newEdge->vertStart->addEdge(newEdge);
+    newEdge->vertEnd->addEdge(newEdge);
+    this->edges.push_back(newEdge);
+}
+
+void Mesh::addEdge(int vertStartIndex, int vertEndIndex)
+{
+    Vertex *vertStart = this->vertices[vertStartIndex];
+    Vertex *vertEnd = this->vertices[vertEndIndex];
+    this->addEdge(vertStart, vertEnd);
 }
 
 void Mesh::addFace(Edge *edge)
 {
     this->faces.push_back(new Face(edge));
+}
+
+void Mesh::addFace(int edgeIndex)
+{
+    this->faces.push_back(new Face(this->getEdge(edgeIndex)));
 }
 
 array<float, 3> Mesh::getOrigin()

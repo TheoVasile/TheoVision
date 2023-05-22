@@ -1,5 +1,5 @@
-#ifndef OPERATIONS_H
-#define OPERATIONS_H
+#ifndef UTILS_H
+#define UTILS_H
 
 #include <iostream>
 #include <array>
@@ -19,4 +19,5 @@ array<float, 3> cross(array<float, 3> vector1, array<float, 3> vector2);
 float dot(array<float, 3> vector1, array<float, 3> vector2);
 array<float, 3> project_onto_plane(array<float, 3> dir, array<float, 3> normal);
 array<float, 3> Rotate(array<float, 3> pos, array<float, 3> rot);
+
 #endif

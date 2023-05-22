@@ -14,6 +14,8 @@ void FlatShader::ApplyShading(wxGraphicsContext *gc, wxSize screenDim, Camera *c
             Face *currFace = currMesh->getFace(j);
 
             // Trace the path of the edges until the face is completed.
+            gc->SetPen( *wxRED_PEN );
+            gc->SetBrush(*wxRED_BRUSH);
             wxGraphicsPath path = gc->CreatePath();
             Edge *startEdge = currFace->getEdge();
             Edge *currEdge = startEdge;
@@ -21,18 +23,25 @@ void FlatShader::ApplyShading(wxGraphicsContext *gc, wxSize screenDim, Camera *c
                 wxPrintf("very very bad\n");
                 continue;
             }
-            while (currEdge->edgeNextCW != startEdge){
-                Vertex *currVert = currEdge->vertEnd;
-                array<float, 2> screenCoord = camera->projectPoint(currVert->getPos(), screenDim);
-                path.MoveToPoint((int)screenCoord[0], (int)screenCoord[1]);
+
+            Vertex *currVert = currEdge->vertStart;
+            array<float, 2> screenCoord = camera->projectPoint(currVert->getPos(), screenDim);
+            path.AddLineToPoint((int)screenCoord[0], (int)screenCoord[1]);
+            
+            while (currEdge->nextEdge != startEdge){
+                currVert = currEdge->vertEnd;
+                screenCoord = camera->projectPoint(currVert->getPos(), screenDim);
                 path.AddLineToPoint((int)screenCoord[0], (int)screenCoord[1]);
-                if (currEdge->edgeNextCW == NULL){
+                if (currEdge->nextEdge == NULL){
                     wxPrintf("NO EDGE\n");
                     break;
                 }
-                currEdge = currEdge->edgeNextCW;
+                currEdge = currEdge->nextEdge;
+                wxPrintf("(%f, %f)\n", screenCoord[0], screenCoord[1]);
             }
             path.CloseSubpath();
+
+            gc->FillPath(path);
         }
     }
 }
