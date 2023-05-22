@@ -13,6 +13,18 @@ void Camera::move(array<float, 3> translation){
     this->pos[2] += translation[2];
 }
 
+void Camera::rotate(float xrot, float yrot, float zrot)
+{
+    array<float, 3> rot = {xrot, yrot, zrot};
+    this->rotate(rot);
+}
+
+void Camera::rotate(array<float, 3> rot)
+{
+    this->normal = Rotate(this->normal, rot);
+    this->vertical = Rotate(this->vertical, rot);
+}
+
 void Camera::zoom(){
     this->move(this->normal);
 }
@@ -48,6 +60,11 @@ array<float, 2> Camera::projectPoint(float x, float y, float z, wxSize screenDim
 
 array<float, 3> Camera::getNormal(){
     return this->normal;
+}
+
+array<float, 3> Camera::getPos()
+{
+    return this->pos;
 }
 
 void Camera::setFov(float fov){

@@ -39,6 +39,7 @@ Viewport::Viewport(Controller * controller)
     panel->Bind(wxEVT_KEY_UP, &Viewport::OnKeyUp, this);
     panel->Bind(wxEVT_MOTION, &Viewport::OnMouseMotion, this);
     panel->Bind(wxEVT_LEFT_DOWN, &Viewport::OnClick, this);
+    panel->Bind(wxEVT_MOUSEWHEEL, &Viewport::OnMouseWheel, this);
     Bind(wxEVT_MENU, &Viewport::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &Viewport::OnExit, this, wxID_EXIT);
 }
@@ -69,6 +70,10 @@ void Viewport::OnPaint(wxPaintEvent& event){
             array<float, 2> v2_coords = cam->projectPoint(curr_edges[j]->vertEnd->getPos(), this->GetSize());
             dc.DrawLine((int)v1_coords[0], (int)v1_coords[1],(int)v2_coords[0], (int)v2_coords[1]);
         }
+
+        wxGraphicsContext* gc = wxGraphicsContext::Create(dc);
+        FlatShader *shader = new FlatShader(this->controller->getMeshes());
+        shader->ApplyShading(gc, this->GetSize(), cam);
 
         /*
         // Draw faces
@@ -131,6 +136,17 @@ void Viewport::OnMouseMotion(wxMouseEvent& event)
     this->prev_cursor_pos[1] = event.GetY();
     this->controller->operate();
     Refresh();
+}
+
+void Viewport::OnMouseWheel(wxMouseEvent& event)
+{
+    float rotation = event.GetWheelRotation();
+    if (rotation != 0) {
+        // Scroll up event detected
+        this->controller->getActiveCamera()->rotate(0, 0, rotation * PI/360);
+    }
+    Refresh();
+    event.Skip();
 }
 
 void Viewport::OnClick(wxMouseEvent& event)

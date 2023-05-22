@@ -53,12 +53,15 @@ void Controller::operate(){
     Perform the current operation on all selected objects
     */
     switch(this->operation){
-        case ID_GRAB:
-            this->move(this->cursor_movement[0]/10, this->cursor_movement[1]/10, 0);
+        case ID_GRAB: {
+            float movementFactor = dist(this->activeCamera->getPos(), this->getSelected()[0]->getOrigin()) / 1000;
+            this->move(this->cursor_movement[0] * movementFactor, this->cursor_movement[1] * movementFactor, 0);
             break;
-        case ID_ROTATE:
-            this->rotate(this->cursor_movement[0]/10 * PI / 180, this->cursor_movement[1]/10 * PI / 180, 0);
+        }
+        case ID_ROTATE: {
+            this->rotate(0, cursor_movement[0] * PI / 180, -cursor_movement[1] * PI / 180);
             break;
+        }
         case ID_SCALE:
             this->scale(this->cursor_movement[0]/10+1);
             break;
@@ -138,6 +141,35 @@ void Controller::addUVSphere(float x, float y, float z, int rings, int segments)
             int next_j = (j + 1) % segments;
             uvsphere->addEdge(uvsphere->getVertex(i * segments + j), uvsphere->getVertex(i * segments + next_j));
             uvsphere->addEdge(uvsphere->getVertex(i * segments + j), uvsphere->getVertex(next_i * segments + j));
+        }
+    }
+
+    // Provide more edge information
+    for (int i = 0; i < uvsphere->getEdges().size(); i++) {
+        if (i % 2 == 0) {
+            if (i < uvsphere->getEdges().size() - 1){
+                if (i > 2 * segments){
+                    uvsphere->getEdge(i)->edgeNextCCW = uvsphere->getEdge(i - 2 * segments + 1);
+                }
+                uvsphere->getEdge(i)->edgePreviousCW = uvsphere->getEdge(i+1);
+            }
+            if (i < uvsphere->getEdges().size() - 3){
+                if (i > 2 * segments){
+                    uvsphere->getEdge(i)->edgePreviousCCW = uvsphere->getEdge(i - 2 * segments + 3);
+                }
+                uvsphere->getEdge(i)->edgeNextCW = uvsphere->getEdge(i+3);
+            }
+        } else {
+            uvsphere->getEdge(i)->edgeNextCCW = uvsphere->getEdge(i-1);
+            if (i >= 3){
+                uvsphere->getEdge(i)->edgePreviousCW = uvsphere->getEdge(i-3);
+            }
+            if (i < uvsphere->getEdges().size() - 2 * segments + 1) {
+                uvsphere->getEdge(i)->edgePreviousCCW = uvsphere->getEdge(i+2*segments-1);
+            }
+            if (i < uvsphere->getEdges().size() - 2 * segments + 3){
+                uvsphere->getEdge(i)->edgeNextCW = uvsphere->getEdge(i+2*segments-3);
+            }
         }
     }
 

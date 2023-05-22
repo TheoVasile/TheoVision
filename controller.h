@@ -11,7 +11,6 @@
 #define ID_SCALE 3
 #define ID_ZOOM_IN 4
 #define ID_ZOOM_OUT 5
-#endif
 
 class Controller{
     public:
@@ -37,3 +36,4 @@ class Controller{
         vector<Mesh *> objects;
         vector<int> meshes;
 };
+#endif

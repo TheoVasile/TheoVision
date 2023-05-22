@@ -1,5 +1,10 @@
 #include "operations.h"
 
+float dist(array<float, 3> startPos, array<float, 3> endPos)
+{
+    return sqrt(pow((startPos[0] - endPos[0]), 2) + pow((startPos[1] - endPos[1]), 2) + pow((startPos[2] - endPos[2]), 2));
+}
+
 int sign(float val){
     if (val > 0){
         return 1;

@@ -1,6 +1,10 @@
+#ifndef DISPLAY_H
+#define DISPLAY_H
+
 #include <wx/wx.h>
 #include "controller.h"
 #include "operations.h"
+#include "./shaders/flatShader.h"
 #include <iostream>
 #include <list>
 
@@ -12,7 +16,7 @@ public:
     Viewport(Controller *controller);
  
 private:
-    wxPanel * panel;
+    wxPanel *panel;
     Controller *controller;
     array<float, 3> normal;
     array<float, 3> vertical;
@@ -24,6 +28,7 @@ private:
     void OnKeyUp(wxKeyEvent& event);
     void OnKeyPress(wxKeyEvent& event);
     void OnMouseMotion(wxMouseEvent& event);
+    void OnMouseWheel(wxMouseEvent& event);
     void OnClick(wxMouseEvent& event);
     void OnShow(wxShowEvent& event);
     void OnHello(wxCommandEvent& event);
@@ -33,3 +38,4 @@ private:
     array<float, 2> projectPoint(float x, float y, float z);
     array<float, 2> projectPoint(array<float, 3> pos);
 };
+#endif
