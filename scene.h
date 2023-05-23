@@ -1,12 +1,15 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 #include <wx/wx.h>
+#include <limits>
 #include "./objects/object.h"
 #include "./objects/bmesh.h"
 #include "./objects/light.h"
 #include "camera.h"
 #include "utils.h"
 #include <math.h>
+
+using namespace std;
 
 #define ID_GRAB 1
 #define ID_ROTATE 2
@@ -29,12 +32,14 @@ class Scene{
         vector<Mesh *> getMeshes();
         vector<Light *> getLights();
         void operate();
+        void select(int x, int y);
+        void select(array<int, 2> cursorPos);
         void setOperation(int operation);
         void addLight(Light *light);
         void addCube(float x, float y, float z);
         void addUVSphere(float x, float y, float z, int rings, int segments);
-    private:
         int operation;
+    private:
         Camera *activeCamera;
         vector<Object *> objects;
         vector<Object *> selected;

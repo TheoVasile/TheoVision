@@ -82,7 +82,11 @@ void Viewport::OnMouseWheel(wxMouseEvent& event)
 
 void Viewport::OnClick(wxMouseEvent& event)
 {
-    this->scene->setOperation(0);
+    if (this->scene->operation != 0) {
+        this->scene->setOperation(0);
+    } else {
+        this->scene->select(event.GetX(), event.GetY());
+    }
 }
 
 void Viewport::OnKeyPress(wxKeyEvent& event)

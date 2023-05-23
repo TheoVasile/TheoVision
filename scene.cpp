@@ -69,6 +69,24 @@ void Scene::operate(){
     }
 }
 
+void Scene::select(int x, int y) {
+    float minDist = numeric_limits<float>::infinity();
+    Object *selection;
+    for (Object *currObject : this->objects) {
+        float currDist = pow(currObject->getOrigin()[0] - x, 2) + pow(currObject->getOrigin()[1] - y, 2);
+        if (currDist < minDist) {
+            minDist = currDist;
+            selection = currObject;
+        }
+    }
+    selected.clear();
+    selected.push_back(selection);
+}
+
+void Scene::select(array<int, 2> cursorPos) {
+    this->select(cursorPos[0], cursorPos[1]);
+}
+
 void Scene::setOperation(int operation){
     this->operation=operation;
 }
