@@ -4,6 +4,7 @@
 #include <array>
 #include "display.h"
 #include "./objects/sunLight.h"
+#include "./objects/pointLight.h"
  
 #ifndef WX_PRECOMP
     #include <wx/wx.h>
