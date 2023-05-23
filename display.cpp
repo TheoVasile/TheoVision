@@ -7,6 +7,10 @@ Viewport::Viewport(Controller * controller)
     wxPanel * panel = new wxPanel(this);
     this->controller = controller;
 
+    wxPaintDC dc(this);
+    wxGraphicsContext* gc = wxGraphicsContext::Create(dc);
+    this->shader = new PhongShader(this->controller->getMeshes(), gc, this->GetSize(), this->controller->getActiveCamera());
+
     SetBackgroundColour(wxColour(* wxWHITE));
 
     // Initialize default attributes
@@ -57,9 +61,7 @@ void Viewport::OnPaint(wxPaintEvent& event){
     for (int i = 0; i < this->controller->getMeshes().size(); i++){
         Camera *cam = this->controller->getActiveCamera();
 
-        wxGraphicsContext* gc = wxGraphicsContext::Create(dc);
-        PhongShader *shader = new PhongShader(this->controller->getMeshes(), gc, this->GetSize(), cam);
-        dc.DrawBitmap(shader->ApplyShading(), 0, 0);
+        dc.DrawBitmap(this->shader->ApplyShading(), 0, 0);
 
         //Wireframe *wireShader = new Wireframe(this->controller->getMeshes(), gc, this->GetSize(), cam);
         //dc.DrawBitmap(wireShader->ApplyShading(), 0, 0);

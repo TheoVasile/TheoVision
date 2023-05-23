@@ -19,6 +19,7 @@ public:
  
 private:
     wxPanel *panel;
+    Shader *shader;
     Controller *controller;
     array<float, 3> normal;
     array<float, 3> vertical;
