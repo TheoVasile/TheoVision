@@ -1,8 +1,12 @@
-#include <wx/wx.h>
-#include "mesh.h"
+#ifndef WIREFRAME_H
+#define WIREFRAME_H
 
-public:
-    void drawMesh(Mesh *mesh, wxPaintDC dc);
-private:
-    void drawVertex(float x, float y, float z);
-    void drawEdge();
+#include "shader.h"
+
+class Wireframe : public Shader{
+    public:
+        Wireframe(vector<Mesh *> meshes, wxGraphicsContext *gc, wxSize screenDim, Camera *camera);
+        wxBitmap ApplyShading(int pixelSize = 10);
+};
+
+#endif

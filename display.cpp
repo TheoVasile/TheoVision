@@ -61,20 +61,8 @@ void Viewport::OnPaint(wxPaintEvent& event){
         PhongShader *shader = new PhongShader(this->controller->getMeshes(), gc, this->GetSize(), cam);
         dc.DrawBitmap(shader->ApplyShading(), 0, 0);
 
-        // Draw vertices
-        vector<Vertex *> curr_verts = this->controller->getMeshes()[i]->getVerts();
-        for (int j = 0; j < curr_verts.size(); j++){
-            array<float, 2> screen_coords = cam->projectPoint(curr_verts[j]->getPos(), this->GetSize());
-            dc.DrawCircle((int)screen_coords[0], (int)screen_coords[1], 1);
-        }
-
-        // Draw edges
-        vector<Edge *> curr_edges = this->controller->getMeshes()[i]->getEdges();
-        for (int j=0; j < curr_edges.size(); j++){
-            array<float, 2> v1_coords = cam->projectPoint(curr_edges[j]->vertStart->getPos(), this->GetSize());
-            array<float, 2> v2_coords = cam->projectPoint(curr_edges[j]->vertEnd->getPos(), this->GetSize());
-            dc.DrawLine((int)v1_coords[0], (int)v1_coords[1],(int)v2_coords[0], (int)v2_coords[1]);
-        }
+        Wireframe *wireShader = new Wireframe(this->controller->getMeshes(), gc, this->GetSize(), cam);
+        dc.DrawBitmap(wireShader->ApplyShading(), 0, 0);
 
         wxColor col(255, 0, 0);
         dc.SetPen( wxPen(col) );

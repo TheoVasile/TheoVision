@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "./shaders/flatShader.h"
 #include "./shaders/phongShader.h"
+#include "./shaders/wireframe.h"
 #include <iostream>
 #include <list>
 
