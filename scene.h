@@ -12,9 +12,9 @@
 #define ID_ZOOM_IN 4
 #define ID_ZOOM_OUT 5
 
-class Controller{
+class Scene{
     public:
-        Controller();
+        Scene();
         float cursor_movement[2];
         void move(float x, float y, float z);
         void move(array<float, 3> translation);

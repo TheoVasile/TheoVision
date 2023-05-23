@@ -1,5 +1,5 @@
 #ifndef SUNLIGHT_H
-#ifndef SUNLIGHT_H
+#define SUNLIGHT_H
 
 #include "light.h"
 
@@ -11,7 +11,7 @@ class SunLight : public Light {
         using Light::getIntensity;
         using Light::scale;
         using Light::move;
-        voie rotate(array<float, 3> rot);
+        void rotate(array<float, 3> rot) override;
         using Light::rotate;
         using Light::getOrigin;
         using Light::setOrigin;

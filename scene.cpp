@@ -1,15 +1,15 @@
-#include "controller.h"
+#include "scene.h"
 
-Controller::Controller(){
+Scene::Scene(){
     this->operation=0;
     this->activeCamera = new Camera(0, 0, 0);
 }
 
-Camera *Controller::getActiveCamera(){
+Camera *Scene::getActiveCamera(){
     return this->activeCamera;
 }
 
-void Controller::move(float x, float y, float z){
+void Scene::move(float x, float y, float z){
     /*
     Translate all the selected objects
     */
@@ -18,11 +18,11 @@ void Controller::move(float x, float y, float z){
     }
 }
 
-void Controller::move(array<float, 3> translation){
+void Scene::move(array<float, 3> translation){
     this->move(translation[0], translation[1], translation[2]);
 }
 
-void Controller::rotate(float xrot, float yrot, float zrot){
+void Scene::rotate(float xrot, float yrot, float zrot){
     /*
     Rotate all the selected objects
     */
@@ -31,11 +31,11 @@ void Controller::rotate(float xrot, float yrot, float zrot){
     }
 }
 
-void Controller::rotate(array<float, 3> rot){
+void Scene::rotate(array<float, 3> rot){
     this->rotate(rot[0], rot[1], rot[2]);
 }
 
-void Controller::scale(float x, float y, float z){
+void Scene::scale(float x, float y, float z){
     /*
     Scale all selected objects
     */
@@ -44,11 +44,11 @@ void Controller::scale(float x, float y, float z){
     }
 }
 
-void Controller::scale(float size){
+void Scene::scale(float size){
     this->scale(size, size, size);
 }
 
-void Controller::operate(){
+void Scene::operate(){
     /*
     Perform the current operation on all selected objects
     */
@@ -72,11 +72,11 @@ void Controller::operate(){
     }
 }
 
-void Controller::setOperation(int operation){
+void Scene::setOperation(int operation){
     this->operation=operation;
 }
 
-vector<Mesh *> Controller::getSelected(){
+vector<Mesh *> Scene::getSelected(){
     vector<Mesh *> selected_objects;
     for (int i=0; i < this->selected.size(); i++){
         selected_objects.push_back(this->objects[this->selected[i]]);
@@ -84,7 +84,7 @@ vector<Mesh *> Controller::getSelected(){
     return selected_objects;
 }
 
-vector<Mesh *> Controller::getMeshes(){
+vector<Mesh *> Scene::getMeshes(){
     vector<Mesh *> mesh_objs;
     for (int i=0; i < this->meshes.size(); i++){
         mesh_objs.push_back(this->objects[this->meshes[i]]);
@@ -92,7 +92,7 @@ vector<Mesh *> Controller::getMeshes(){
     return mesh_objs;
 }
 
-void Controller::addCube(float x, float y, float z){
+void Scene::addCube(float x, float y, float z){
     Mesh *cube = new Mesh(0, 0, 0);
 
     // Vertices
@@ -172,7 +172,7 @@ void Controller::addCube(float x, float y, float z){
     this->meshes.push_back(this->objects.size()-1);
 }
 
-void Controller::addUVSphere(float x, float y, float z, int rings, int segments){
+void Scene::addUVSphere(float x, float y, float z, int rings, int segments){
     Mesh *uvsphere = new Mesh(0, 0, 0);
    // Create vertices
    /*

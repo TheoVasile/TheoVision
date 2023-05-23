@@ -7,7 +7,7 @@ using namespace std;
 
 class PhongShader : public Shader{
     public:
-        PhongShader(vector<Mesh *> meshes, wxGraphicsContext *gc, wxSize screenDim, Camera *camera);
+        PhongShader(Scene *scene, wxSize screenDim);
         using Shader::ApplyShading;
     protected:
         void drawPoly(vector<array<float, 3> > positions);

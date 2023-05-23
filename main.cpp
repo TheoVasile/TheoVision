@@ -4,11 +4,10 @@ wxIMPLEMENT_APP(MyApp);
 
 bool MyApp::OnInit()
 {
-    std::cout << __cplusplus << std::endl;
-    Controller *controller = new Controller();
-    //controller->addUVSphere(0, 0, 20, 4, 8);
-    controller->addCube(0, 0, 20);
-    Viewport *frame = new Viewport(controller);
+    Scene *scene = new Scene();
+    //scene->addUVSphere(0, 0, 20, 4, 8);
+    scene->addCube(0, 0, 20);
+    Viewport *frame = new Viewport(scene);
     frame->Show(true);
     return true;
 }

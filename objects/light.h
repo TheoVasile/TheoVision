@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class Light : Object {
+class Light : public Object {
     public:
         Light(array<float, 3> pow, float power);
         Light(float x, float y, float z, float power);

@@ -2,7 +2,7 @@
 #define DISPLAY_H
 
 #include <wx/wx.h>
-#include "controller.h"
+#include "scene.h"
 #include "utils.h"
 #include "./shaders/flatShader.h"
 #include "./shaders/phongShader.h"
@@ -15,12 +15,12 @@ using namespace std;
 class Viewport : public wxFrame
 {
 public:
-    Viewport(Controller *controller);
+    Viewport(Scene *scene);
  
 private:
     wxPanel *panel;
     Shader *shader;
-    Controller *controller;
+    Scene *scene;
     array<float, 3> normal;
     array<float, 3> vertical;
     float fov;

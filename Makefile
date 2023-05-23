@@ -3,7 +3,9 @@ CFLAGS = `wx-config --cxxflags`
 CFLAGS += -std=c++11
 LDFLAGS = `wx-config --libs`
 
-SOURCES = main.cpp vector.cpp ./objects/object.cpp ./objects/light.cpp ./objects/bmesh.cpp ./objects/vertex.cpp ./objects/edge.cpp ./objects/face.cpp utils.cpp controller.cpp display.cpp camera.cpp ./shaders/shaderUtils.cpp ./shaders/ray.cpp ./shaders/shader.cpp ./shaders/wireframe.cpp ./shaders/flatShader.cpp ./shaders/phongShader.cpp
+SRC_DIRS = ./ ./objects ./shaders
+
+SOURCES = $(wildcard $(addsuffix /*.cpp,$(SRC_DIRS)))
 EXECUTABLE = Theovision
 
 all: $(EXECUTABLE)

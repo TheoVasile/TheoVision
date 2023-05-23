@@ -1,6 +1,6 @@
 #include "wireframe.h"
 
-Wireframe::Wireframe(vector<Mesh *> meshes, wxGraphicsContext *gc, wxSize screenDim, Camera *camera) : Shader(meshes, gc, screenDim, camera){};
+Wireframe::Wireframe(Scene *scene, wxSize screenDim) : Shader(scene, screenDim){};
 
 wxBitmap Wireframe::ApplyShading(int pixelSize){
     int depth = 24;
@@ -18,14 +18,14 @@ wxBitmap Wireframe::ApplyShading(int pixelSize){
     memDC.SetPen(colour);
     memDC.SetBrush(wxBrush(colour));
 
-    for (Mesh *currMesh : this->meshes){
+    for (Mesh *currMesh : scene->getMeshes()){
         for (Edge *currEdge : currMesh->getEdges()) {
-            array<float, 2> v1_coords = this->camera->projectPoint(currEdge->vertStart->getPos(), this->screenDim);
-            array<float, 2> v2_coords = this->camera->projectPoint(currEdge->vertEnd->getPos(), this->screenDim);
+            array<float, 2> v1_coords = this->scene->getActiveCamera()->projectPoint(currEdge->vertStart->getPos(), this->screenDim);
+            array<float, 2> v2_coords = this->scene->getActiveCamera()->projectPoint(currEdge->vertEnd->getPos(), this->screenDim);
             memDC.DrawLine((int)v1_coords[0], (int)v1_coords[1],(int)v2_coords[0], (int)v2_coords[1]);
         }
         for (Vertex *currVert : currMesh->getVerts()){
-            array<float, 2> screenCoord = camera->projectPoint(currVert->getPos(), this->screenDim);
+            array<float, 2> screenCoord = scene->getActiveCamera()->projectPoint(currVert->getPos(), this->screenDim);
             memDC.DrawCircle((int) screenCoord[0], (int) screenCoord[1], 1);
         }
     }

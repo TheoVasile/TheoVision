@@ -5,7 +5,7 @@
 
 class Wireframe : public Shader{
     public:
-        Wireframe(vector<Mesh *> meshes, wxGraphicsContext *gc, wxSize screenDim, Camera *camera);
+        Wireframe(Scene *scene, wxSize screenDim);
         wxBitmap ApplyShading(int pixelSize = 10);
 };
 

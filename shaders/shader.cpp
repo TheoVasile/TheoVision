@@ -1,11 +1,9 @@
 #include "shader.h"
 
-Shader::Shader(vector<Mesh *> meshes, wxGraphicsContext *gc, wxSize screenDim, Camera *camera)
+Shader::Shader(Scene *scene, wxSize screenDim)
 {
-    this->meshes = meshes;
-    this->gc = gc;
+    this->scene = scene;
     this->screenDim = screenDim;
-    this->camera = camera;
 }
 
 wxBitmap Shader::ApplyShading(int pixelSize)
@@ -33,8 +31,8 @@ wxBitmap Shader::ApplyShading(int pixelSize)
     wxColor col(255, 0, 0);
     memDC.SetPen(wxPen(col));
     memDC.SetBrush(wxBrush(col));
-    for (Mesh *currMesh : this->meshes){
-        array<float, 2> originPos = this->camera->projectPoint(currMesh->getOrigin(), this->screenDim);
+    for (Mesh *currMesh : scene->getMeshes()){
+        array<float, 2> originPos = scene->getActiveCamera()->projectPoint(currMesh->getOrigin(), this->screenDim);
         memDC.DrawCircle((int)originPos[0], (int)originPos[1], 1);
     }
 

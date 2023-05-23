@@ -1,15 +1,15 @@
 #include "display.h"
 
 
-Viewport::Viewport(Controller * controller)
+Viewport::Viewport(Scene *scene)
     : wxFrame(NULL, wxID_ANY, "TheoVision 3D", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE | wxWS_EX_PROCESS_UI_UPDATES)
 {
     wxPanel * panel = new wxPanel(this);
-    this->controller = controller;
+    this->scene = scene;
 
     wxPaintDC dc(this);
     wxGraphicsContext* gc = wxGraphicsContext::Create(dc);
-    this->shader = new PhongShader(this->controller->getMeshes(), gc, this->GetSize(), this->controller->getActiveCamera());
+    this->shader = new PhongShader(this->scene, this->GetSize());
 
     SetBackgroundColour(wxColour(* wxWHITE));
 
@@ -73,11 +73,11 @@ void Viewport::OnHello(wxCommandEvent& event)
 
 void Viewport::OnMouseMotion(wxMouseEvent& event)
 {
-    this->controller->cursor_movement[0] = event.GetX() - this->prev_cursor_pos[0];
+    this->scene->cursor_movement[0] = event.GetX() - this->prev_cursor_pos[0];
     this->prev_cursor_pos[0] = event.GetX();
-    this->controller->cursor_movement[1] = event.GetY() - this->prev_cursor_pos[1];
+    this->scene->cursor_movement[1] = event.GetY() - this->prev_cursor_pos[1];
     this->prev_cursor_pos[1] = event.GetY();
-    this->controller->operate();
+    this->scene->operate();
     Refresh();
 }
 
@@ -86,7 +86,7 @@ void Viewport::OnMouseWheel(wxMouseEvent& event)
     float rotation = event.GetWheelRotation();
     if (rotation != 0) {
         // Scroll up event detected
-        this->controller->getActiveCamera()->rotate(0, 0, rotation * M_PI / 360);
+        this->scene->getActiveCamera()->rotate(0, 0, rotation * M_PI / 360);
     }
     Refresh();
     event.Skip();
@@ -94,23 +94,23 @@ void Viewport::OnMouseWheel(wxMouseEvent& event)
 
 void Viewport::OnClick(wxMouseEvent& event)
 {
-    this->controller->setOperation(0);
+    this->scene->setOperation(0);
 }
 
 void Viewport::OnKeyPress(wxKeyEvent& event)
 {
     switch(event.GetUnicodeKey()){
         case 'G':
-            this->controller->setOperation(ID_GRAB);
+            this->scene->setOperation(ID_GRAB);
             break;
         case 'R':
-            this->controller->setOperation(ID_ROTATE);
+            this->scene->setOperation(ID_ROTATE);
             break;
         case 'S':
-            this->controller->setOperation(ID_SCALE);
+            this->scene->setOperation(ID_SCALE);
             break;
         case 'W':
-            this->controller->setOperation(ID_ZOOM_IN);
+            this->scene->setOperation(ID_ZOOM_IN);
             break;
     }
     Refresh();
@@ -120,7 +120,7 @@ void Viewport::OnKeyPress(wxKeyEvent& event)
 void Viewport::OnKeyUp(wxKeyEvent& event){
     switch(event.GetUnicodeKey()){
         case 'W':
-            this->controller->setOperation(0);
+            this->scene->setOperation(0);
             break;
     }
     Refresh();
