@@ -1,6 +1,7 @@
 #include "bmesh.h"
 
-Mesh::Mesh(float x, float y, float z):Object(x, y, z){};
+Mesh::Mesh(float x, float y, float z):Object(x, y, z){}
+Mesh::Mesh(array<float, 3> pos):Object(pos){}
 
 void Mesh::scale(float x, float y, float z)
 {

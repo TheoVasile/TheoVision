@@ -1,5 +1,9 @@
 #include "object.h"
 
+Object::Object(array<float, 3> pos){
+    this->origin = origin;
+}
+
 Object::Object(float x, float y, float z){
     this->origin[0] = x;
     this->origin[1] = y;

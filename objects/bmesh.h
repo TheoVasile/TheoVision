@@ -27,6 +27,7 @@ public:
      * @param z The z-coordinate of the mesh.
      */
     Mesh(float x, float y, float z);
+    Mesh(array<float, 3> pos);
 
     /**
      * @brief Adds a vertex to the mesh with the given position.

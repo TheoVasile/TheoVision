@@ -11,6 +11,7 @@ using namespace std;
 
 class Object{
     public:
+        Object(array<float, 3> pos);
         Object(float x, float y, float z);
         virtual void scale(float x, float y, float z);
         void scale(float size);
