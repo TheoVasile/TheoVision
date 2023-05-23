@@ -56,6 +56,13 @@ void Shader::drawLight(Light *light)
     
     memDC.SetBrush(*wxTRANSPARENT_BRUSH);
     memDC.DrawCircle((int) screenCoord[0], (int) screenCoord[1], 10);
+
+    // Check if the light source is a sun
+    SunLight *sunLight = dynamic_cast<SunLight *>(light);
+    if (sunLight != nullptr) {
+        array<float, 2> endPos = this->scene->getActiveCamera()->projectPoint(add(sunLight->getOrigin(), multiply(sunLight->direction, 10)), this->screenDim);
+        memDC.DrawLine((int) screenCoord[0], (int) screenCoord[1], (int) endPos[0], (int) endPos[1]);
+    }
 }
 
 wxColour Shader::getPixelColour(int x, int y)

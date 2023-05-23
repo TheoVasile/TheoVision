@@ -56,7 +56,7 @@ void Viewport::OnExit(wxCommandEvent& event)
 void Viewport::OnPaint(wxPaintEvent& event){
     wxPaintDC dc(this);
 
-    dc.DrawBitmap(this->shader->ApplyShading(), 0, 0);
+    dc.DrawBitmap(this->shader->ApplyShading(10), 0, 0);
 }
 
 void Viewport::OnMouseMotion(wxMouseEvent& event)

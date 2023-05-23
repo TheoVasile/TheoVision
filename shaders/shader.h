@@ -4,6 +4,7 @@
 #include "../scene.h"
 #include "../camera.h"
 #include "../objects/bmesh.h"
+#include "../objects/sunLight.h"
 #include "ray.h"
 #include <wx/wx.h>
 #include <vector>

@@ -15,7 +15,6 @@ class SunLight : public Light {
         using Light::rotate;
         using Light::getOrigin;
         using Light::setOrigin;
-    protected:
         array<float, 3> direction;
 };
 
