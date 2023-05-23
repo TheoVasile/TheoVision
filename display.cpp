@@ -65,7 +65,7 @@ void Viewport::OnPaint(wxPaintEvent& event){
         //dc.DrawBitmap(wireShader->ApplyShading(), 0, 0);
 
         wxColor col(255, 0, 0);
-        dc.SetPen( wxPen(col) );
+        dc.SetPen(wxPen(col));
         dc.SetBrush(wxBrush(col));
         array<float, 2> originPos = cam->projectPoint(this->controller->getMeshes()[i]->getOrigin(), this->GetSize());
         dc.DrawCircle((int)originPos[0], (int)originPos[1], 1);

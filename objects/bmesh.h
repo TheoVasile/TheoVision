@@ -1,8 +1,8 @@
 #ifndef BMESH_H
 #define BMESH_H
 
-#include <vector>
 #include <wx/wx.h>
+#include "object.h"
 #include "../utils.h"
 #include "vertex.h"
 #include "edge.h"
@@ -16,7 +16,7 @@ using namespace std;
  *
  * The Mesh class provides functionality to manipulate and operate on a mesh structure. It is based ont he winged edge data structure
  */
-class Mesh{
+class Mesh : public Object{
 
 public:
     /**
@@ -92,28 +92,10 @@ public:
      */
     void addFace(int edgeIndex, bool pair=false);
 
-    /**
-     * @brief Retrieves the origin coordinates of the mesh.
-     *
-     * @return An array of floats representing the origin coordinates [x, y, z].
-     */
-    array<float, 3> getOrigin();
+    
+    using Object::getOrigin;
 
-    /**
-     * @brief Assigns a new coordinate to the origin.
-     * 
-     * @param x The x-coordinate of the origin
-     * @param y The y-coordinate of the origin
-     * @param z The z-coordinate of the origin
-     */
-    void setOrigin(float x, float y, float z);
-
-    /**
-     * @brief Assigns a new coordinate to the origin.
-     * 
-     * @param pos An array of floats representing the new origin coordinates [x, y, z].
-     */
-    void setOrigin(array<float, 3> pos);
+    using Object::setOrigin;
 
     /**
      * @brief Retrieves a vector of all vertices in the mesh.
@@ -170,14 +152,8 @@ public:
      * @param y The scaling factor for the y-axis.
      * @param z The scaling factor for the z-axis.
      */
-    void scale(float x, float y, float z);
-
-    /**
-     * @brief Scales the mesh uniformly by the given size.
-     *
-     * @param size The scaling factor to be applied uniformly to all axes.
-     */
-    void scale(float size);
+    void scale(float x, float y, float z) override;
+    using Object::scale;
 
     /**
      * @brief Moves the mesh by the given translation in each axis.
@@ -186,33 +162,18 @@ public:
      * @param y The translation along the y-axis.
      * @param z The translation along the z-axis.
      */
-    void move(float x, float y, float z);
-
-    /**
-     * @brief Moves the mesh by the given translation vector.
-     *
-     * @param translation The translation vector as an array of floats [x, y, z].
-     */
-    void move(array<float, 3> translation);
+    void move(float x, float y, float z) override;
+    using Object::move;
 
     /**
      * @brief Rotates the mesh by the given rotation angles.
      *
      * @param rot The rotation angles as an array of floats [xrot, yrot, zrot].
      */
-    void rotate(array<float, 3> rot);
+    void rotate(array<float, 3> rot) override;
+    using Object::rotate;
 
-    /**
-     * @brief Rotates the mesh by the given rotation angles for each axis.
-     *
-     * @param xrot The rotation angle around the x-axis.
-     * @param yrot The rotation angle around the y-axis.
-     * @param zrot The rotation angle around the z-axis.
-     */
-    void rotate(float xrot, float yrot, float zrot);
-
-private:
-    array<float, 3> origin; /**< The origin coordinates of the mesh. */
+protected:
     vector<Vertex*> vertices; /**< The collection of vertices in the mesh. */
     vector<Edge*> edges; /**< The collection of edges in the mesh. */
     vector<Face*> faces; /**< The collection of faces in the mesh. */

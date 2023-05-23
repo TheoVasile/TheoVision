@@ -2,14 +2,6 @@
 #define PHONG_H
 
 #include "shader.h"
-/*
-#include "../camera.h"
-#include "../objects/bmesh.h"
-#include "ray.h"
-#include <wx/wx.h>
-#include <vector>
-#include <iostream>
-*/
 
 using namespace std;
 
