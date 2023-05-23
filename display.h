@@ -38,7 +38,5 @@ private:
     void OnPaint(wxPaintEvent& event);
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
-    array<float, 2> projectPoint(float x, float y, float z);
-    array<float, 2> projectPoint(array<float, 3> pos);
 };
 #endif

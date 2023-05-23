@@ -57,21 +57,7 @@ void Viewport::OnExit(wxCommandEvent& event)
 void Viewport::OnPaint(wxPaintEvent& event){
     wxPaintDC dc(this);
 
-    // Mesh loop
-    for (int i = 0; i < this->controller->getMeshes().size(); i++){
-        Camera *cam = this->controller->getActiveCamera();
-
-        dc.DrawBitmap(this->shader->ApplyShading(), 0, 0);
-
-        //Wireframe *wireShader = new Wireframe(this->controller->getMeshes(), gc, this->GetSize(), cam);
-        //dc.DrawBitmap(wireShader->ApplyShading(), 0, 0);
-
-        wxColor col(255, 0, 0);
-        dc.SetPen(wxPen(col));
-        dc.SetBrush(wxBrush(col));
-        array<float, 2> originPos = cam->projectPoint(this->controller->getMeshes()[i]->getOrigin(), this->GetSize());
-        dc.DrawCircle((int)originPos[0], (int)originPos[1], 1);
-    }
+    dc.DrawBitmap(this->shader->ApplyShading(), 0, 0);
 }
 
 void Viewport::OnAbout(wxCommandEvent& event)
@@ -100,7 +86,7 @@ void Viewport::OnMouseWheel(wxMouseEvent& event)
     float rotation = event.GetWheelRotation();
     if (rotation != 0) {
         // Scroll up event detected
-        this->controller->getActiveCamera()->rotate(0, 0, rotation * PI / 360);
+        this->controller->getActiveCamera()->rotate(0, 0, rotation * M_PI / 360);
     }
     Refresh();
     event.Skip();
@@ -148,32 +134,4 @@ void Viewport::OnShow(wxShowEvent& event)
 
     // Unbind the OnShow handler since we only need to call SetFocus once
     Unbind(wxEVT_SHOW, &Viewport::OnShow, this);
-}
-
-
-array<float, 2> Viewport::projectPoint(float x, float y, float z){
-    array<float, 3> dir;
-    dir[0] = x - this->pos[0];
-    dir[1] = y - this->pos[1];
-    dir[2] = z - this->pos[2];
-
-    array<float, 3> x_component = project_onto_plane(dir, this->vertical);
-    x_component = normalize(x_component);
-
-    array<float, 3> y_component = project_onto_plane(dir, cross(this->vertical, this->normal));
-    y_component = normalize(y_component);
-
-    float x_angle = acos(dot(x_component, this->normal)) * 180.0 / PI;
-    x_angle = x_angle * (float) sign(dot(x_component, cross(this->vertical, this->normal)));
-
-    float y_angle = acos(dot(y_component, this->normal)) * 180.0 / PI;
-    y_angle = y_angle * (float) sign(dot(y_component, this->vertical));
-
-    wxSize screen_dim = this->GetSize();
-    int scale_factor = min(screen_dim.GetHeight(), screen_dim.GetWidth());
-    return {x_angle / this->fov * 2 * scale_factor + screen_dim.GetWidth() / 2, y_angle / this->fov * 2 * scale_factor + screen_dim.GetHeight() / 2};
-}
-
-array<float, 2> Viewport::projectPoint(array<float, 3> pos){
-    return this->projectPoint(pos[0], pos[1], pos[2]);
 }

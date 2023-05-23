@@ -1,7 +1,7 @@
 #include "object.h"
 
 Object::Object(array<float, 3> pos){
-    this->origin = origin;
+    this->origin = pos;
 }
 
 Object::Object(float x, float y, float z){

@@ -6,7 +6,6 @@
 #include "utils.h"
 #include <math.h>
 
-#define PI 3.141592653589793
 #define ID_GRAB 1
 #define ID_ROTATE 2
 #define ID_SCALE 3

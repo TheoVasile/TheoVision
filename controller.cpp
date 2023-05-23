@@ -60,7 +60,7 @@ void Controller::operate(){
             break;
         }
         case ID_ROTATE: {
-            this->rotate(0, cursor_movement[0] * PI / 180, -cursor_movement[1] * PI / 180);
+            this->rotate(0, cursor_movement[0] * M_PI / 180, -cursor_movement[1] * M_PI / 180);
             break;
         }
         case ID_SCALE:

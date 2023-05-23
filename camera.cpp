@@ -45,10 +45,10 @@ array<float, 2> Camera::projectPoint(float x, float y, float z, wxSize screenDim
     array<float, 3> y_component = project_onto_plane(dir, cross(this->vertical, this->normal));
     y_component = normalize(y_component);
 
-    float x_angle = acos(dot(x_component, this->normal)) * 180.0 / PI;
+    float x_angle = acos(dot(x_component, this->normal)) * 180.0 / M_PI;
     x_angle = x_angle * (float) sign(dot(x_component, cross(this->vertical, this->normal)));
 
-    float y_angle = acos(dot(y_component, this->normal)) * 180.0 / PI;
+    float y_angle = acos(dot(y_component, this->normal)) * 180.0 / M_PI;
     y_angle = y_angle * (float) sign(dot(y_component, this->vertical));
 
     int scale_factor = min(screenDim.GetHeight(), screenDim.GetWidth());

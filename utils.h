@@ -7,8 +7,6 @@
 #include <math.h>
 #include "vector.h"
 
-#define PI 3.1415
-
 using namespace std;
 
 class Vector;
