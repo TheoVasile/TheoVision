@@ -54,7 +54,7 @@ void Scene::operate(){
     */
     switch(this->operation){
         case ID_GRAB: {
-            float movementFactor = dist(this->activeCamera->getPos(), this->getSelected()[0]->getOrigin()) / 1000;
+            float movementFactor = dist(this->activeCamera->getOrigin(), this->getSelected()[0]->getOrigin()) / 1000;
             this->move(multiply(cross(this->activeCamera->getNormal(), this->activeCamera->getVertical()), -this->cursor_movement[0] * movementFactor));
             this->move(multiply(this->activeCamera->getVertical(), this->cursor_movement[1] * movementFactor));
             break;
@@ -65,9 +65,6 @@ void Scene::operate(){
         }
         case ID_SCALE:
             this->scale(this->cursor_movement[0]/10+1);
-            break;
-        case ID_ZOOM_IN:
-            this->activeCamera->zoom();
             break;
     }
 }

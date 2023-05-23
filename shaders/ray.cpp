@@ -1,14 +1,7 @@
 #include "ray.h"
 
-Ray::Ray(Vector *_vector)
+Ray::Ray(array<float, 3> pos, array<float, 3> direction):Vector(pos, direction)
 {
-    this->_vector = _vector;
-    this->hasHit = false;
-}
-
-Ray::Ray(array<float, 3> pos, array<float, 3> direction)
-{
-    this->_vector = new Vector(pos, direction);
     this->hasHit = false;
 }
 
@@ -22,13 +15,13 @@ void Ray::cast(array<array<float, 3>, 3> tri)
     this->hasHit = false;
     // Find the point of intersection with the plane
     array<float, 3> normal = getNormal(tri);
-    float numerator = -sum(multiply(normal, subtract(this->_vector->pos, tri[0])));
-    float denominator = sum(multiply(normal, this->_vector->direction));
+    float numerator = -sum(multiply(normal, subtract(this->pos, tri[0])));
+    float denominator = sum(multiply(normal, this->direction));
     if (denominator == 0) {
         return;
     }
     float t = numerator / denominator;
-    array<float, 3> collision = add(this->_vector->pos, multiply(this->_vector->direction, t));
+    array<float, 3> collision = add(this->pos, multiply(this->direction, t));
 
     // See if the point lies within the tri.
     array<float, 3> v1 = subtract(collision, tri[0]);
@@ -55,7 +48,7 @@ void Ray::cast(Face *face)
         if (!this->hasHit) {
             continue;
         }
-        float currDist = dist(this->collisionPoint, this->_vector->pos);
+        float currDist = dist(this->collisionPoint, this->pos);
         if (currDist < minDist) {
             minDist = currDist;
             closestPoint = this->collisionPoint;
@@ -77,7 +70,7 @@ void Ray::cast(Mesh *mesh)
         if (!this->hasHit) {
             continue;
         }
-        float currDist = dist(this->collisionPoint, this->_vector->pos);
+        float currDist = dist(this->collisionPoint, this->pos);
         if (currDist < minDist) {
             minDist = currDist;
             closestPoint = this->collisionPoint;
@@ -98,7 +91,7 @@ void Ray::cast(vector<Mesh *> meshes)
         if (!this->hasHit) {
             continue;
         }
-        float currDist = dist(this->collisionPoint, this->_vector->pos);
+        float currDist = dist(this->collisionPoint, this->pos);
         if (currDist < minDist) {
             minDist = currDist;
             closestPoint = this->collisionPoint;

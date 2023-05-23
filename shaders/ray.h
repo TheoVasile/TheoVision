@@ -13,18 +13,17 @@
 
 using namespace std;
 
-class Ray {
+class Ray : public Vector {
     public:
-        Ray(Vector *vector);
         Ray(array<float, 3> pos, array<float, 3> direction);
         array<float, 3> getCollisionPoint();
+        using Vector::getPoint;
         void cast(array<array<float, 3>, 3> tri);
         void cast(Face *face);
         void cast(Mesh *mesh);
         void cast(vector<Mesh *> meshes);
         bool hasHit;
-    private:
-        Vector *_vector;
+    protected:
         array<float, 3> collisionPoint;
 };
 
