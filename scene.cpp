@@ -51,7 +51,8 @@ void Scene::select(int x, int y) {
     float minDist = numeric_limits<float>::infinity();
     Object *selection;
     for (Object *currObject : this->objects) {
-        float currDist = pow(currObject->getOrigin()[0] - x, 2) + pow(currObject->getOrigin()[1] - y, 2);
+        array<float, 2> screenOrigin = this->activeCamera->projectPoint(currObject->getOrigin(), this->screenDim);
+        float currDist = abs(screenOrigin[0] - x) + abs(screenOrigin[1] - y);
         if (currDist < minDist) {
             minDist = currDist;
             selection = currObject;

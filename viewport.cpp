@@ -5,6 +5,7 @@ Viewport::Viewport(Scene *scene)
     : wxFrame(NULL, wxID_ANY, "TheoVision 3D", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE | wxWS_EX_PROCESS_UI_UPDATES)
 {
     wxPanel * panel = new wxPanel(this);
+    scene->screenDim = wxSize(800, 600);
     this->scene = scene;
     this->opID = 0;
 
@@ -117,6 +118,7 @@ void Viewport::OnKeyPress(wxKeyEvent& event)
             this->opID = ID_SCALE;
             break;
         case 'W':
+            wxPrintf("zoom\n");
             this->opID = ID_ZOOM_IN;
             break;
     }
@@ -127,6 +129,7 @@ void Viewport::OnKeyPress(wxKeyEvent& event)
 void Viewport::OnKeyUp(wxKeyEvent& event){
     switch(event.GetUnicodeKey()){
         case 'W':
+            wxPrintf("zoom end\n");
             this->opID = 0;
             break;
     }
