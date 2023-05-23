@@ -12,6 +12,7 @@ class Light : Object {
         Light(array<float, 3> pow, float power);
         Light(float x, float y, float z, float power);
         virtual float getIntensity(array<float, 3> pos);
+        float getIntensity(float x, float y, float z);
         using Object::scale;
         using Object::move;
         using Object::rotate;
@@ -19,6 +20,6 @@ class Light : Object {
         using Object::setOrigin;
     protected:
         float power;
-}
+};
 
 #endif
