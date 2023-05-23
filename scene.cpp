@@ -66,6 +66,15 @@ void Scene::select(array<int, 2> cursorPos) {
     this->select(cursorPos[0], cursorPos[1]);
 }
 
+array<float, 3> Scene::getMedianPoint() {
+    array<float, 3> median = {0, 0, 0};
+    for (Object *currObject : this->selected) {
+        median = add(median, currObject->getOrigin());
+    }
+    median = multiply(median, 1 / this->selected.size());
+    return median;
+}
+
 vector<Object *> Scene::getSelected() {
     return this->selected;
 }

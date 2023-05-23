@@ -26,6 +26,7 @@ class Scene{
         void rotate(array<float, 3> rot);
         void scale(float size);
         void scale(float x, float y, float z);
+        array<float, 3> getMedianPoint();
         Camera *getActiveCamera();
         vector<Object *> getSelected();
         vector<Mesh *> getMeshes();

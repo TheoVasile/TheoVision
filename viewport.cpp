@@ -59,6 +59,18 @@ void Viewport::OnPaint(wxPaintEvent& event){
     wxPaintDC dc(this);
 
     dc.DrawBitmap(this->shader->ApplyShading(10), 0, 0);
+
+    switch(opID){
+        case ID_SCALE:{
+            array<float, 2> p1 = this->scene->getActiveCamera()->projectPoint(this->scene->getMedianPoint(), this->scene->screenDim);
+            array<float, 2> p2 = {this->prev_cursor_pos[0], this->prev_cursor_pos[1]};
+            
+            wxPen pen(wxColour(0, 0, 0), 1, wxPENSTYLE_SHORT_DASH);
+            dc.SetPen(pen);
+            dc.DrawLine((int) p1[0], (int) p1[1], (int) p2[0], (int) p2[1]);
+            break;
+        }
+    }
 }
 
 void Viewport::OnMouseMotion(wxMouseEvent& event)
@@ -79,7 +91,10 @@ void Viewport::OnMouseMotion(wxMouseEvent& event)
             break;
         }
         case ID_SCALE:
-            scene->scale(this->mouse_motion[0]/10+1);
+            array<float, 2> screenOrigin = scene->getActiveCamera()->projectPoint(scene->getMedianPoint(), scene->screenDim);
+            array<float, 2> dir = {this->prev_cursor_pos[0] - screenOrigin[0], this->prev_cursor_pos[1] - screenOrigin[1]};
+            float movementFactor = (this->mouse_motion[0] * dir[0] + this->mouse_motion[1] * dir[1]) / (pow(dir[0], 2) + pow(dir[1], 2));
+            scene->scale(movementFactor+1);
             break;
     }
     Refresh();
