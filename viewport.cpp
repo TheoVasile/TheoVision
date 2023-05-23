@@ -1,4 +1,4 @@
-#include "display.h"
+#include "viewport.h"
 
 
 Viewport::Viewport(Scene *scene)
@@ -6,6 +6,7 @@ Viewport::Viewport(Scene *scene)
 {
     wxPanel * panel = new wxPanel(this);
     this->scene = scene;
+    this->opID = 0;
 
     wxPaintDC dc(this);
     wxGraphicsContext* gc = wxGraphicsContext::Create(dc);
@@ -61,11 +62,25 @@ void Viewport::OnPaint(wxPaintEvent& event){
 
 void Viewport::OnMouseMotion(wxMouseEvent& event)
 {
-    this->scene->cursor_movement[0] = event.GetX() - this->prev_cursor_pos[0];
+    this->mouse_motion[0] = event.GetX() - this->prev_cursor_pos[0];
     this->prev_cursor_pos[0] = event.GetX();
-    this->scene->cursor_movement[1] = event.GetY() - this->prev_cursor_pos[1];
+    this->mouse_motion[1] = event.GetY() - this->prev_cursor_pos[1];
     this->prev_cursor_pos[1] = event.GetY();
-    this->scene->operate();
+    switch(this->opID){
+        case ID_GRAB: {
+            float movementFactor = dist(scene->getActiveCamera()->getOrigin(), scene->getSelected()[0]->getOrigin()) / 1000;
+            scene->move(multiply(cross(scene->getActiveCamera()->getNormal(), scene->getActiveCamera()->getVertical()), -this->mouse_motion[0] * movementFactor));
+            scene->move(multiply(scene->getActiveCamera()->getVertical(), this->mouse_motion[1] * movementFactor));
+            break;
+        }
+        case ID_ROTATE: {
+            scene->rotate(0, mouse_motion[0] * M_PI / 180, -mouse_motion[1] * M_PI / 180);
+            break;
+        }
+        case ID_SCALE:
+            scene->scale(this->mouse_motion[0]/10+1);
+            break;
+    }
     Refresh();
 }
 
@@ -82,8 +97,8 @@ void Viewport::OnMouseWheel(wxMouseEvent& event)
 
 void Viewport::OnClick(wxMouseEvent& event)
 {
-    if (this->scene->operation != 0) {
-        this->scene->setOperation(0);
+    if (this->opID != 0) {
+        this->opID = 0;
     } else {
         this->scene->select(event.GetX(), event.GetY());
     }
@@ -93,16 +108,16 @@ void Viewport::OnKeyPress(wxKeyEvent& event)
 {
     switch(event.GetUnicodeKey()){
         case 'G':
-            this->scene->setOperation(ID_GRAB);
+            this->opID = ID_GRAB;
             break;
         case 'R':
-            this->scene->setOperation(ID_ROTATE);
+            this->opID = ID_ROTATE;
             break;
         case 'S':
-            this->scene->setOperation(ID_SCALE);
+            this->opID = ID_SCALE;
             break;
         case 'W':
-            this->scene->setOperation(ID_ZOOM_IN);
+            this->opID = ID_ZOOM_IN;
             break;
     }
     Refresh();
@@ -112,7 +127,7 @@ void Viewport::OnKeyPress(wxKeyEvent& event)
 void Viewport::OnKeyUp(wxKeyEvent& event){
     switch(event.GetUnicodeKey()){
         case 'W':
-            this->scene->setOperation(0);
+            this->opID = 0;
             break;
     }
     Refresh();

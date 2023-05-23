@@ -8,6 +8,9 @@ wxColour DiffuseShader::getPixelColour(int x, int y) {
     if (ray->hasHit) {
         float val = 255 * this->scene->getLights()[0]->getIntensity(ray->getCollisionPoint());
         int col = (int) val < 255 ? val : 255;
+        if (col < 0){
+            col = 0;
+        }
         return wxColour(col, col, col);
     }
     return wxColour(255, 255, 255);

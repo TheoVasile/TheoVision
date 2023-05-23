@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <array>
-#include "display.h"
+#include "viewport.h"
 #include "./objects/sunLight.h"
 #include "./objects/pointLight.h"
  

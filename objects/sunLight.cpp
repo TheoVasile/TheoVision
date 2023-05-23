@@ -10,7 +10,7 @@ SunLight::SunLight(float x, float y, float z, float power, array<float, 3> direc
 
 float SunLight::getIntensity(array<float, 3> pos)
 {
-    return this->power * dot(this->direction, normalize(subtract(pos, this->origin)));
+    return this->power;
 }
 
 void SunLight::rotate(array<float, 3> rot)

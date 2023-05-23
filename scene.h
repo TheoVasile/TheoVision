@@ -20,7 +20,6 @@ using namespace std;
 class Scene{
     public:
         Scene();
-        float cursor_movement[2];
         void move(float x, float y, float z);
         void move(array<float, 3> translation);
         void rotate(float xrot, float yrot, float zrot);
@@ -31,14 +30,12 @@ class Scene{
         vector<Object *> getSelected();
         vector<Mesh *> getMeshes();
         vector<Light *> getLights();
-        void operate();
         void select(int x, int y);
         void select(array<int, 2> cursorPos);
         void setOperation(int operation);
         void addLight(Light *light);
         void addCube(float x, float y, float z);
         void addUVSphere(float x, float y, float z, int rings, int segments);
-        int operation;
     private:
         Camera *activeCamera;
         vector<Object *> objects;

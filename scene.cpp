@@ -1,7 +1,6 @@
 #include "scene.h"
 
 Scene::Scene(){
-    this->operation=0;
     this->activeCamera = new Camera(0, 0, 0);
 }
 
@@ -48,27 +47,6 @@ void Scene::scale(float size){
     this->scale(size, size, size);
 }
 
-void Scene::operate(){
-    /*
-    Perform the current operation on all selected objects
-    */
-    switch(this->operation){
-        case ID_GRAB: {
-            float movementFactor = dist(this->activeCamera->getOrigin(), this->getSelected()[0]->getOrigin()) / 1000;
-            this->move(multiply(cross(this->activeCamera->getNormal(), this->activeCamera->getVertical()), -this->cursor_movement[0] * movementFactor));
-            this->move(multiply(this->activeCamera->getVertical(), this->cursor_movement[1] * movementFactor));
-            break;
-        }
-        case ID_ROTATE: {
-            this->rotate(0, cursor_movement[0] * M_PI / 180, -cursor_movement[1] * M_PI / 180);
-            break;
-        }
-        case ID_SCALE:
-            this->scale(this->cursor_movement[0]/10+1);
-            break;
-    }
-}
-
 void Scene::select(int x, int y) {
     float minDist = numeric_limits<float>::infinity();
     Object *selection;
@@ -85,10 +63,6 @@ void Scene::select(int x, int y) {
 
 void Scene::select(array<int, 2> cursorPos) {
     this->select(cursorPos[0], cursorPos[1]);
-}
-
-void Scene::setOperation(int operation){
-    this->operation=operation;
 }
 
 vector<Object *> Scene::getSelected() {

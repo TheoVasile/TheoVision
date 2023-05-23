@@ -1,5 +1,5 @@
-#ifndef DISPLAY_H
-#define DISPLAY_H
+#ifndef VIEWPORT_H
+#define VIEWPORT_H
 
 #include <wx/wx.h>
 #include "scene.h"
@@ -27,7 +27,7 @@ private:
     float fov;
     float prev_cursor_pos[2];
     float mouse_motion[2];
-    char operation;
+    int opID;
     array<float, 3> pos;
     void OnKeyUp(wxKeyEvent& event);
     void OnKeyPress(wxKeyEvent& event);
