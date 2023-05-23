@@ -34,9 +34,7 @@ private:
     void OnMouseWheel(wxMouseEvent& event);
     void OnClick(wxMouseEvent& event);
     void OnShow(wxShowEvent& event);
-    void OnHello(wxCommandEvent& event);
     void OnPaint(wxPaintEvent& event);
     void OnExit(wxCommandEvent& event);
-    void OnAbout(wxCommandEvent& event);
 };
 #endif

@@ -73,20 +73,22 @@ void Scene::setOperation(int operation){
     this->operation=operation;
 }
 
-vector<Mesh *> Scene::getSelected(){
-    vector<Mesh *> selected_objects;
-    for (int i=0; i < this->selected.size(); i++){
-        selected_objects.push_back(this->objects[this->selected[i]]);
-    }
-    return selected_objects;
+vector<Object *> Scene::getSelected() {
+    return this->selected;
 }
 
-vector<Mesh *> Scene::getMeshes(){
-    vector<Mesh *> mesh_objs;
-    for (int i=0; i < this->meshes.size(); i++){
-        mesh_objs.push_back(this->objects[this->meshes[i]]);
-    }
-    return mesh_objs;
+vector<Mesh *> Scene::getMeshes() {
+    return this->meshes;
+}
+
+vector<Light *> Scene::getLights() {
+    return this->lights;
+}
+
+void Scene::addLight(Light *light)
+{
+    this->objects.push_back(light);
+    this->lights.push_back(light);
 }
 
 void Scene::addCube(float x, float y, float z){
@@ -165,8 +167,8 @@ void Scene::addCube(float x, float y, float z){
     cube->move(x, y, z);
 
     this->objects.push_back(cube);
-    this->selected.push_back(this->objects.size()-1);
-    this->meshes.push_back(this->objects.size()-1);
+    this->selected.push_back(cube);
+    this->meshes.push_back(cube);
 }
 
 void Scene::addUVSphere(float x, float y, float z, int rings, int segments){
@@ -238,6 +240,6 @@ void Scene::addUVSphere(float x, float y, float z, int rings, int segments){
 
     uvsphere->move(x, y, z);
     this->objects.push_back(uvsphere);
-    this->selected.push_back(this->objects.size()-1);
-    this->meshes.push_back(this->objects.size()-1);
+    this->selected.push_back(uvsphere);
+    this->meshes.push_back(uvsphere);
 }

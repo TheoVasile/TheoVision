@@ -13,7 +13,6 @@ wxBitmap Shader::ApplyShading(int pixelSize)
     wxBitmap bitmap(this->screenDim.GetWidth(), this->screenDim.GetHeight(), depth);
 
     // Create a wxMemoryDC and associate it with the bitmap
-    wxMemoryDC memDC;
     memDC.SelectObject(bitmap);
 
     // Draw onto the bitmap using the memory DC
@@ -28,7 +27,15 @@ wxBitmap Shader::ApplyShading(int pixelSize)
         }
     }
 
-    wxColor col(255, 0, 0);
+    wxColor col(0, 0, 0);
+    memDC.SetPen(wxPen(col));
+    memDC.SetBrush(wxBrush(col));
+
+    for (Light *currLight : scene->getLights()) {
+        this->drawLight(currLight);
+    }
+
+    col = wxColor(255, 0, 0);
     memDC.SetPen(wxPen(col));
     memDC.SetBrush(wxBrush(col));
     for (Mesh *currMesh : scene->getMeshes()){
@@ -37,6 +44,18 @@ wxBitmap Shader::ApplyShading(int pixelSize)
     }
 
     return bitmap;
+}
+
+void Shader::drawLight(Light *light)
+{
+    wxColor col(0, 0, 0);
+    memDC.SetPen(wxPen(col));
+    memDC.SetBrush(wxBrush(col));
+    array<float, 2> screenCoord = this->scene->getActiveCamera()->projectPoint(light->getOrigin(), this->screenDim);
+    memDC.DrawCircle((int) screenCoord[0], (int) screenCoord[1], 5);
+    
+    memDC.SetBrush(*wxTRANSPARENT_BRUSH);
+    memDC.DrawCircle((int) screenCoord[0], (int) screenCoord[1], 10);
 }
 
 wxColour Shader::getPixelColour(int x, int y)

@@ -1,7 +1,9 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 #include <wx/wx.h>
+#include "./objects/object.h"
 #include "./objects/bmesh.h"
+#include "./objects/light.h"
 #include "camera.h"
 #include "utils.h"
 #include <math.h>
@@ -23,17 +25,20 @@ class Scene{
         void scale(float size);
         void scale(float x, float y, float z);
         Camera *getActiveCamera();
-        vector<Mesh *> getSelected();
+        vector<Object *> getSelected();
         vector<Mesh *> getMeshes();
+        vector<Light *> getLights();
         void operate();
         void setOperation(int operation);
+        void addLight(Light *light);
         void addCube(float x, float y, float z);
         void addUVSphere(float x, float y, float z, int rings, int segments);
     private:
         int operation;
         Camera *activeCamera;
-        vector<int> selected;
-        vector<Mesh *> objects;
-        vector<int> meshes;
+        vector<Object *> objects;
+        vector<Object *> selected;
+        vector<Mesh *> meshes;
+        vector<Light *> lights;
 };
 #endif

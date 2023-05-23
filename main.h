@@ -3,6 +3,7 @@
 #include <vector>
 #include <array>
 #include "display.h"
+#include "./objects/sunLight.h"
  
 #ifndef WX_PRECOMP
     #include <wx/wx.h>

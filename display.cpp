@@ -44,7 +44,6 @@ Viewport::Viewport(Scene *scene)
     panel->Bind(wxEVT_MOTION, &Viewport::OnMouseMotion, this);
     panel->Bind(wxEVT_LEFT_DOWN, &Viewport::OnClick, this);
     panel->Bind(wxEVT_MOUSEWHEEL, &Viewport::OnMouseWheel, this);
-    Bind(wxEVT_MENU, &Viewport::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &Viewport::OnExit, this, wxID_EXIT);
 }
 
@@ -58,17 +57,6 @@ void Viewport::OnPaint(wxPaintEvent& event){
     wxPaintDC dc(this);
 
     dc.DrawBitmap(this->shader->ApplyShading(), 0, 0);
-}
-
-void Viewport::OnAbout(wxCommandEvent& event)
-{
-    wxMessageBox("This is a wxWidgets Hello World example",
-                 "About Hello World", wxOK | wxICON_INFORMATION);
-}
- 
-void Viewport::OnHello(wxCommandEvent& event)
-{
-    wxLogMessage("3D interactive display using wxWidgets");
 }
 
 void Viewport::OnMouseMotion(wxMouseEvent& event)
