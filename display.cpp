@@ -61,12 +61,12 @@ void Viewport::OnPaint(wxPaintEvent& event){
         PhongShader *shader = new PhongShader(this->controller->getMeshes(), gc, this->GetSize(), cam);
         dc.DrawBitmap(shader->ApplyShading(), 0, 0);
 
-        Wireframe *wireShader = new Wireframe(this->controller->getMeshes(), gc, this->GetSize(), cam);
-        dc.DrawBitmap(wireShader->ApplyShading(), 0, 0);
+        //Wireframe *wireShader = new Wireframe(this->controller->getMeshes(), gc, this->GetSize(), cam);
+        //dc.DrawBitmap(wireShader->ApplyShading(), 0, 0);
 
         wxColor col(255, 0, 0);
         dc.SetPen( wxPen(col) );
-        dc.SetBrush( wxBrush(col) );
+        dc.SetBrush(wxBrush(col));
         array<float, 2> originPos = cam->projectPoint(this->controller->getMeshes()[i]->getOrigin(), this->GetSize());
         dc.DrawCircle((int)originPos[0], (int)originPos[1], 1);
     }

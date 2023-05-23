@@ -1,13 +1,7 @@
 #include "phongShader.h"
 
-PhongShader::PhongShader(vector<Mesh *> meshes, wxGraphicsContext *gc, wxSize screenDim, Camera *camera)
-{
-    this->meshes = meshes;
-    this->gc = gc;
-    this->screenDim = screenDim;
-    this->camera = camera;
-}
-
+PhongShader::PhongShader(vector<Mesh *> meshes, wxGraphicsContext *gc, wxSize screenDim, Camera *camera) : Shader(meshes, gc, screenDim, camera){};
+/*
 wxBitmap PhongShader::ApplyShading(int pixelSize)
 {
     int depth = 24;
@@ -32,13 +26,14 @@ wxBitmap PhongShader::ApplyShading(int pixelSize)
 
     return bitmap;
 }
-
+*/
 wxColour PhongShader::getPixelColour(int x, int y)
 {
     Ray *ray = this->camera->castRay(x, y, this->screenDim);
     ray->cast(this->meshes);
     if (ray->hasHit) {
         int distance = (int) pow(255 / dist(ray->getCollisionPoint(), camera->getPos()), 2);
+        wxPrintf("%d\n", distance);
         return wxColour(distance, distance, distance);
     }
     return wxColour(255, 255, 255);

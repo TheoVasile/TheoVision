@@ -16,7 +16,7 @@ class Shader{
         wxBitmap ApplyShading(int pixelSize = 10);
     protected:
         void drawPoly(vector<array<float, 3> > positions);
-        wxColour getPixelColour(int x, int y);
+        virtual wxColour getPixelColour(int x, int y);
         vector<Mesh *> meshes;
         wxGraphicsContext *gc;
         wxSize screenDim;
