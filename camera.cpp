@@ -60,14 +60,15 @@ array<float, 2> Camera::projectPoint(float x, float y, float z, wxSize screenDim
 
 Ray *Camera::castRay(int x, int y, wxSize screenDim)
 {
-    float angle = this->fov * PI / 360;
-    float _x = x - screenDim.GetWidth() / 2;
+    float angle = this->fov * M_PI / 360;
+    float _x = screenDim.GetWidth() / 2 - x;
     array<float, 3> xComponent = multiply(cross(this->normal, this->vertical), _x);
 
     float _y = y - screenDim.GetHeight() / 2;
     array<float, 3> yComponent = multiply(this->vertical, _y);
 
-    array<float, 3> direction = add(yComponent, add(xComponent, multiply(this->normal, screenDim.GetWidth() / 2 * cosf(angle) / sinf(angle))));
+    int scale_factor = min(screenDim.GetHeight(), screenDim.GetWidth());
+    array<float, 3> direction = add(yComponent, add(xComponent, multiply(this->normal, scale_factor * cosf(angle) / sinf(angle))));
     
     Ray *ray = new Ray(this->pos, direction);
     return ray;

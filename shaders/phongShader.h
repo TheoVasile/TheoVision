@@ -13,7 +13,7 @@ using namespace std;
 class PhongShader{
     public:
         PhongShader(vector<Mesh *> meshes, wxGraphicsContext *gc, wxSize screenDim, Camera *camera);
-        wxBitmap ApplyShading();
+        wxBitmap ApplyShading(int pixelShader = 10);
     private:
         void drawPoly(vector<array<float, 3> > positions);
         wxColour getPixelColour(int x, int y);

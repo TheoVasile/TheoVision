@@ -8,7 +8,7 @@ PhongShader::PhongShader(vector<Mesh *> meshes, wxGraphicsContext *gc, wxSize sc
     this->camera = camera;
 }
 
-wxBitmap PhongShader::ApplyShading()
+wxBitmap PhongShader::ApplyShading(int pixelSize)
 {
     int depth = 24;
     int x = 10;
@@ -23,11 +23,13 @@ wxBitmap PhongShader::ApplyShading()
     // Draw onto the bitmap using the memory DC
     memDC.SetBackground(*wxWHITE_BRUSH);
     memDC.Clear();
-    for (int x=0; x < this->screenDim.GetWidth(); x++){
-        for (int y=0; y < this->screenDim.GetHeight(); y++){
-            //wxColour colour((int) x * 255 / this->screenDim.GetWidth(), (int) y * 255 / this->screenDim.GetHeight(), 255);
-            memDC.SetPen(getPixelColour(x, y));
-            memDC.DrawPoint(x, y);
+    for (int x=0; x < this->screenDim.GetWidth(); x+=pixelSize){
+        for (int y=0; y < this->screenDim.GetHeight(); y+=pixelSize){
+            wxColour colour = getPixelColour(x, y);
+            memDC.SetPen(colour);
+            memDC.SetBrush(wxBrush(colour));
+            //memDC.DrawPoint(x, y);
+            memDC.DrawRectangle(x, y, pixelSize, pixelSize);
         }
     }
 
@@ -39,9 +41,8 @@ wxColour PhongShader::getPixelColour(int x, int y)
     Ray *ray = this->camera->castRay(x, y, this->screenDim);
     ray->cast(this->meshes);
     if (ray->hasHit) {
-        int distance = (int) 255 / dist(ray->getCollisionPoint(), camera->getPos());
-        wxPrintf("%d\n", distance);
+        int distance = (int) pow(255 / dist(ray->getCollisionPoint(), camera->getPos()), 2);
         return wxColour(distance, distance, distance);
     }
-    return wxColour(0, 0, 0);
+    return wxColour(255, 255, 255);
 }
