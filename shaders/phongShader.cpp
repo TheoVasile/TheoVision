@@ -28,8 +28,7 @@ wxBitmap PhongShader::ApplyShading(int pixelSize)
             wxColour colour = getPixelColour(x, y);
             memDC.SetPen(colour);
             memDC.SetBrush(wxBrush(colour));
-            //memDC.DrawPoint(x, y);
-            memDC.DrawRectangle(x, y, pixelSize, pixelSize);
+            memDC.DrawRectangle((int) x - pixelSize/2, (int) y - pixelSize, pixelSize, pixelSize);
         }
     }
 
