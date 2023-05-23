@@ -12,6 +12,10 @@ class PhongShader : public Shader{
     protected:
         void drawPoly(vector<array<float, 3> > positions);
         wxColour getPixelColour(int x, int y) override;
+        float specularConstant;
+        float diffuseConstant;
+        float ambientConstant;
+        float shininessConstant;
 };
 
 #endif

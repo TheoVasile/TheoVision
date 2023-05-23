@@ -11,7 +11,7 @@ Viewport::Viewport(Scene *scene)
 
     wxPaintDC dc(this);
     wxGraphicsContext* gc = wxGraphicsContext::Create(dc);
-    this->shader = new DiffuseShader(this->scene, this->GetSize());
+    this->shader = new PhongShader(this->scene, this->GetSize());
 
     SetBackgroundColour(wxColour(* wxWHITE));
 

@@ -10,6 +10,11 @@ array<float, 3> Ray::getCollisionPoint()
     return this->collisionPoint;
 }
 
+array<float, 3> Ray::getCollisionNormal()
+{
+    return normalize(this->collisionNormal);
+}
+
 void Ray::cast(array<array<float, 3>, 3> tri)
 {
     this->hasHit = false;
@@ -33,6 +38,7 @@ void Ray::cast(array<array<float, 3>, 3> tri)
 
     if (abs(angle - 2 * M_PI) < 0.1) {
         this->collisionPoint = collision;
+        this->collisionNormal = getNormal(tri);
     this->hasHit = true;
     }
 }
@@ -42,6 +48,7 @@ void Ray::cast(Face *face)
     bool hit = false;
     float minDist = numeric_limits<float>::infinity();
     array<float, 3> closestPoint;
+    array<float, 3> closestNormal;
     vector<array<array<float, 3>, 3> > tris = face->getTris();
     for (array<array<float, 3>, 3> currTri : tris){
         this->cast(currTri);
@@ -52,11 +59,13 @@ void Ray::cast(Face *face)
         if (currDist < minDist) {
             minDist = currDist;
             closestPoint = this->collisionPoint;
+            closestNormal = this->collisionNormal;
             hit = true;
         }
     }
     this->hasHit = hit;
     this->collisionPoint = closestPoint;
+    this->collisionNormal = closestNormal;
 }
 
 void Ray::cast(Mesh *mesh)
@@ -64,6 +73,7 @@ void Ray::cast(Mesh *mesh)
     bool hit = false;
     float minDist = numeric_limits<float>::infinity();
     array<float, 3> closestPoint;
+    array<float, 3> closestNormal;
     vector<Face *> faces = mesh->getFaces();
     for (Face *currFace : faces) {
         this->cast(currFace);
@@ -74,11 +84,13 @@ void Ray::cast(Mesh *mesh)
         if (currDist < minDist) {
             minDist = currDist;
             closestPoint = this->collisionPoint;
+            closestNormal = this->collisionNormal;
             hit = true;
         }
     }
     this->hasHit = hit;
     this->collisionPoint = closestPoint;
+    this->collisionNormal = closestNormal;
 }
 
 void Ray::cast(vector<Mesh *> meshes)
@@ -86,6 +98,7 @@ void Ray::cast(vector<Mesh *> meshes)
     bool hit = false;
     float minDist = numeric_limits<float>::infinity();
     array<float, 3> closestPoint;
+    array<float, 3> closestNormal;
     for (Mesh *currMesh : meshes) {
         this->cast(currMesh);
         if (!this->hasHit) {
@@ -95,9 +108,11 @@ void Ray::cast(vector<Mesh *> meshes)
         if (currDist < minDist) {
             minDist = currDist;
             closestPoint = this->collisionPoint;
+            closestNormal = this->collisionNormal;
             hit = true;
         }
     }
     this->hasHit = hit;
     this->collisionPoint = closestPoint;
+    this->collisionNormal = closestNormal;
 }

@@ -17,6 +17,7 @@ class Ray : public Vector {
     public:
         Ray(array<float, 3> pos, array<float, 3> direction);
         array<float, 3> getCollisionPoint();
+        array<float, 3> getCollisionNormal();
         using Vector::getPoint;
         void cast(array<array<float, 3>, 3> tri);
         void cast(Face *face);
@@ -25,6 +26,7 @@ class Ray : public Vector {
         bool hasHit;
     protected:
         array<float, 3> collisionPoint;
+        array<float, 3> collisionNormal;
 };
 
 #endif
