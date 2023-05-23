@@ -2,10 +2,16 @@
 
 array<float, 3> multiply(array<float, 3> vector, float coefficient)
 {
-    vector[0] *= coefficient;
-    vector[1] *= coefficient;
-    vector[2] *= coefficient;
-    return vector;
+    array<float, 3> vector2 = {coefficient, coefficient, coefficient};
+    return multiply(vector, vector2);
+}
+
+array<float, 3> multiply(array<float, 3> vector1, array<float, 3> vector2)
+{
+    vector1[0] *= vector2[0];
+    vector1[1] *= vector2[1];
+    vector1[2] *= vector2[2];
+    return vector1;
 }
 
 array<float, 3> subtract(array<float, 3> vector1, array<float, 3> vector2)
@@ -54,6 +60,9 @@ int sign(float val){
 float magnitude(array<float, 3> vector){
     return pow(pow(vector[0], 2) + pow(vector[1], 2) + pow(vector[2], 2), 0.5);
 }
+float magnitude(Vector *vector){
+    return magnitude(vector->direction);
+}
 
 array<float, 3> normalize(array<float, 3> vector){
     float mag;
@@ -91,6 +100,15 @@ array<float, 3> project_onto_plane(array<float, 3> dir, array<float, 3> normal){
     new_dir[2] = new_dir[2] * new_mag;
 
     return new_dir;
+}
+
+array<float, 3> collideLines(Vector *vector1, Vector *vector2)
+{
+    float t = (vector2->pos[1] - vector1->pos[1] - vector1->direction[0] / vector1->direction[1] * (vector2->pos[0] - vector1->pos[0])) / (vector1->direction[0] / vector1->direction[1] * vector2->direction[0] - vector2->direction[1]);
+    if (vector1->getPoint(t)[2] == vector2->getPoint(t)[2]){
+        return vector1->getPoint(t);
+    }
+    return {};
 }
 
 array<float, 3> Rotate(array<float, 3> pos, array<float, 3> rot){

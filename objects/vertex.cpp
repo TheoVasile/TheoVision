@@ -1,5 +1,5 @@
+#include "edge.h"
 #include "vertex.h"
-#include <wx/wx.h>
 
 Vertex::Vertex(float x, float y, float z)
 {

@@ -5,6 +5,7 @@
 #include "controller.h"
 #include "utils.h"
 #include "./shaders/flatShader.h"
+#include "./shaders/phongShader.h"
 #include <iostream>
 #include <list>
 

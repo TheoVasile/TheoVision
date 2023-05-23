@@ -1,20 +1,22 @@
-#ifndef FLATSHADER_H
-#define FLATSHADER_H
+#ifndef PHONG_H
+#define PHONG_H
 
 #include "../camera.h"
 #include "../objects/bmesh.h"
+#include "ray.h"
 #include <wx/wx.h>
 #include <vector>
 #include <iostream>
 
 using namespace std;
 
-class FlatShader{
+class PhongShader{
     public:
-        FlatShader(vector<Mesh *> meshes, wxGraphicsContext *gc, wxSize screenDim, Camera *camera);
-        void ApplyShading();
+        PhongShader(vector<Mesh *> meshes, wxGraphicsContext *gc, wxSize screenDim, Camera *camera);
+        wxBitmap ApplyShading();
     private:
         void drawPoly(vector<array<float, 3> > positions);
+        wxColour getPixelColour(int x, int y);
         vector<Mesh *> meshes;
         wxGraphicsContext *gc;
         wxSize screenDim;

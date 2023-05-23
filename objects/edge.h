@@ -1,12 +1,13 @@
 #ifndef EDGE_H
 #define EDGE_H
+
 #include <iostream>
+#include "vertex.h"
+#include "face.h"
 
 using namespace std;
 
 class Vertex;
-
-class Face;
 
 /**
  * @class Edge
@@ -26,4 +27,5 @@ class Edge{
         Edge *nextEdge;
         Edge *previousEdge;
 };
+
 #endif

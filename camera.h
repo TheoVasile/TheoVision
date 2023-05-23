@@ -2,6 +2,7 @@
 #define CAMERA_H
 
 #include "utils.h"
+#include "./shaders/ray.h"
 #include <array>
 #include <iostream>
 #include <wx/wx.h>
@@ -17,6 +18,7 @@ class Camera{
         void zoom();
         array<float, 2> projectPoint(array<float, 3> pos, wxSize screenDim);
         array<float, 2> projectPoint(float x, float y, float z, wxSize screenDim);
+        Ray *castRay(int x, int y, wxSize screenDim);
         array<float, 3> getPos();
         void setFov(float fov);
         float getFov();

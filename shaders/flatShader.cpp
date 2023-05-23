@@ -44,27 +44,8 @@ void FlatShader::ApplyShading()
         Mesh *currMesh = this->meshes[i];
         // Loop through faces
         for (int j=0; j < currMesh->getFaces().size(); j++){
-            vector<array<float, 3> > vertPositions;
             Face *currFace = currMesh->getFace(j);
-
-            // Trace the path of the edges until the face is completed.
-            Edge *startEdge = currFace->getEdge();
-            Edge *currEdge = startEdge;
-            if (currEdge == NULL){
-                throw runtime_error("Face incorrectly defined.\n");
-            }
-
-            Vertex *currVert = currEdge->vertStart;
-            vertPositions.push_back(currVert->getPos());
-            while (currEdge->nextEdge != startEdge){
-                currVert = currEdge->vertEnd;
-                vertPositions.push_back(currVert->getPos());
-                if (currEdge->nextEdge == NULL){
-                    throw runtime_error("Face is not complete.\n");
-                }
-                currEdge = currEdge->nextEdge;
-            }
-            this->drawPoly(vertPositions);
+            this->drawPoly(currFace->getPoints());
         }
     }
 }

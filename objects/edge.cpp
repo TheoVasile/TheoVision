@@ -1,5 +1,4 @@
 #include "edge.h"
-#include <wx/wx.h>
 
 Edge::Edge(Vertex *vertStart, Vertex *vertEnd){
     this->vertStart = vertStart;

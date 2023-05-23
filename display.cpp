@@ -58,8 +58,8 @@ void Viewport::OnPaint(wxPaintEvent& event){
         Camera *cam = this->controller->getActiveCamera();
 
         wxGraphicsContext* gc = wxGraphicsContext::Create(dc);
-        FlatShader *shader = new FlatShader(this->controller->getMeshes(), gc, this->GetSize(), cam);
-        shader->ApplyShading();
+        PhongShader *shader = new PhongShader(this->controller->getMeshes(), gc, this->GetSize(), cam);
+        dc.DrawBitmap(shader->ApplyShading(), 0, 0);
 
         // Draw vertices
         vector<Vertex *> curr_verts = this->controller->getMeshes()[i]->getVerts();

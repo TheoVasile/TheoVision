@@ -5,10 +5,13 @@
 #include <array>
 #include <vector>
 #include <math.h>
+#include "vector.h"
 
 #define PI 3.1415
 
 using namespace std;
+
+class Vector;
 
 /**
  * Multiplies a vector by a scalar coefficient.
@@ -18,6 +21,15 @@ using namespace std;
  * @return The result of multiplying the vector by the coefficient.
  */
 array<float, 3> multiply(array<float, 3> vector, float coefficient);
+
+/**
+ * Elementwise multiplication of the vectors.
+ * 
+ * @param vector1 The first input vector
+ * @param vector2 The second input vector
+ * @return The result of multiplying each element of vector1 with the corresponding element of vector2
+ */
+array<float, 3> multiply(array<float, 3> vector1, array<float, 3> vector2);
 
 /**
  * Subtracts vector2 from vector1 element-wise.
@@ -74,6 +86,14 @@ int sign(float val);
 float magnitude(array<float, 3> vector);
 
 /**
+ * Calculates the magnitude (length) of a vector.
+ * 
+ * @param vector: The input vector.
+ * @return The magnitude of the vector.
+ */
+float magnitude(Vector *vector);
+
+/**
  * Normalizes a vector to have unit length.
  * 
  * @param vector: The input vector.
@@ -107,6 +127,15 @@ float dot(array<float, 3> vector1, array<float, 3> vector2);
  * @return The projection of dir onto the plane defined by normal.
  */
 array<float, 3> project_onto_plane(array<float, 3> dir, array<float, 3> normal);
+
+/**
+ * Finds the point of intersection between 2 lines
+ * 
+ * @param vector1 The first input vector
+ * @param vector2 The second input vector
+ * @return The point of intersection between vector1 and vector2
+ */
+array<float, 3> collideLines(Vector *vector1, Vector *vector2);
 
 /**
  * Rotates a position vector according to the given rotation vector.
