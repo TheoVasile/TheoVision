@@ -5,8 +5,10 @@
 
 class SubdivisionSurface : public Modifier {
     public:
-        SubdivisionSurface();
+        SubdivisionSurface(int subdivisions=2);
         Mesh *apply(Mesh *mesh) override;
+    private:
+        int subdivisions;
 };
 
 #endif

@@ -95,13 +95,16 @@ void Mesh::addFace(int edgeIndex, bool pair)
 }
 
 void Mesh::addFace(Face *face) {
-    wxPrintf("There should be 12 of these\n");
     this->faces.push_back(face);
     Edge *startEdge = face->getEdge();
     Edge *currEdge = startEdge;
+    currEdge->face = face;
+    int x = 0;
     while (currEdge->nextEdge != startEdge) {
-        currEdge->face = face;
+        //wxPrintf("There should be 24 of these\n");
+        currEdge->nextEdge->face = face;
         currEdge = currEdge->nextEdge;
+        x++;
     }
 }
 
@@ -140,7 +143,7 @@ void Mesh::addModifier(Modifier *modifier) {
 }
 
 Mesh *Mesh::getModifiedMesh() {
-    Mesh *newMesh = this;//->copy();
+    Mesh *newMesh = this->copy();
     for (Modifier *modifier : this->modifiers) {
         newMesh = modifier->apply(newMesh);
     }
