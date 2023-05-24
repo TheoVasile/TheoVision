@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include "./modifiers/subdivisionSurface.h"
 #include "viewport.h"
 #include "./objects/sunLight.h"
 #include "./objects/pointLight.h"

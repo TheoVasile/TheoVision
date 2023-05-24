@@ -15,7 +15,7 @@ using namespace std;
 class Shader{
     public:
         Shader(Scene *scene, wxSize screenDim);
-        wxBitmap ApplyShading(int pixelSize = 10);
+        virtual wxBitmap ApplyShading(int pixelSize = 10);
     protected:
         void drawPoly(vector<array<float, 3> > positions);
         void drawLight(Light *light);

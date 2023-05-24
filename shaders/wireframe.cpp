@@ -3,22 +3,15 @@
 Wireframe::Wireframe(Scene *scene, wxSize screenDim) : Shader(scene, screenDim){};
 
 wxBitmap Wireframe::ApplyShading(int pixelSize){
-    int depth = 24;
-    // Create a wxBitmap with desired dimensions and color depth
-    wxBitmap bitmap(this->screenDim.GetWidth(), this->screenDim.GetHeight(), depth);
+    wxBitmap bitmap = Shader::ApplyShading(pixelSize);
 
-    // Create a wxMemoryDC and associate it with the bitmap
-    wxMemoryDC memDC;
     memDC.SelectObject(bitmap);
 
-    // Draw onto the bitmap using the memory DC
-    memDC.SetBackground(*wxWHITE_BRUSH);
-    memDC.Clear();
     wxColour colour(0, 0, 0);
     memDC.SetPen(colour);
     memDC.SetBrush(wxBrush(colour));
-
     for (Mesh *currMesh : scene->getMeshes()){
+        currMesh = currMesh->getModifiedMesh();
         for (Edge *currEdge : currMesh->getEdges()) {
             array<float, 2> v1_coords = this->scene->getActiveCamera()->projectPoint(currEdge->vertStart->getPos(), this->screenDim);
             array<float, 2> v2_coords = this->scene->getActiveCamera()->projectPoint(currEdge->vertEnd->getPos(), this->screenDim);

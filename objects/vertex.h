@@ -10,6 +10,7 @@ class Edge;
 
 class Vertex{
     public:
+        Vertex(array<float, 3> pos);
         Vertex(float x, float y, float z);
         Vertex(float x, float y, float z, vector<Edge *> edges);
         array<float, 3> getPos();

@@ -50,3 +50,8 @@ void Object::setOrigin(array<float, 3> pos)
 {
     this->setOrigin(pos[0], pos[1], pos[2]);
 }
+
+Object *Object::copy() {
+    Object *newObject = new Object(this->origin);
+    return newObject;
+}

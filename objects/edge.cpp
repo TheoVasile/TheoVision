@@ -17,6 +17,10 @@ Edge::Edge(Edge *edge)
     this->pair = edge;
 }
 
+array<float, 3> Edge::getMidpoint() {
+    return multiply(add(vertStart->getPos(), vertEnd->getPos()), 2);
+}
+
 void Edge::setNextEdge(Edge *edge)
 {
     edge->previousEdge = this;

@@ -58,6 +58,10 @@ void Mesh::addVert(float x, float y, float z, vector<Edge *> edges)
     this->vertices.push_back(new Vertex(x, y, z, edges));
 }
 
+void Mesh::addVert(Vertex *vert){
+    this->vertices.push_back(vert);
+}
+
 void Mesh::addEdge(Vertex *vertStart, Vertex *vertEnd)
 {
     Edge *newEdge = new Edge(vertStart, vertEnd);
@@ -73,17 +77,32 @@ void Mesh::addEdge(int vertStartIndex, int vertEndIndex)
     this->addEdge(vertStart, vertEnd);
 }
 
+void Mesh::addEdge(Edge *edge) {
+    this->edges.push_back(edge);
+}
+
 void Mesh::addFace(Edge *edge, bool pair)
 {
     if (pair) {
         edge = edge->pair;
     }
-    this->faces.push_back(new Face(edge));
+    this->addFace(new Face(edge));
 }
 
 void Mesh::addFace(int edgeIndex, bool pair)
 {
     this->addFace(this->getEdge(edgeIndex), pair);
+}
+
+void Mesh::addFace(Face *face) {
+    wxPrintf("There should be 12 of these\n");
+    this->faces.push_back(face);
+    Edge *startEdge = face->getEdge();
+    Edge *currEdge = startEdge;
+    while (currEdge->nextEdge != startEdge) {
+        currEdge->face = face;
+        currEdge = currEdge->nextEdge;
+    }
 }
 
 vector<Vertex *> Mesh::getVerts()
@@ -114,4 +133,31 @@ vector<Face *> Mesh::getFaces()
 Face *Mesh::getFace(int index)
 {
     return this->faces[index];
+}
+
+void Mesh::addModifier(Modifier *modifier) {
+    this->modifiers.push_back(modifier);
+}
+
+Mesh *Mesh::getModifiedMesh() {
+    Mesh *newMesh = this;//->copy();
+    for (Modifier *modifier : this->modifiers) {
+        newMesh = modifier->apply(newMesh);
+    }
+    return newMesh;
+}
+
+Mesh *Mesh::copy() {
+    Mesh *newMesh = new Mesh(this->origin);
+    for (Vertex *currVert : this->vertices) {
+        newMesh->addVert(currVert);
+    }
+    for (Edge *currEdge : this->edges) {
+        newMesh->addEdge(currEdge);
+    }
+    for (Face *currFace : this->faces) {
+        newMesh->addFace(currFace);
+    }
+
+    return newMesh;
 }

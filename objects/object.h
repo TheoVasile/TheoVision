@@ -22,6 +22,7 @@ class Object{
         array<float, 3> getOrigin();
         void setOrigin(array<float, 3> pos);
         void setOrigin(float x, float y, float z);
+        virtual Object *copy();
     protected:
         array<float, 3> origin;
 };

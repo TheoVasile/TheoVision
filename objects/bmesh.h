@@ -3,12 +3,15 @@
 
 #include <wx/wx.h>
 #include "object.h"
+#include "../modifiers/modifier.h"
 #include "../utils.h"
 #include "vertex.h"
 #include "edge.h"
 #include "face.h"
 
 using namespace std;
+
+class Modifier;
 
 /**
  * @class Mesh
@@ -63,6 +66,8 @@ public:
      */
     void addVert(float x, float y, float z, vector<Edge *> edges);
 
+    void addVert(Vertex *vert);
+
     /**
      * @brief Adds an edge to the mesh between the given start and end vertices.
      *
@@ -79,6 +84,8 @@ public:
      */
     void addEdge(int vertStartIndex, int vertEndIndex);
 
+    void addEdge(Edge *edge);
+
     /**
      * @brief Adds a face to the mesh with the given associated edge.
      *
@@ -92,6 +99,8 @@ public:
      * @param edgeIndex The index of the associated edge for the face.
      */
     void addFace(int edgeIndex, bool pair=false);
+
+    void addFace(Face *face);
 
     
     using Object::getOrigin;
@@ -146,6 +155,10 @@ public:
      */
     Face *getFace(int index);
 
+    void addModifier(Modifier *modifier);
+
+    Mesh *getModifiedMesh();
+
     /**
      * @brief Scales the mesh by the given scale factors for each axis.
      *
@@ -174,7 +187,10 @@ public:
     void rotate(array<float, 3> rot) override;
     using Object::rotate;
 
+    Mesh *copy() override;
+
 protected:
+    vector<Modifier *> modifiers;
     vector<Vertex*> vertices; /**< The collection of vertices in the mesh. */
     vector<Edge*> edges; /**< The collection of edges in the mesh. */
     vector<Face*> faces; /**< The collection of faces in the mesh. */

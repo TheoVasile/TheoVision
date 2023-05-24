@@ -6,6 +6,15 @@ Face::Face(Edge *edge){
     this->setEdge(edge);
 }
 
+array<float, 3> Face::getMidpoint() {
+    array<float, 3> midPoint = {0, 0, 0};
+    vector<array<float, 3> > points = this->getPoints();
+    for (array<float, 3> currPoint : points) {
+        midPoint = add(midPoint, currPoint);
+    }
+    return multiply(midPoint, points.size());
+}
+
 vector<array<float, 3> > Face::getPoints()
 {
     vector<array<float, 3> > vertPositions;

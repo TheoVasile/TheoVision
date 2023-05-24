@@ -11,6 +11,9 @@ Vertex::Vertex(float x, float y, float z, vector<Edge *> edges)
     this->setPos(x, y, z);
     this->setEdges(edges);
 }
+Vertex::Vertex(array<float, 3> pos) {
+    this->setPos(pos);
+}
 
 array<float, 3> Vertex::getPos()
 {
