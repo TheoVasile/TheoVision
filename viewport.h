@@ -22,13 +22,10 @@ private:
     wxPanel *panel;
     Shader *shader;
     Scene *scene;
-    array<float, 3> normal;
-    array<float, 3> vertical;
     float fov;
-    float prev_cursor_pos[2];
-    float mouse_motion[2];
+    vec2 prev_cursor_pos;
+    vec2 mouse_motion;
     int opID;
-    array<float, 3> pos;
     void OnKeyUp(wxKeyEvent& event);
     void OnKeyPress(wxKeyEvent& event);
     void OnMouseMotion(wxMouseEvent& event);

@@ -8,39 +8,51 @@ Camera *Scene::getActiveCamera(){
     return this->activeCamera;
 }
 
+void Scene::move(vec3 translation) {
+    for (int i=0; i < this->getSelected().size(); i++){
+        this->getSelected()[i]->move(translation);
+    }
+}
+
 void Scene::move(float x, float y, float z){
     /*
     Translate all the selected objects
     */
-    for (int i=0; i < this->getSelected().size(); i++){
-        this->getSelected()[i]->move(x, y, z);
-    }
+    this->move(vec3(x, y, z));
 }
 
 void Scene::move(array<float, 3> translation){
     this->move(translation[0], translation[1], translation[2]);
 }
 
+void Scene::rotate(vec3 rot) {
+    for (int i=0; i < this->getSelected().size(); i++){
+        this->getSelected()[i]->rotate(rot);
+    }
+}
+
 void Scene::rotate(float xrot, float yrot, float zrot){
     /*
     Rotate all the selected objects
     */
-    for (int i=0; i < this->getSelected().size(); i++){
-        this->getSelected()[i]->rotate(xrot, yrot, zrot);
-    }
+    this->rotate(vec3(xrot, yrot, zrot));
 }
 
 void Scene::rotate(array<float, 3> rot){
     this->rotate(rot[0], rot[1], rot[2]);
 }
 
+void Scene::scale(vec3 scalingFactor) {
+    for (int i=0; i<this->getSelected().size(); i++){
+        this->getSelected()[i]->scale(scalingFactor);
+    }
+}
+
 void Scene::scale(float x, float y, float z){
     /*
     Scale all selected objects
     */
-    for (int i=0; i<this->getSelected().size(); i++){
-        this->getSelected()[i]->scale(x, y, z);
-    }
+    this->scale(vec3(x, y, z));
 }
 
 void Scene::scale(float size){
@@ -48,11 +60,15 @@ void Scene::scale(float size){
 }
 
 void Scene::select(int x, int y) {
+    this->select(vec2(x, y));
+}
+
+void Scene::select(vec2 cursorPos) {
     float minDist = numeric_limits<float>::infinity();
     Object *selection;
     for (Object *currObject : this->objects) {
-        array<float, 2> screenOrigin = this->activeCamera->projectPoint(currObject->getOrigin(), this->screenDim);
-        float currDist = abs(screenOrigin[0] - x) + abs(screenOrigin[1] - y);
+        vec2 screenOrigin = this->activeCamera->projectPoint(currObject->getOrigin(), this->screenDim);
+        float currDist = distance(cursorPos, screenOrigin);
         if (currDist < minDist) {
             minDist = currDist;
             selection = currObject;
@@ -62,16 +78,12 @@ void Scene::select(int x, int y) {
     selected.push_back(selection);
 }
 
-void Scene::select(array<int, 2> cursorPos) {
-    this->select(cursorPos[0], cursorPos[1]);
-}
-
-array<float, 3> Scene::getMedianPoint() {
-    array<float, 3> median = {0, 0, 0};
+vec3 Scene::getMedianPoint() {
+    vec3 median(0.0f, 0.0f, 0.0f);
     for (Object *currObject : this->selected) {
-        median = add(median, currObject->getOrigin());
+        median += currObject->getOrigin();
     }
-    median = multiply(median, 1 / this->selected.size());
+    median = median / (float) this->selected.size();
     return median;
 }
 

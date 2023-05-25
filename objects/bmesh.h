@@ -5,11 +5,13 @@
 #include "object.h"
 #include "../modifiers/modifier.h"
 #include "../utils.h"
+#include <glm/glm.hpp>
 #include "vertex.h"
 #include "edge.h"
 #include "face.h"
 
 using namespace std;
+using namespace glm;
 
 class Modifier;
 
@@ -29,6 +31,7 @@ public:
      * @param y The y-coordinate of the mesh.
      * @param z The z-coordinate of the mesh.
      */
+    Mesh(vec3 pos);
     Mesh(float x, float y, float z);
     Mesh(array<float, 3> pos);
 
@@ -38,6 +41,8 @@ public:
      * @param pos The position of the vertex as an array of floats [x, y, z].
      */
     void addVert(array<float, 3> pos);
+    
+    void addVert(vec3 pos);
 
     /**
      * @brief Adds a vertex to the mesh with the given position and associated edge.
@@ -46,6 +51,7 @@ public:
      * @param edge The associated edge for the vertex.
      */
     void addVert(array<float, 3> pos, vector<Edge *> edges);
+    void addVert(vec3 pos, vector<Edge *> edges);
 
     /**
      * @brief Adds a vertex to the mesh with the given coordinates.
@@ -159,14 +165,7 @@ public:
 
     Mesh *getModifiedMesh();
 
-    /**
-     * @brief Scales the mesh by the given scale factors for each axis.
-     *
-     * @param x The scaling factor for the x-axis.
-     * @param y The scaling factor for the y-axis.
-     * @param z The scaling factor for the z-axis.
-     */
-    void scale(float x, float y, float z) override;
+    void scale(vec3 rot) override;
     using Object::scale;
 
     /**
@@ -176,7 +175,7 @@ public:
      * @param y The translation along the y-axis.
      * @param z The translation along the z-axis.
      */
-    void move(float x, float y, float z) override;
+    void move(vec3 translation) override;
     using Object::move;
 
     /**
@@ -184,7 +183,7 @@ public:
      *
      * @param rot The rotation angles as an array of floats [xrot, yrot, zrot].
      */
-    void rotate(array<float, 3> rot) override;
+    void rotate(vec3 rot) override;
     using Object::rotate;
 
     Mesh *copy() override;

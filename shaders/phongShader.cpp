@@ -15,10 +15,10 @@ wxColour PhongShader::getPixelColour(int x, int y)
         //int distance = (int) pow(255 / dist(ray->getCollisionPoint(), this->scene->getActiveCamera()->getOrigin()), 2);
         float intensity = this->ambientConstant;
         for (Light *currLight : this->scene->getLights()) {
-            array<float, 3> lightDir = multiply(normalize(subtract(currLight->getOrigin(), ray->getCollisionPoint())), -1);
-            array<float, 3> surfaceNormal = ray->getCollisionNormal();
-            array<float, 3> reflRay = subtract(multiply(surfaceNormal, 2 * dot(lightDir, surfaceNormal)), lightDir);
-            array<float, 3> viewerRay = multiply(scene->getActiveCamera()->getNormal(), -1);
+            vec3 lightDir = -normalize(currLight->getOrigin() - ray->getCollisionPoint());
+            vec3 surfaceNormal = ray->getCollisionNormal();
+            vec3 reflRay = 2.0f * surfaceNormal * dot(lightDir, surfaceNormal) - lightDir;
+            vec3 viewerRay = -scene->getActiveCamera()->getNormal();
             intensity += diffuseConstant * dot(lightDir, surfaceNormal);
             intensity += specularConstant * pow(dot(reflRay, viewerRay), shininessConstant);
         }

@@ -7,13 +7,13 @@ FlatShader::FlatShader(vector<Mesh *> meshes, wxGraphicsContext *gc, wxSize scre
     this->camera = camera;
 }
 
-void FlatShader::drawPoly(vector<array<float, 3> > positions)
+void FlatShader::drawPoly(vector<vec3> positions)
 {
-    array<float, 3> startPos = positions[0];
+    vec3 startPos = positions[0];
     // Break the polygon into tris
     for (int i=2; i < positions.size(); i++){
         wxGraphicsPath path = gc->CreatePath();
-        array<float, 2> screenCoord = camera->projectPoint(startPos, screenDim);
+        vec2 screenCoord = camera->projectPoint(startPos, screenDim);
         path.AddLineToPoint((int)screenCoord[0], (int)screenCoord[1]);
         screenCoord = camera->projectPoint(positions[i-1], screenDim);
         path.AddLineToPoint((int)screenCoord[0], (int)screenCoord[1]);
@@ -21,10 +21,10 @@ void FlatShader::drawPoly(vector<array<float, 3> > positions)
         path.AddLineToPoint((int)screenCoord[0], (int)screenCoord[1]);
         path.CloseSubpath();
         
-        array<float, 3> v1 = subtract(positions[i-1], startPos);
-        array<float, 3> v2 = subtract(positions[i], startPos);
+        vec3 v1 = positions[i-1] - startPos;
+        vec3 v2 = positions[i] - startPos;
 
-        array<float, 3> faceNormals = normalize(cross(v1, v2));
+        vec3 faceNormals = normalize(cross(v1, v2));
         float fresnel = dot(faceNormals, camera->getNormal());
         if (fresnel > 0) {
             wxColour brushColour((int) (fresnel * 255), (int) (fresnel * 255), (int) (fresnel * 255));

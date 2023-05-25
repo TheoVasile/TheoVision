@@ -14,7 +14,7 @@ class FlatShader{
         FlatShader(vector<Mesh *> meshes, wxGraphicsContext *gc, wxSize screenDim, Camera *camera);
         void ApplyShading();
     private:
-        void drawPoly(vector<array<float, 3> > positions);
+        void drawPoly(vector<vec3 > positions);
         vector<Mesh *> meshes;
         wxGraphicsContext *gc;
         wxSize screenDim;

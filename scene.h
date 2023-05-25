@@ -8,8 +8,10 @@
 #include "camera.h"
 #include "utils.h"
 #include <math.h>
+#include <glm/glm.hpp>
 
 using namespace std;
+using namespace glm;
 
 #define ID_GRAB 1
 #define ID_ROTATE 2
@@ -20,19 +22,23 @@ using namespace std;
 class Scene{
     public:
         Scene();
+        void move(vec3 translation);
         void move(float x, float y, float z);
         void move(array<float, 3> translation);
+        void rotate(vec3 rotate);
         void rotate(float xrot, float yrot, float zrot);
         void rotate(array<float, 3> rot);
+        void scale(vec3 scalingFactor);
         void scale(float size);
         void scale(float x, float y, float z);
-        array<float, 3> getMedianPoint();
+        vec3 getMedianPoint();
         Camera *getActiveCamera();
         vector<Object *> getSelected();
         vector<Mesh *> getMeshes();
         vector<Light *> getLights();
         void select(int x, int y);
         void select(array<int, 2> cursorPos);
+        void select(vec2 cursorPos);
         void setOperation(int operation);
         void addLight(Light *light);
         void addCube(float x, float y, float z);

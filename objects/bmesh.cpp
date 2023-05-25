@@ -2,38 +2,35 @@
 
 Mesh::Mesh(float x, float y, float z):Object(x, y, z){}
 Mesh::Mesh(array<float, 3> pos):Object(pos){}
+Mesh::Mesh(vec3 pos):Object(pos){}
 
-void Mesh::scale(float x, float y, float z)
+void Mesh::scale(vec3 scalingFactor)
 {
-    array<float, 3> _origin = this->origin;
-    this->move(-this->origin[0], -this->origin[1], -this->origin[2]);
+    vec3 _origin = this->origin;
+    this->move(-this->origin);
 
-    for (int i=0; i<this->vertices.size(); i++){
-        this->vertices[i]->setX(this->vertices[i]->getX() * x);
-        this->vertices[i]->setY(this->vertices[i]->getY() * y);
-        this->vertices[i]->setZ(this->vertices[i]->getZ() * z);
+    for (Vertex *currVert : this->vertices){
+        currVert->setPos(currVert->getPos() * scalingFactor);
     }
 
     this->move(_origin);
 }
 
-void Mesh::move(float x, float y, float z)
+void Mesh::move(vec3 translation)
 {
-    this->setOrigin(this->origin[0] + x, this->origin[1] + y, this->origin[2] + z);
-    for (int i=0; i<this->vertices.size(); i++){
-        this->vertices[i]->setX(this->vertices[i]->getX() + x);
-        this->vertices[i]->setY(this->vertices[i]->getY() + y);
-        this->vertices[i]->setZ(this->vertices[i]->getZ() + z);
+    this->setOrigin(this->origin + translation);
+    for (Vertex *currVert : this->vertices){
+        currVert->setPos(currVert->getPos() + translation);
     }
 }
 
-void Mesh::rotate(array<float, 3> rot)
+void Mesh::rotate(vec3 rot)
 {
-    array<float, 3> _origin = this->origin;
-    this->move(-this->origin[0], -this->origin[1], -this->origin[2]);
+    vec3 _origin = this->origin;
+    this->move(-_origin);
 
-    for (int i=0; i<this->vertices.size(); i++){
-        this->vertices[i]->setPos(Rotate(this->vertices[i]->getPos(), rot));
+    for (Vertex *currVert : this->vertices){
+        currVert->setPos(Rotate(currVert->getPos(), rot));
     }
     this->move(_origin);
 }
@@ -41,6 +38,10 @@ void Mesh::rotate(array<float, 3> rot)
 void Mesh::addVert(array<float, 3> pos)
 {
     this->addVert(pos[0], pos[1], pos[2]);
+}
+
+void Mesh::addVert(vec3 pos) {
+    this->vertices.push_back(new Vertex(pos));
 }
 
 void Mesh::addVert(array<float, 3> pos, vector<Edge *> edges)
@@ -56,6 +57,10 @@ void Mesh::addVert(float x, float y, float z)
 void Mesh::addVert(float x, float y, float z, vector<Edge *> edges)
 {
     this->vertices.push_back(new Vertex(x, y, z, edges));
+}
+
+void Mesh::addVert(vec3 pos, vector<Edge *>) {
+    this->vertices.push_back(new Vertex(pos, edges));
 }
 
 void Mesh::addVert(Vertex *vert){

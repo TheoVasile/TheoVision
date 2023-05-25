@@ -7,6 +7,7 @@
 #include <array>
 #include <iostream>
 #include <wx/wx.h>
+#include <glm/glm.hpp>
 
 using namespace std;
 
@@ -14,18 +15,19 @@ class Camera : public Object{
     public:
         Camera(float x, float y, float z);
         using Object::move;
-        void rotate(array<float, 3> rot);
+        void rotate(vec3 rot);
         using Object::rotate;
-        array<float, 2> projectPoint(array<float, 3> pos, wxSize screenDim);
-        array<float, 2> projectPoint(float x, float y, float z, wxSize screenDim);
+        vec2 projectPoint(vec3 pos, wxSize screenDim);
+        vec2 projectPoint(array<float, 3> pos, wxSize screenDim);
+        vec2 projectPoint(float x, float y, float z, wxSize screenDim);
         Ray *castRay(int x, int y, wxSize screenDim);
         void setFov(float fov);
         float getFov();
-        array<float, 3> getNormal();
-        array<float, 3> getVertical();
+        vec3 getNormal();
+        vec3 getVertical();
     protected:
-        array<float, 3> normal;
-        array<float, 3> vertical;
+        vec3 normal;
+        vec3 vertical;
         float fov;
 };
 #endif

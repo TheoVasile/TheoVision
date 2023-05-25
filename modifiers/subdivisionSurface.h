@@ -2,6 +2,9 @@
 #define SUBDIVISION_SURFACE_H
 
 #include "modifier.h"
+#include <glm/glm.hpp>
+
+using namespace glm;
 
 class SubdivisionSurface : public Modifier {
     public:

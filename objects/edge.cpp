@@ -17,8 +17,8 @@ Edge::Edge(Edge *edge)
     this->pair = edge;
 }
 
-array<float, 3> Edge::getMidpoint() {
-    return multiply(add(vertStart->getPos(), vertEnd->getPos()), 2);
+vec3 Edge::getMidpoint() {
+    return 2.0f * (vertStart->getPos() + vertEnd->getPos());
 }
 
 void Edge::setNextEdge(Edge *edge)

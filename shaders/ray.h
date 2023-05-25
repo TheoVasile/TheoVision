@@ -5,28 +5,32 @@
 #include <vector>
 #include <limits>
 #include <iostream>
-#include "../vector.h"
 #include "ray.h"
+#include <glm/glm.hpp>
 #include "shaderUtils.h"
 #include "../objects/face.h"
 #include "../objects/bmesh.h"
 
 using namespace std;
+using namespace glm;
 
-class Ray : public Vector {
+class Ray {
     public:
+        Ray(vec3 pos, vec3 direction);
         Ray(array<float, 3> pos, array<float, 3> direction);
-        array<float, 3> getCollisionPoint();
-        array<float, 3> getCollisionNormal();
-        using Vector::getPoint;
-        void cast(array<array<float, 3>, 3> tri);
+        vec3 getCollisionPoint();
+        vec3 getCollisionNormal();
+        vec3 getPoint(float t);
+        void cast(array<vec3, 3> tri);
         void cast(Face *face);
         void cast(Mesh *mesh);
         void cast(vector<Mesh *> meshes);
         bool hasHit;
     protected:
-        array<float, 3> collisionPoint;
-        array<float, 3> collisionNormal;
+        vec3 pos;
+        vec3 direction;
+        vec3 collisionPoint;
+        vec3 collisionNormal;
 };
 
 #endif

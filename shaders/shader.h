@@ -6,11 +6,13 @@
 #include "../objects/bmesh.h"
 #include "../objects/sunLight.h"
 #include "ray.h"
+#include <glm/glm.hpp>
 #include <wx/wx.h>
 #include <vector>
 #include <iostream>
 
 using namespace std;
+using namespace glm;
 
 class Shader{
     public:

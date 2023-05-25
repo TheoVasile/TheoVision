@@ -15,14 +15,6 @@ Viewport::Viewport(Scene *scene)
 
     SetBackgroundColour(wxColour(* wxWHITE));
 
-    // Initialize default attributes
-    this->normal = (array<float, 3>){0.0, 0.0, 1.0};
-    this->vertical = (array<float, 3>){0.0, 1.0, 0.0};
-    this->fov = 30.6;
-    this->pos[0] = 0;
-    this->pos[1] = 0;
-    this->pos[2] = 0;
-
     // Make sure the frame has focus and keyboard input is enabled
     SetFocus();
     Bind(wxEVT_SHOW, &Viewport::OnShow, this);
@@ -62,8 +54,8 @@ void Viewport::OnPaint(wxPaintEvent& event){
 
     switch(opID){
         case ID_SCALE:{
-            array<float, 2> p1 = this->scene->getActiveCamera()->projectPoint(this->scene->getMedianPoint(), this->scene->screenDim);
-            array<float, 2> p2 = {this->prev_cursor_pos[0], this->prev_cursor_pos[1]};
+            vec2 p1 = this->scene->getActiveCamera()->projectPoint(this->scene->getMedianPoint(), this->scene->screenDim);
+            vec2 p2 = {this->prev_cursor_pos[0], this->prev_cursor_pos[1]};
             
             wxPen pen(wxColour(0, 0, 0), 1, wxPENSTYLE_SHORT_DASH);
             dc.SetPen(pen);
@@ -81,9 +73,9 @@ void Viewport::OnMouseMotion(wxMouseEvent& event)
     this->prev_cursor_pos[1] = event.GetY();
     switch(this->opID){
         case ID_GRAB: {
-            float movementFactor = dist(scene->getActiveCamera()->getOrigin(), scene->getSelected()[0]->getOrigin()) / 1000;
-            scene->move(multiply(cross(scene->getActiveCamera()->getNormal(), scene->getActiveCamera()->getVertical()), -this->mouse_motion[0] * movementFactor));
-            scene->move(multiply(scene->getActiveCamera()->getVertical(), this->mouse_motion[1] * movementFactor));
+            float movementFactor = distance(scene->getActiveCamera()->getOrigin(), scene->getSelected()[0]->getOrigin()) / 1000;
+            scene->move(cross(scene->getActiveCamera()->getNormal(), scene->getActiveCamera()->getVertical()) * (-this->mouse_motion[0] * movementFactor));
+            scene->move(scene->getActiveCamera()->getVertical() * this->mouse_motion[1] * movementFactor);
             break;
         }
         case ID_ROTATE: {
@@ -91,8 +83,8 @@ void Viewport::OnMouseMotion(wxMouseEvent& event)
             break;
         }
         case ID_SCALE:
-            array<float, 2> screenOrigin = scene->getActiveCamera()->projectPoint(scene->getMedianPoint(), scene->screenDim);
-            array<float, 2> dir = {this->prev_cursor_pos[0] - screenOrigin[0], this->prev_cursor_pos[1] - screenOrigin[1]};
+            vec2 screenOrigin = scene->getActiveCamera()->projectPoint(scene->getMedianPoint(), scene->screenDim);
+            vec2 dir = this->prev_cursor_pos - screenOrigin;
             float movementFactor = (this->mouse_motion[0] * dir[0] + this->mouse_motion[1] * dir[1]) / (pow(dir[0], 2) + pow(dir[1], 2));
             scene->scale(movementFactor+1);
             break;

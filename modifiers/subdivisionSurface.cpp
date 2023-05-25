@@ -16,13 +16,13 @@ Mesh *SubdivisionSurface::apply(Mesh *mesh) {
             Edge *currEdge = startEdge;
             do {
                 // Edge point is the average of neighboring facepoints and edge center
-                array<float, 3> edgePoint = {0, 0, 0};
+                vec3 edgePoint(0, 0, 0);
                 if (currEdge->face){
-                    edgePoint = add(edgePoint, currEdge->face->getMidpoint());
+                    edgePoint = edgePoint + currEdge->face->getMidpoint();
                 } if (currEdge->pair->face){
-                    edgePoint = add(edgePoint, currEdge->pair->face->getMidpoint());
+                    edgePoint = edgePoint + currEdge->pair->face->getMidpoint();
                 }
-                edgePoint = multiply(add(multiply(edgePoint, 0.5), currEdge->getMidpoint()), 0.5);
+                edgePoint = (edgePoint * 0.5f + currEdge->getMidpoint()) * 0.5f;
                 Vertex *edgeVert = new Vertex(edgePoint);
                 mesh->addVert(edgeVert);
                 mesh->addEdge(edgeVert, faceVert);

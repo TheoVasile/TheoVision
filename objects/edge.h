@@ -21,7 +21,7 @@ class Edge{
         Edge(Edge *edge);
         void setNextEdge(Edge *edge);
         void setPreviousEdge(Edge *edge);
-        array<float, 3> getMidpoint();
+        vec3 getMidpoint();
         Vertex *vertStart;
         Vertex *vertEnd;
         Edge *pair;

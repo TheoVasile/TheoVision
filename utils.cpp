@@ -1,5 +1,6 @@
 #include "utils.h"
 
+/*
 array<float, 3> multiply(array<float, 3> vector, float coefficient)
 {
     array<float, 3> vector2 = {coefficient, coefficient, coefficient};
@@ -87,21 +88,6 @@ float dot(array<float, 3> vector1, array<float, 3> vector2){
     return vector1[0] * vector2[0] + vector1[1] * vector2[1] + vector1[2] * vector2[2];
 }
 
-array<float, 3> project_onto_plane(array<float, 3> dir, array<float, 3> normal){
-    float mag = magnitude(dir);
-    array<float, 3> norm_dir = normalize(dir);
-    double angle = acos(dot(norm_dir, normal));
-    
-    array<float, 3> new_dir = cross(cross(normal, norm_dir), normal);
-    float new_mag = mag * (float) sin(angle);
-
-    new_dir[0] = new_dir[0] * new_mag;
-    new_dir[1] = new_dir[1] * new_mag;
-    new_dir[2] = new_dir[2] * new_mag;
-
-    return new_dir;
-}
-
 array<float, 3> collideLines(Vector *vector1, Vector *vector2)
 {
     float t = (vector2->pos[1] - vector1->pos[1] - vector1->direction[0] / vector1->direction[1] * (vector2->pos[0] - vector1->pos[0])) / (vector1->direction[0] / vector1->direction[1] * vector2->direction[0] - vector2->direction[1]);
@@ -110,14 +96,27 @@ array<float, 3> collideLines(Vector *vector1, Vector *vector2)
     }
     return {};
 }
+*/
+vec3 project_onto_plane(vec3 dir, vec3 normal){
+    float mag = length(dir);
+    vec3 norm_dir = normalize(dir);
+    double angle = acos(dot(norm_dir, normal));
+    
+    vec3 new_dir = cross(cross(normal, norm_dir), normal);
+    float new_mag = mag * (float) sin(angle);
 
-array<float, 3> Rotate(array<float, 3> pos, array<float, 3> rot){
+    new_dir *= new_mag;
+
+    return new_dir;
+}
+
+vec3 Rotate(vec3 pos, vec3 rot){
     /*
     Return the new 3D coordinate of the provided point around the origin
 
     precondition: given angles of rotation must be in radians
     */
-    array<float, 3> newPos;
+    vec3 newPos(0, 0, 0);
     newPos[0] = pos[0] * cosf(rot[1]) * cosf(rot[0]) + pos[1] * cosf(rot[1]) * sinf(rot[0]) - pos[2] * sinf(rot[1]);
     newPos[1] = pos[0] * (sinf(rot[2]) * sinf(rot[1]) * cosf(rot[0]) - cosf(rot[2]) * sinf(rot[0])) + pos[1] * (sinf(rot[2]) * sinf(rot[1]) * sinf(rot[0]) + cosf(rot[2]) * cosf(rot[0])) + pos[2] * sinf(rot[2]) * cosf(rot[1]);
     newPos[2] = pos[0] * (cosf(rot[2]) * sinf(rot[1]) * cosf(rot[0]) + sinf(rot[2]) * sinf(rot[0])) + pos[1] * (cosf(rot[2]) * sinf(rot[1]) * sinf(rot[0]) - sinf(rot[2]) * cosf(rot[0])) + pos[2] * cos(rot[2]) * cos(rot[1]);

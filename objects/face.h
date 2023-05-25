@@ -15,9 +15,9 @@ class Edge;
 class Face{
     public:
         Face(Edge *edge);
-        array<float, 3> getMidpoint();
-        vector<array<float, 3> > getPoints();
-        vector<array<array<float, 3>, 3> > getTris();
+        vec3 getMidpoint();
+        vector<vec3> getPoints();
+        vector<array<vec3, 3> > getTris();
         void setEdge(Edge *edge);
         Edge *getEdge();
     private:
