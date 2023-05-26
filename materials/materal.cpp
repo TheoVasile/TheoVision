@@ -2,6 +2,7 @@
 
 Material::Material(wxColour albedo, float roughness, float specular, float ior) {
     this->albedo = albedo;
+    this->diffuse = 0.5;
     this->roughness = roughness;
     this->specular = specular;
     this->ior = ior;
@@ -9,6 +10,7 @@ Material::Material(wxColour albedo, float roughness, float specular, float ior) 
 
 Material::Material(array<float, 3> albedo, float roughness, float specular, float ior) {
     this->albedo = wxColour(albedo[0], albedo[1], albedo[2]);
+    this->diffuse = 0.5;
     this->roughness = roughness;
     this->specular = specular;
     this->ior = ior;

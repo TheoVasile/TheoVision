@@ -15,6 +15,7 @@ class Material {
         //wxColour getEmittance();
         vec3 getEmittance();
         wxColour albedo;
+        float diffuse;
         float roughness;
         float specular;
         float ior;

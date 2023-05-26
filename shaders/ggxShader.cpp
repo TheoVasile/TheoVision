@@ -27,7 +27,7 @@ float GGXShader::getBRDF(Ray *ray, Light *light) {
 float GGXShader::getDistribution(Ray *ray, Light *light) {
     vec3 h = normalize(normalize(light->getOrigin() - ray->getCollisionPoint()) - ray->direction);
     vec3 n = ray->getCollisionNormal();
-    vec3 m = ray->getOutgoingDirection();
+    vec3 m = normalize(light->getOrigin() - ray->getCollisionPoint());//ray->getOutgoingDirection();
     float a = ray->getCollisionMesh()->material->roughness;
     return pow(a, 2) * this->getX(dot(h, n)) / (M_PI * (pow(dot(m, n), 2) * pow(pow(a, 2) + (1-pow(dot(m, n), 2)) / pow(dot(m, n), 2), 2)));
 }

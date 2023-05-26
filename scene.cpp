@@ -189,26 +189,42 @@ void Scene::addCube(float x, float y, float z){
 void Scene::addUVSphere(float x, float y, float z, int rings, int segments){
     Mesh *uvsphere = new Mesh(0, 0, 0);
    // Create vertices
-   /*
     for (int i = 0; i <= rings; i++) {
-        float curr_height = sinf((((float)i)/rings - 0.5) * PI);
+        float curr_height = sinf((((float)i)/rings - 0.5) * M_PI);
         for (int j = 0; j < segments; j++) {
             float curr_y = sqrt(1 - curr_height * curr_height) * sin(static_cast<float>(j) / segments * 2.0f * M_PI);
             float curr_x = sqrt(1 - curr_height * curr_height) * cos(static_cast<float>(j) / segments * 2.0f * M_PI);
             uvsphere->addVert(curr_x, curr_y, curr_height);
         }
     }
-
     // Create edges
     for (int i = 0; i < rings; i++) {
         int next_i = (i + 1) % (rings + 1);
         for (int j = 0; j < segments; j++) {
             int next_j = (j + 1) % segments;
-            uvsphere->addEdge(uvsphere->getVertex(i * segments + j), uvsphere->getVertex(i * segments + next_j));
-            uvsphere->addEdge(uvsphere->getVertex(i * segments + j), uvsphere->getVertex(next_i * segments + j));
+            uvsphere->addEdge(i * segments + j, i * segments + next_j);
+            uvsphere->addEdge(i * segments + j, next_i * segments + j);
         }
     }
 
+    for (int i=0; i < uvsphere->getEdges().size() - 2 * segments - 1; i+=2) {
+        if (i % (2 * segments - 2) == 0 && false) {
+            /*
+            uvsphere->getEdge(i)->setNextEdge(uvsphere->getEdge(i-2 * segments - 3));
+            uvsphere->getEdge(i-2 * segments - 3)->setNextEdge(uvsphere->getEdge(i + 2)->pair);
+            uvsphere->getEdge(i + 2)->pair->setNextEdge(uvsphere->getEdge(i+1)->pair);
+            uvsphere->getEdge(i+1)->pair->setNextEdge(uvsphere->getEdge(i));
+            uvsphere->addFace(i);
+            */
+        } else {
+            uvsphere->getEdge(i)->setNextEdge(uvsphere->getEdge(i+3));
+            uvsphere->getEdge(i+3)->setNextEdge(uvsphere->getEdge(i + 2 * segments)->pair);
+            uvsphere->getEdge(i + 2 * segments)->pair->setNextEdge(uvsphere->getEdge(i+1)->pair);
+            uvsphere->getEdge(i+1)->pair->setNextEdge(uvsphere->getEdge(i));
+            uvsphere->addFace(i);
+        }
+    }
+    /*
     // Provide more edge information
     for (int i = 0; i < uvsphere->getEdges().size(); i++) {
         if (i % 2 == 0) {
