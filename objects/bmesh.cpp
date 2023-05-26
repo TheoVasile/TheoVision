@@ -41,6 +41,12 @@ void Mesh::rotate(vec3 rot)
     this->move(_origin);
 }
 
+void Mesh::flipNormals() {
+    for (Face *currFace : this->faces) {
+        currFace->flipNormal();
+    }
+}
+
 void Mesh::addVert(array<float, 3> pos)
 {
     this->addVert(pos[0], pos[1], pos[2]);

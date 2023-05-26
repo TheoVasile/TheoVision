@@ -36,6 +36,8 @@ public:
     Mesh(float x, float y, float z);
     Mesh(array<float, 3> pos);
 
+    void flipNormals();
+
     /**
      * @brief Adds a vertex to the mesh with the given position.
      *

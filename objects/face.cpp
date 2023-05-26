@@ -3,7 +3,12 @@
 #include "vertex.h"
 
 Face::Face(Edge *edge){
+    this->normDir = 1.0f;
     this->setEdge(edge);
+}
+
+void Face::flipNormal() {
+    this->normDir *= -1.0f;
 }
 
 vec3 Face::getMidpoint() {
@@ -13,6 +18,16 @@ vec3 Face::getMidpoint() {
         midPoint += currPoint;
     }
     return midPoint / (float) points.size();
+}
+
+vec3 Face::getNormal() {
+    vec3 normal(0, 0, 0);
+    for (array<vec3, 3> currTri : this->getTris()) {
+        vec3 v1 = normalize(currTri[1] - currTri[0]);
+        vec3 v2 = normalize(currTri[2] - currTri[0]);
+        normal += normalize(cross(v1, v2));
+    }
+    return normalize(normal * this->normDir);
 }
 
 vector<vec3> Face::getPoints()

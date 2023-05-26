@@ -81,7 +81,7 @@ void Ray::cast(Face *face)
         if (currDist < minDist) {
             minDist = currDist;
             closestPoint = this->collisionPoint;
-            closestNormal = this->collisionNormal;
+            closestNormal = face->getNormal();
             closestOutgoing = this->outgoingDirection;
             hit = true;
         }

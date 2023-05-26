@@ -224,6 +224,8 @@ void Scene::addUVSphere(float x, float y, float z, int rings, int segments){
             uvsphere->addFace(i);
         }
     }
+
+    uvsphere->flipNormals();
     /*
     // Provide more edge information
     for (int i = 0; i < uvsphere->getEdges().size(); i++) {
