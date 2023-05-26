@@ -4,6 +4,7 @@
 #include <wx/wx.h>
 #include "object.h"
 #include "../modifiers/modifier.h"
+#include "../materials/material.h"
 #include "../utils.h"
 #include <glm/glm.hpp>
 #include "vertex.h"
@@ -187,6 +188,8 @@ public:
     using Object::rotate;
 
     Mesh *copy() override;
+
+    Material *material;
 
 protected:
     vector<Modifier *> modifiers;

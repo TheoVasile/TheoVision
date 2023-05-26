@@ -44,6 +44,7 @@ class Scene{
         void addCube(float x, float y, float z);
         void addUVSphere(float x, float y, float z, int rings, int segments);
         wxSize screenDim;
+        vec3 backgroundColor;
     private:
         Camera *activeCamera;
         vector<Object *> objects;

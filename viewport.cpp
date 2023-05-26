@@ -11,7 +11,7 @@ Viewport::Viewport(Scene *scene)
 
     wxPaintDC dc(this);
     wxGraphicsContext* gc = wxGraphicsContext::Create(dc);
-    this->shader = new Wireframe(this->scene, this->GetSize());
+    this->shader = new GGXShader(this->scene, this->GetSize());
 
     SetBackgroundColour(wxColour(* wxWHITE));
 
@@ -50,7 +50,7 @@ void Viewport::OnExit(wxCommandEvent& event)
 void Viewport::OnPaint(wxPaintEvent& event){
     wxPaintDC dc(this);
 
-    dc.DrawBitmap(this->shader->ApplyShading(10), 0, 0);
+    dc.DrawBitmap(this->shader->ApplyShading(5), 0, 0);
 
     switch(opID){
         case ID_SCALE:{

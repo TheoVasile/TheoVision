@@ -1,8 +1,14 @@
 #include "bmesh.h"
 
-Mesh::Mesh(float x, float y, float z):Object(x, y, z){}
-Mesh::Mesh(array<float, 3> pos):Object(pos){}
-Mesh::Mesh(vec3 pos):Object(pos){}
+Mesh::Mesh(float x, float y, float z):Object(x, y, z){
+    this->material = new Material(wxColour(0, 0, 255), 0.5, 0.5, 1.4);
+}
+Mesh::Mesh(array<float, 3> pos):Object(pos){
+    this->material = new Material(wxColour(0, 0, 255), 0.5, 0.5, 1.4);
+}
+Mesh::Mesh(vec3 pos):Object(pos){
+    this->material = new Material(wxColour(0, 0, 255), 0.5, 0.5, 1.4);
+}
 
 void Mesh::scale(vec3 scalingFactor)
 {
