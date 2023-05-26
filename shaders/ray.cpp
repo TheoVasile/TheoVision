@@ -46,6 +46,9 @@ void Ray::cast(array<vec3, 3> tri)
         return;
     }
     float t = numerator / denominator;
+    if (t <= 0) {
+        return;
+    }
     vec3 collision = this->pos + (this->direction * t);
 
     // See if the point lies within the tri.

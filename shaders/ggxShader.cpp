@@ -64,7 +64,12 @@ vec3 GGXShader::tracePath(Ray *ray, int depth) {
         Ray *newRay = new Ray(ray->getCollisionPoint(), ray->getOutgoingDirection());
         vec3 BRDF = emittance;
         for (Light *currLight : this->scene->getLights()) {
-            BRDF += this->getBRDF(ray, currLight);
+            vec3 lightDir = normalize(currLight->getOrigin() - ray->getCollisionPoint());
+            Ray *shadowRay = new Ray(ray->getCollisionPoint(), lightDir);
+            shadowRay->cast(this->scene->getMeshes());
+            if (!shadowRay->hasHit){
+                BRDF += currLight->colour * this->getBRDF(ray, currLight);
+            }
         }
 
         // Recursively trace reflected light sources.

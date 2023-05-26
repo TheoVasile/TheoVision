@@ -2,12 +2,15 @@
 
 Light::Light(vec3 pos, float power):Object(pos){
     this->power = power;
+    this->colour = vec3(1, 1, 1);
 }
 Light::Light(float x, float y, float z, float power):Object(x, y, z){
     this->power = power;
+    this->colour = vec3(1, 1, 1);
 }
 Light::Light(array<float, 3> pos, float power):Object(pos){
     this->power = power;
+    this->colour = vec3(1, 1, 1);
 }
 
 float Light::getIntensity(vec3 pos) {

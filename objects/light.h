@@ -22,6 +22,7 @@ class Light : public Object {
         using Object::rotate;
         using Object::getOrigin;
         using Object::setOrigin;
+        vec3 colour;
     protected:
         float power;
 };
