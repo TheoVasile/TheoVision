@@ -47,7 +47,7 @@ void Viewport::OnExit(wxCommandEvent& event)
 void Viewport::OnPaint(wxPaintEvent& event){
     wxPaintDC dc(this);
 
-    dc.DrawBitmap(this->shader->ApplyShading(10), 0, 0);
+    dc.DrawBitmap(this->shader->ApplyShading(5), 0, 0);
 
     switch(opID){
         case ID_SCALE:{

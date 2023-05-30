@@ -1,7 +1,7 @@
 #include "raytraceShader.h"
 
 RayTraceShader::RayTraceShader(Scene *scene, wxSize screenDim) : Shader(scene, screenDim){
-    this->samples = 10;
+    this->samples = 1;
 };
 
 wxColour RayTraceShader::getPixelColour(int x, int y) {
@@ -52,7 +52,7 @@ vec3 RayTraceShader::tracePath(Ray *ray, int depth) {
         vec3 l = normalize(selectedLight->getOrigin() - ray->getCollisionPoint());
         Ray *shadowRay = new Ray(ray->getCollisionPoint(), l);
         shadowRay->cast(this->scene->getMeshes());
-        if (shadowRay->hasHit) {
+        if (!shadowRay->hasHit) {
             lightColor += selectedLight->power / pow(distance(selectedLight->getOrigin(), ray->getCollisionPoint()), 2.0f) * vec3(1, 1, 1);
         }
         colour += this->tracePath(reflectedRay, depth - 1) * lightColor * this->getBRDF(reflectedRay, selectedLight) * clamp(dot(reflectedRay->direction, ray->getCollisionNormal()), 0.0f, 1.0f);
