@@ -10,12 +10,10 @@ using namespace glm;
 
 class Material {
     public:
-        Material(wxColour albedo, float roughness, float specular, float ior);
-        Material(array<float, 3> albedo, float roughness, float specular, float ior);
-        //wxColour getEmittance();
+        Material(vec3 baseColor, float roughness, float specular, float ior);
+        Material(array<float, 3> baseColor, float roughness, float specular, float ior);
         vec3 getEmittance();
-        wxColour albedo;
-        float diffuse;
+        vec3 baseColor;
         float roughness;
         float specular;
         float ior;

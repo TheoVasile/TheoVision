@@ -1,7 +1,7 @@
 #ifndef MODIFIER_H
 #define MODIFIER_H
 
-#include "../objects/bmesh.h"
+#include "../objects/meshes/bmesh.h"
 
 class Mesh;
 

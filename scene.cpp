@@ -2,7 +2,7 @@
 
 Scene::Scene(){
     this->activeCamera = new Camera(0, 0, 0);
-    this->backgroundColor = vec3(0.2, 0.2, 0.2);
+    this->backgroundColor = vec3(0.3, 0.3, 0.3);
 }
 
 Camera *Scene::getActiveCamera(){

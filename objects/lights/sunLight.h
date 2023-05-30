@@ -3,7 +3,7 @@
 
 #include "light.h"
 #include <glm/glm.hpp>
-#include "../utils.h"
+#include "../../utils.h"
 
 using namespace glm;
 

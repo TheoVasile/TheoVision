@@ -4,8 +4,8 @@
 #include <array>
 #include "./modifiers/subdivisionSurface.h"
 #include "viewport.h"
-#include "./objects/sunLight.h"
-#include "./objects/pointLight.h"
+#include "./objects/lights/sunLight.h"
+#include "./objects/lights/pointLight.h"
  
 #ifndef WX_PRECOMP
     #include <wx/wx.h>
@@ -16,6 +16,5 @@ using namespace std;
 class MyApp : public wxApp
 {
 public:
-    vector<Mesh *> meshes;
     virtual bool OnInit();
 };

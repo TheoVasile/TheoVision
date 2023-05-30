@@ -5,11 +5,10 @@
 #include <vector>
 #include <limits>
 #include <iostream>
-#include "ray.h"
 #include <glm/glm.hpp>
 #include "shaderUtils.h"
-#include "../objects/face.h"
-#include "../objects/bmesh.h"
+#include "../objects/meshes/face.h"
+#include "../objects/meshes/bmesh.h"
 
 using namespace std;
 using namespace glm;

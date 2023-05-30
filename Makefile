@@ -4,7 +4,7 @@ CFLAGS += -std=c++11
 CFLAGS += -I./include
 LDFLAGS = `wx-config --libs`
 
-SRC_DIRS = ./ ./objects ./shaders ./modifiers ./materials
+SRC_DIRS = ./ ./objects ./objects/lights ./objects/meshes ./shaders ./modifiers ./materials
 
 SOURCES = $(wildcard $(addsuffix /*.cpp,$(SRC_DIRS)))
 EXECUTABLE = Theovision

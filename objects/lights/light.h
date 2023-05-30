@@ -1,7 +1,7 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 
-#include "object.h"
+#include "../object.h"
 #include <array>
 #include <iostream>
 #include <glm/glm.hpp>
@@ -23,7 +23,6 @@ class Light : public Object {
         using Object::getOrigin;
         using Object::setOrigin;
         vec3 colour;
-    protected:
         float power;
 };
 

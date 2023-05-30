@@ -3,7 +3,7 @@
 
 #include <array>
 #include <iostream>
-#include "../objects/bmesh.h"
+#include "../objects/meshes/bmesh.h"
 #include <glm/glm.hpp>
 
 using namespace std;

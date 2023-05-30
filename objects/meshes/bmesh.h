@@ -2,10 +2,10 @@
 #define BMESH_H
 
 #include <wx/wx.h>
-#include "object.h"
-#include "../modifiers/modifier.h"
-#include "../materials/material.h"
-#include "../utils.h"
+#include "../object.h"
+#include "../../modifiers/modifier.h"
+#include "../../materials/material.h"
+#include "../../utils.h"
 #include <glm/glm.hpp>
 #include "vertex.h"
 #include "edge.h"

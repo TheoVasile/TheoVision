@@ -3,8 +3,8 @@
 
 #include "../scene.h"
 #include "../camera.h"
-#include "../objects/bmesh.h"
-#include "../objects/sunLight.h"
+#include "../objects/meshes/bmesh.h"
+#include "../objects/lights/sunLight.h"
 #include "ray.h"
 #include <glm/glm.hpp>
 #include <wx/wx.h>

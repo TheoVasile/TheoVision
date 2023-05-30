@@ -3,8 +3,8 @@
 #include <wx/wx.h>
 #include <limits>
 #include "./objects/object.h"
-#include "./objects/bmesh.h"
-#include "./objects/light.h"
+#include "./objects/meshes/bmesh.h"
+#include "./objects/lights/light.h"
 #include "camera.h"
 #include "utils.h"
 #include <math.h>

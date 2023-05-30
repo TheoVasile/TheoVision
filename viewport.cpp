@@ -8,7 +8,7 @@ Viewport::Viewport(Scene *scene)
     scene->screenDim = wxSize(800, 600);
     this->scene = scene;
     this->opID = 0;
-    this->shader = new GGXShader(this->scene, this->GetSize());
+    this->shader = new RayTraceShader(this->scene, this->GetSize());
 
     SetBackgroundColour(wxColour(* wxWHITE));
 

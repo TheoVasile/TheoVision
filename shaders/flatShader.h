@@ -2,7 +2,7 @@
 #define FLATSHADER_H
 
 #include "../camera.h"
-#include "../objects/bmesh.h"
+#include "../objects/meshes/bmesh.h"
 #include <wx/wx.h>
 #include <vector>
 #include <iostream>
