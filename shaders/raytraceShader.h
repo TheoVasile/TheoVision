@@ -16,7 +16,7 @@ class RayTraceShader : public Shader {
         wxColour getPixelColour(int x, int y) override;
         vec3 getRandomHemisphereVector(vec3 normal);
         vec3 tracePath(Ray *ray, int depth);
-        vec3 getBRDF(Ray *ray, Light *light);
+        virtual vec3 getBRDF(Ray *ray, Light *light);
 };
 
 #endif

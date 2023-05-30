@@ -8,7 +8,7 @@
 #include "./shaders/phongShader.h"
 #include "./shaders/diffuseShader.h"
 #include "./shaders/wireframe.h"
-#include "./shaders/raytraceShader.h"
+#include "./shaders/ggxShader.h"
 #include <iostream>
 #include <list>
 
