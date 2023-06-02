@@ -68,7 +68,7 @@ void Scene::select(vec2 cursorPos) {
     float minDist = numeric_limits<float>::infinity();
     Object *selection;
     for (Object *currObject : this->objects) {
-        vec2 screenOrigin = this->activeCamera->projectPoint(currObject->getOrigin(), this->screenDim);
+        vec2 screenOrigin = this->activeCamera->projectPoint(currObject->origin, this->screenDim);
         float currDist = distance(cursorPos, screenOrigin);
         if (currDist < minDist) {
             minDist = currDist;
@@ -82,7 +82,7 @@ void Scene::select(vec2 cursorPos) {
 vec3 Scene::getMedianPoint() {
     vec3 median(0.0f, 0.0f, 0.0f);
     for (Object *currObject : this->selected) {
-        median += currObject->getOrigin();
+        median += currObject->origin;
     }
     median = median / (float) this->selected.size();
     return median;
@@ -100,8 +100,7 @@ vector<Light *> Scene::getLights() {
     return this->lights;
 }
 
-void Scene::addLight(Light *light)
-{
+void Scene::addLight(Light *light) {
     this->objects.push_back(light);
     this->lights.push_back(light);
 }

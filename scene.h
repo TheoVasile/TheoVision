@@ -1,23 +1,16 @@
-#ifndef CONTROLLER_H
-#define CONTROLLER_H
-#include <wx/wx.h>
+#ifndef SCENE_H
+#define SCENE_H
 #include <limits>
 #include "./objects/object.h"
 #include "./objects/meshes/bmesh.h"
-#include "./objects/lights/light.h"
 #include "camera.h"
+#include "./objects/lights/light.h"
 #include "utils.h"
 #include <math.h>
 #include <glm/glm.hpp>
 
 using namespace std;
 using namespace glm;
-
-#define ID_GRAB 1
-#define ID_ROTATE 2
-#define ID_SCALE 3
-#define ID_ZOOM_IN 4
-#define ID_ZOOM_OUT 5
 
 class Scene{
     public:
@@ -43,7 +36,7 @@ class Scene{
         void addLight(Light *light);
         void addCube(float x, float y, float z);
         void addUVSphere(float x, float y, float z, int rings, int segments);
-        wxSize screenDim;
+        int screenDim[2];
         vec3 backgroundColor;
     private:
         Camera *activeCamera;

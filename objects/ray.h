@@ -6,8 +6,6 @@
 #include <limits>
 #include <iostream>
 #include <glm/glm.hpp>
-#include "shaderUtils.h"
-#include "../objects/meshes/face.h"
 #include "../objects/meshes/bmesh.h"
 
 using namespace std;
