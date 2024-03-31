@@ -16,6 +16,8 @@ class PointLight : public Light{
         using Light::scale;
         using Light::move;
         using Light::rotate;
+        using Light::getOrigin;
+        using Light::setOrigin;
 };
 
 #endif

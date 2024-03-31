@@ -20,6 +20,8 @@ class Light : public Object {
         using Object::scale;
         using Object::move;
         using Object::rotate;
+        using Object::getOrigin;
+        using Object::setOrigin;
         vec3 colour;
         float power;
 };

@@ -18,8 +18,8 @@ wxBitmap Shader::ApplyShading(int pixelSize)
     // Draw onto the bitmap using the memory DC
     memDC.SetBackground(*wxWHITE_BRUSH);
     memDC.Clear();
-    for (int x=0; x < this->screenDim.GetWidth(); x+=pixelSize){
-        for (int y=0; y < this->screenDim.GetHeight(); y+=pixelSize){
+    for (int x=0; x < this->screenDim.GetWidth(); x+= pixelSize){
+        for (int y=0; y < this->screenDim.GetHeight(); y+= pixelSize){
             wxColour colour = getPixelColour(x, y);
             memDC.SetPen(colour);
             memDC.SetBrush(wxBrush(colour));

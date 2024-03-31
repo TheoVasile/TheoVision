@@ -17,7 +17,7 @@ using namespace glm;
 class Shader{
     public:
         Shader(Scene *scene, wxSize screenDim);
-        virtual wxBitmap ApplyShading(int pixelSize = 10);
+        virtual wxBitmap ApplyShading(int pixelSize = 20);
     protected:
         void drawPoly(vector<array<float, 3> > positions);
         void drawLight(Light *light);

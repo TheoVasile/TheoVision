@@ -1,134 +1,203 @@
 #ifndef BMESH_H
 #define BMESH_H
 
-#include <glm/glm.hpp>
-#include <array>
-#include <vector>
+#include <wx/wx.h>
 #include "../object.h"
-#include "../../utils.h"
 #include "../../modifiers/modifier.h"
 #include "../../materials/material.h"
+#include "../../utils.h"
+#include <glm/glm.hpp>
+#include "vertex.h"
+#include "edge.h"
+#include "face.h"
 
-using namespace glm;
 using namespace std;
+using namespace glm;
 
-class Edge;
-class Face;
 class Modifier;
 
-class Vertex{
-    public:
-        Vertex(vec3 pos);
-        Vertex(vec3 pos, vector<Edge *> edges);
-        Vertex(array<float, 3> pos);
-        Vertex(array<float, 3> pos, vector<Edge *> edges);
-        Vertex(float x, float y, float z);
-        Vertex(float x, float y, float z, vector<Edge *> edges);
-
-        vector<Edge *> getEdges();
-        void setEdges(vector<Edge *> edges);
-        void addEdge(Edge *edge);
-        vec3 pos;
-        vector<Edge *> edges;
-};
-
-class Edge{
-    public:
-        Edge(Vertex *vertStart, Vertex *vertEnd);
-        Edge(Edge *edge);
-        void setNextEdge(Edge *edge);
-        Edge *getNextEdge();
-        void setPreviousEdge(Edge *edge);
-        Edge *getPreviousEdge();
-        vec3 getMidpoint();
-        Vertex *vertStart;
-        Vertex *vertEnd;
-        Edge *pair;
-        Face *face;
-        Edge *nextEdge;
-        Edge *previousEdge;
-};
-
-class Face{
-    public:
-        Face(Edge *edge);
-        void flipNormal();
-        vec3 getMidpoint();
-        vec3 getNormal();
-        vector<vec3> getPoints();
-        vector<array<vec3, 3> > getTris();
-        void setEdge(Edge *edge);
-        Edge *getEdge();
-    private:
-        float normDir;
-        Edge *edge;
-};
-
+/**
+ * @class Mesh
+ * @brief Represents a mesh composed of vertices, edges, and faces.
+ *
+ * The Mesh class provides functionality to manipulate and operate on a mesh structure. It is based ont he winged edge data structure
+ */
 class Mesh : public Object{
-    public:
-        /**
-         * @brief Constructs a Mesh object with the given coordinates.
-         *
-         * @param x The x-coordinate of the mesh.
-         * @param y The y-coordinate of the mesh.
-         * @param z The z-coordinate of the mesh.
-         */
-        Mesh(vec3 pos);
-        Mesh(float x, float y, float z);
-        Mesh(array<float, 3> pos);
 
-        void flipNormals();
+public:
+    /**
+     * @brief Constructs a Mesh object with the given coordinates.
+     *
+     * @param x The x-coordinate of the mesh.
+     * @param y The y-coordinate of the mesh.
+     * @param z The z-coordinate of the mesh.
+     */
+    Mesh(vec3 pos);
+    Mesh(float x, float y, float z);
+    Mesh(array<float, 3> pos);
 
-        void addVert(array<float, 3> pos);
-        void addVert(vec3 pos);
-        void addVert(array<float, 3> pos, vector<Edge *> edges);
-        void addVert(vec3 pos, vector<Edge *> edges);
-        void addVert(float x, float y, float z);
-        void addVert(float x, float y, float z, vector<Edge *> edges);
-        void addVert(Vertex *vert);
+    void flipNormals();
 
-        void addEdge(Vertex *vertStart, Vertex *vertEnd);
-        void addEdge(int vertStartIndex, int vertEndIndex);
-        void addEdge(Edge *edge);
+    /**
+     * @brief Adds a vertex to the mesh with the given position.
+     *
+     * @param pos The position of the vertex as an array of floats [x, y, z].
+     */
+    void addVert(array<float, 3> pos);
+    
+    void addVert(vec3 pos);
 
-        void addFace(Edge *edge, bool pair=false);
-        void addFace(int edgeIndex, bool pair=false);
-        void addFace(Face *face);
+    /**
+     * @brief Adds a vertex to the mesh with the given position and associated edge.
+     *
+     * @param pos  The position of the vertex as an array of floats [x, y, z].
+     * @param edge The associated edge for the vertex.
+     */
+    void addVert(array<float, 3> pos, vector<Edge *> edges);
+    void addVert(vec3 pos, vector<Edge *> edges);
 
-        vector<Vertex *> getVerts();
+    /**
+     * @brief Adds a vertex to the mesh with the given coordinates.
+     *
+     * @param x The x-coordinate of the vertex.
+     * @param y The y-coordinate of the vertex.
+     * @param z The z-coordinate of the vertex.
+     */
+    void addVert(float x, float y, float z);
 
-        Vertex *getVertex(int index);
+    /**
+     * @brief Adds a vertex to the mesh with the given coordinates and associated edge.
+     *
+     * @param x    The x-coordinate of the vertex.
+     * @param y    The y-coordinate of the vertex.
+     * @param z    The z-coordinate of the vertex.
+     * @param edge The associated edge for the vertex.
+     */
+    void addVert(float x, float y, float z, vector<Edge *> edges);
 
-        vector<Edge *> getEdges();
+    void addVert(Vertex *vert);
 
-        Edge *getEdge(int index);
+    /**
+     * @brief Adds an edge to the mesh between the given start and end vertices.
+     *
+     * @param vertStart The starting vertex of the edge.
+     * @param vertEnd   The ending vertex of the edge.
+     */
+    void addEdge(Vertex *vertStart, Vertex *vertEnd);
 
-        vector<Face *> getFaces();
+    /**
+     * @brief Adds an edge to the mesh between the vertices corresponding to the start and end indices.
+     * 
+     * @param vertStartIndex The index corresponding to the starting vertex of the edge.
+     * @param vertEndIndex   The index corresponding to the ending vertex of the edge.
+     */
+    void addEdge(int vertStartIndex, int vertEndIndex);
 
-        Face *getFace(int index);
+    void addEdge(Edge *edge);
 
-        void addModifier(Modifier *modifier);
+    /**
+     * @brief Adds a face to the mesh with the given associated edge.
+     *
+     * @param edge The associated edge for the face.
+     */
+    void addFace(Edge *edge, bool pair=false);
 
-        Mesh *getModifiedMesh();
+    /**
+     * @brief Adds a face to the mesh with the associated edge given by the provided index.
+     * 
+     * @param edgeIndex The index of the associated edge for the face.
+     */
+    void addFace(int edgeIndex, bool pair=false);
 
-        void scale(vec3 rot) override;
-        using Object::scale;
+    void addFace(Face *face);
 
-        void move(vec3 translation) override;
-        using Object::move;
+    
+    using Object::getOrigin;
 
-        void rotate(vec3 rot) override;
-        using Object::rotate;
+    using Object::setOrigin;
 
-        Mesh *copy() override;
+    /**
+     * @brief Retrieves a vector of all vertices in the mesh.
+     *
+     * @return A vector of Vertex pointers representing all vertices in the mesh.
+     */
+    vector<Vertex *> getVerts();
 
-        Material *material;
+    /**
+     * @brief Returns a vertex at the specified index
+     * 
+     * @param index the index to retrieve the vertex
+     * 
+     * @return A vertex
+     */
+    Vertex *getVertex(int index);
 
-    protected:
-        vector<Modifier *> modifiers;
-        vector<Vertex*> vertices; /**< The collection of vertices in the mesh. */
-        vector<Edge*> edges; /**< The collection of edges in the mesh. */
-        vector<Face*> faces; /**< The collection of faces in the mesh. */
+    /**
+     * @brief Retrieves a vector of all edges in the mesh.
+     *
+     * @return A vector of Edge pointers representing all edges in the mesh.
+     */
+    vector<Edge *> getEdges();
+
+    /**
+     * @brief Returns the edge at the specified index
+     * 
+     * @param index the index to retrieve the edge
+     * 
+     * @return the edge
+     */
+    Edge *getEdge(int index);
+
+    /**
+     * @brief Retrieves a vector of all faces in the mesh.
+     *
+     * @return A vector of Face pointers representing all faces in the mesh.
+     */
+    vector<Face *> getFaces();
+
+    /**
+     * @brief Returns a face at the specified index
+     * 
+     * @param index the index to retrieve the face
+     * 
+     * @return A face
+     */
+    Face *getFace(int index);
+
+    void addModifier(Modifier *modifier);
+
+    Mesh *getModifiedMesh();
+
+    void scale(vec3 rot) override;
+    using Object::scale;
+
+    /**
+     * @brief Moves the mesh by the given translation in each axis.
+     *
+     * @param x The translation along the x-axis.
+     * @param y The translation along the y-axis.
+     * @param z The translation along the z-axis.
+     */
+    void move(vec3 translation) override;
+    using Object::move;
+
+    /**
+     * @brief Rotates the mesh by the given rotation angles.
+     *
+     * @param rot The rotation angles as an array of floats [xrot, yrot, zrot].
+     */
+    void rotate(vec3 rot) override;
+    using Object::rotate;
+
+    Mesh *copy() override;
+
+    Material *material;
+
+protected:
+    vector<Modifier *> modifiers;
+    vector<Vertex*> vertices; /**< The collection of vertices in the mesh. */
+    vector<Edge*> edges; /**< The collection of edges in the mesh. */
+    vector<Face*> faces; /**< The collection of faces in the mesh. */
 };
 
 #endif

@@ -54,6 +54,23 @@ void Object::rotate(array<float, 3> rot)
     this->rotate(rot[0], rot[1], rot[2]);
 }
 
+vec3 Object::getOrigin(){
+    return this->origin;
+}
+
+void Object::setOrigin(vec3 pos) {
+    origin = pos;
+}
+
+void Object::setOrigin(float x, float y, float z)
+{
+    this->setOrigin(vec3(x, y, z));
+}
+void Object::setOrigin(array<float, 3> pos)
+{
+    this->setOrigin(pos[0], pos[1], pos[2]);
+}
+
 Object *Object::copy() {
     Object *newObject = new Object(this->origin);
     return newObject;

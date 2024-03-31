@@ -1,7 +1,7 @@
 #include "raytraceShader.h"
 
 RayTraceShader::RayTraceShader(Scene *scene, wxSize screenDim) : Shader(scene, screenDim){
-    this->samples = 1;
+    this->samples = 10;
 };
 
 wxColour RayTraceShader::getPixelColour(int x, int y) {

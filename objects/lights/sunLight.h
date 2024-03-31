@@ -18,6 +18,8 @@ class SunLight : public Light {
         using Light::move;
         void rotate(vec3 rot) override;
         using Light::rotate;
+        using Light::getOrigin;
+        using Light::setOrigin;
         vec3 direction;
 };
 

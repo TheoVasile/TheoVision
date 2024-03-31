@@ -1,5 +1,5 @@
 #include "ray.h"
-/*
+
 Ray::Ray(vec3 pos, vec3 direction) {
     this->pos = pos;
     this->direction = direction;
@@ -38,43 +38,6 @@ Mesh *Ray::getCollisionMesh() {
 void Ray::cast(array<vec3, 3> tri)
 {
     this->hasHit = false;
-    constexpr float epsilon = std::numeric_limits<float>::epsilon();
-    vec3 edge1 = tri[1] - tri[0];
-    vec3 edge2 = tri[2] - tri[0];
-    vec3 ray_cross_edge2 = cross(this->direction, edge2);
-    float determinant = dot(edge1, ray_cross_edge2);
-
-    // Check if ray is parallel to the triangle
-    if (determinant > -epsilon && determinant < epsilon) {
-        return;
-    }
-
-    float inverse_determinant = 1.0 / determinant;
-    vec3 s = this->pos - tri[0];
-    float u = inverse_determinant * dot(s, ray_cross_edge2);
-
-    if (u < 0 || u > 1) {
-        return;
-    }
-
-    vec3 s_cross_edge1 = cross(s, edge1);
-    float v = inverse_determinant * dot(this->direction, s_cross_edge1);
-
-    if (v < 0 || u+v > 1) {
-        return;
-    }
-
-    // Compute point where ray intersects triangle
-    float t = inverse_determinant * dot(edge2, s_cross_edge1);
-
-    if (t > epsilon) {
-        this->collisionPoint = this->pos + this->direction * t;
-        this->collisionNormal = getNormal(tri);
-        this->outgoingDirection = this->direction - 2 * dot(this->collisionNormal, this->direction) * this->collisionNormal;
-        this->hasHit = true;
-    }
-    /*
-    this->hasHit = false;
     // Find the point of intersection with the plane
     vec3 normal = getNormal(tri);
     float numerator = -dot(normal, (this->pos - tri[0]));
@@ -102,7 +65,6 @@ void Ray::cast(array<vec3, 3> tri)
         this->outgoingDirection = this->direction - 2 * dot(this->collisionNormal, this->direction) * this->collisionNormal;
     this->hasHit = true;
     }
-    *//*
 }
 
 void Ray::cast(Face *face)
@@ -188,4 +150,4 @@ void Ray::cast(vector<Mesh *> meshes)
     this->collisionPoint = closestPoint;
     this->collisionNormal = closestNormal;
     this->outgoingDirection = closestOutgoing;
-}*/
+}

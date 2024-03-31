@@ -1,16 +1,25 @@
 # TheoVision
 
-Interactive 3d environment. Move, rotate, scale 3D objects. manipulate geometry and adjust materials and rendering settings.
+## Description
+Interactive 3D environment. Move, rotate, scale 3D objects. manipulate geometry and adjust materials and rendering settings.
 
 <img width="816" alt="screencap" src="https://cdn.discordapp.com/attachments/728141580174753835/1223728054791311531/Untitled.png?ex=661ae890&is=66087390&hm=21adf60cdbe90d49afe61389872376e840a0e38d2c8e61fef1aac9c8825d585a&">
 
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Dependencies](#dependencies)
+- [References](#references)
+
 ## Usage
-Click on an object to select it.\
-Tapping "a" allows you to select/deselect all objects
-Tapping "r" allows you to rotate the selected object by moving the cursor around the screen. Clicking will apply the rotation.\
-Tapping "g" allows you to move the selected object by moving the cursor around the screen. Clicking will apply the translation.\
-Tapping "s" allows you to move the selected object by moving the cursor around the screen. Clicking will apply the scale.\
-Different shaders can be applied by replacing the shader object in the Viewport class.\
+- Click on an object to select it.
+- Tapping "a" allows you to select/deselect all objects.
+- Tapping "r" allows you to rotate the selected object by moving the cursor around the screen. Clicking will apply the rotation.
+- Tapping "g" allows you to move the selected object by moving the cursor around the screen. Clicking will apply the translation.
+- Tapping "s" allows you to move the selected object by moving the cursor around the screen. Clicking will apply the scale.
+- Different shaders can be applied by replacing the shader object in the Viewport class.
 
 ## Prerequisites
 
@@ -61,3 +70,7 @@ Run in the terminal:
 ```bash
 brew install glfw
 ```
+
+## References
+- [BVH Algorithm](https://www.researchgate.net/publication/226039567_Grid-based_SAH_BVH_construction_on_a_GPU)
+- [Ray Triangle Intersection](https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm)
