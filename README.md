@@ -3,7 +3,8 @@
 ## Description
 Interactive 3D environment. Move, rotate, scale 3D objects. manipulate geometry and adjust materials and rendering settings.
 
-<img width="816" alt="screencap" src="https://cdn.discordapp.com/attachments/728141580174753835/1223728054791311531/Untitled.png?ex=661ae890&is=66087390&hm=21adf60cdbe90d49afe61389872376e840a0e38d2c8e61fef1aac9c8825d585a&">
+<img width="798" alt="theovision" src="https://github.com/user-attachments/assets/1cc87d94-08b6-40ef-84f7-93a1f44b9c30" />
+
 
 
 ## Table of Contents
